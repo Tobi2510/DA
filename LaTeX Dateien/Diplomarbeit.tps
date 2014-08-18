@@ -12,12 +12,12 @@ MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
 NormalPos.right=1322
-NormalPos.bottom=550
+NormalPos.bottom=548
 Class=LaTeXView
 Document=kapitel\kapitelDrei_Unfaelle.tex
 
 [Frame0_View0,0]
-TopLine=55
+TopLine=49
 Cursor=8052
 
 [Frame1]
@@ -30,13 +30,13 @@ MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
 NormalPos.right=1322
-NormalPos.bottom=550
+NormalPos.bottom=548
 Class=LaTeXView
 Document=kapitel\kapitelZwei_fachlicheEinleitung.tex
 
 [Frame1_View0,0]
-TopLine=138
-Cursor=7540
+TopLine=142
+Cursor=7937
 
 [Frame2]
 Flags=0
@@ -48,7 +48,7 @@ MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
 NormalPos.right=1322
-NormalPos.bottom=550
+NormalPos.bottom=548
 Class=LaTeXView
 Document=Diplomarbeit.tex
 
@@ -66,7 +66,7 @@ MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
 NormalPos.right=1322
-NormalPos.bottom=550
+NormalPos.bottom=548
 Class=LaTeXView
 Document=header.tex
 
@@ -84,7 +84,7 @@ MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
 NormalPos.right=1322
-NormalPos.bottom=550
+NormalPos.bottom=548
 Class=LaTeXView
 Document=kapitel\kapitelEins_einleitung.tex
 
@@ -102,7 +102,7 @@ MaxPos.y=-1
 NormalPos.left=4
 NormalPos.top=26
 NormalPos.right=1322
-NormalPos.bottom=550
+NormalPos.bottom=548
 Class=LaTeXView
 Document=Zeichen.tex
 
