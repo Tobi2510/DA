@@ -1,0 +1,54 @@
+\documentclass[a4paper,titlepage,oneside]{scrreprt}
+
+% Paket zum Übersetzen
+\usepackage{ngerman}
+
+% Eingabe von Umlauten
+\usepackage[latin1]{inputenc}
+
+% Verwenden von T1 Fonts
+\usepackage[T1]{fontenc}
+
+\usepackage[pdftex]{graphicx}
+\usepackage{array}
+\usepackage[bottom]{footmisc} %Tabelle nicht unter Fußnoten
+\usepackage{enumitem}
+\usepackage{amsfonts, amsmath, amsthm, amssymb}
+\usepackage{subfig} 
+
+\usepackage[linktocpage,bookmarks,bookmarksopen={false},bookmarksnumbered,pdfstartview={FitH},
+	pdftitle={Diplomarbeit},
+	pdfauthor={Tobias Riedel},
+	pdfsubject={Modellierung eines Risikoäquivalents für isolierte Ereignisse und singuläre Ereignisketten in Kranken- und Lebensversicherungsbiographien},
+	pdfcreator={TR},
+	pdfproducer={TR},
+	pdfkeywords={Diplomarbeit, Tobias Riedel, Risikotheorie}]{hyperref}
+
+%Einrücken Beginn Absatz
+\setlength{\parindent}{0em} 
+
+\newtheorem{defini}{Definition}[chapter]
+\newenvironment{defi}
+{\begin{defini} \ \newline}
+{\end{defini}}
+
+\newtheorem{lemmas}[defini]{Lemma}
+\newenvironment{lemma}
+{\begin{lemmas} \ \newline}
+{\end{lemmas}}
+
+
+\newtheorem{koro}[defini]{Korollar}
+\newenvironment{korollar}
+{\begin{koro} \ \newline}
+{\end{koro}}
+
+\newtheorem{tehorem}[defini]{Theorem}
+\newenvironment{THEOREM}
+{\begin{tehorem} \ \newline}
+{\end{tehorem}}
+
+\newtheorem{folg}[defini]{Folgerung}
+\newenvironment{folgerung}
+{\begin{folg} \ \newline}
+{\end{folg}}

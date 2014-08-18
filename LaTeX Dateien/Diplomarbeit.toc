@@ -1,0 +1,19 @@
+\contentsline {chapter}{\numberline {1}Einf\"uhrung in das Thema}{5}{chapter.1}
+\contentsline {section}{\numberline {1.1}Mitnahme von Alterungsr\"uckstellung in der PKV - Auswirkungen auf das Versichertenkollektiv}{5}{section.1.1}
+\contentsline {section}{\numberline {1.2}Kohorten Modell}{7}{section.1.2}
+\contentsline {subsection}{\numberline {1.2.1}Lebensabschnitt: \active@dq \dq@prtct {`}0-j\"ahrige\active@dq \dq@prtct {'}}{8}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.2}Lebensabschnitt: \active@dq \dq@prtct {`}Pr\"amortalit\"atsphase\active@dq \dq@prtct {'}}{9}{subsection.1.2.2}
+\contentsline {subsection}{\numberline {1.2.3}Lebensabschnitt: \active@dq \dq@prtct {`}Phase regen Lebens\active@dq \dq@prtct {'}}{9}{subsection.1.2.3}
+\contentsline {subsection}{\numberline {1.2.4}Ereignis: Isolierte Ereignisse}{9}{subsection.1.2.4}
+\contentsline {subsection}{\numberline {1.2.5}Ereignis: Singul\"are Ereignisketten}{9}{subsection.1.2.5}
+\contentsline {chapter}{\numberline {2}Fachliche Einf\"uhrung}{10}{chapter.2}
+\contentsline {chapter}{\numberline {3}Modellierung Isolierte Ereignisse}{15}{chapter.3}
+\contentsline {section}{\numberline {3.1}Grundlegende Betrachtungen}{15}{section.3.1}
+\contentsline {section}{\numberline {3.2}Modell - Poisson-Prozess}{16}{section.3.2}
+\contentsline {section}{\numberline {3.3}Modell - Markov-Kette}{17}{section.3.3}
+\contentsline {section}{\numberline {3.4}Ableitung und Test eines Modells}{18}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Datengrundlage + Aufbereitung}{18}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}Identifizierung von Unf\"allen}{18}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}Anwendung und Test der Modelle}{18}{subsection.3.4.3}
+\contentsline {chapter}{\numberline {A}Anhang}{19}{appendix.A}
+\contentsline {section}{\numberline {A.1}Abk\"urzungsverzeichnis und Zeichenerkl\"arungen}{20}{section.A.1}

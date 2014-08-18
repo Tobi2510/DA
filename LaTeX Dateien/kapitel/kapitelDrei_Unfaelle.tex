@@ -1,0 +1,102 @@
+\chapter{Modellierung Isolierte Ereignisse}
+
+In diesem Kapitel soll ein Risikomodell für die Isolierten Ereignisse in der Phase regen Lebens (im Folgenden alternativ auch als Unfälle bezeichnet) erstellt werden. Anschließend soll dieses Modell an einer ausgewählten Datenbasis verifiziert werden und an einem geeigneten Beispiel vorgestellt werden. Dazu werden zwei Ansätze vorgestellt um ein passendes Risikomodell zu erstellen. Einleitend soll die Definition der Isolierten Ereignisse genauer analysiert werden, um die Anforderungen an das spätere Risikomodell abzuleiten:\\
+
+\section{Grundlegende Betrachtungen}
+
+Im Kohorten-Modell werden die Unfälle als \textbf{seltene Ereignisse}, welche die Gesundheit eines Versicherten beeinträchtigen, \textbf{sich nicht ankündigen} und bei denen der Eintrittszeitpunkt der eigentliche \textbf{Auslöser von begrenzten Leistungsabfolgen} sind, beschrieben. Außerdem sollen sie selten, und in der Regel \textbf{unabhängig voneinander}, auftreten. Das heißt die Eintrittswahrscheinlichkeit für einen Unfall hängt nicht davon ab, ob der Versicherte bereits einen Unfall hatte. Es gibt also insbesondere \textbf{keinen Lerneffekt} und \textbf{keine Folgeschäden} die im Modell berücksichtigt werden müssen. Außerdem ist die durch den Unfall hervorgerufene Leistungsfolge begrenzt was bedeutet, dass \textbf{keine Chronizität} durch einen Unfall entstehen kann.\footnote{Dieser Fall wird durch die singulären Ereignisketten im nächsten Kapitel abgedeckt.}\\
+
+Für das Kohorten-Modell müssen die isolierten Ereignisse in der Phase "`regen Lebens"' beschrieben werden. Deshalb werden für die Modellierung zwar alle Unfälle hinzugezogen, aber die Kosten von Unfällen aus den anderen beiden Phasen werden als jeweilige Phasen-Leistungen in der Krankenversicherungsbiographie kumuliert. Das heißt insbesondere, dass Unfälle mit Todesfolge keine besondere Betrachtung mehr benötigen, da sie bereits in der dritten Phase des Modells erfasst wurden.\\
+
+Die Erfahrung zeigt, dass die Unfallwahrscheinlichkeit in der Regel sowohl vom Alter- als auch vom Geschlecht des Versicherten abhängt. Einen guten Beleg dafür liefert die Statistik über die "`Unfallentwicklung auf deutschen Straßen 2012"' vom Statistischen Bundesamt\footnote{Quelle: Statistisches Bundesamt unter \url{https://www.destatis.de/DE/Publikationen/Thematisch/TransportVerkehr/Verkehrsunfaelle/PK_Unfallentwicklung.html}}. Daraus geht hervor das besonders junge Erwachsene im Alter zwischen 18 und 24 Jahren in schwere Verkehrsunfälle mit Personenschäden verwickelt sind. Hinzukommt das in 86\% aller Motorradunfälle in diesem Altersbereich der Verunglückte männlich war. Neben Alter und Geschlecht wird auch die Saison in bestimmten Fällen Einfluss auf die Unfallwahrscheinlichkeit haben. Dies spiegelt sich auch bei den Verkehrsunfällen wieder, denn im Zeitraum von Mai bis September gab es die meisten Unfälle mit Personenschäden, da es aufgrund der höheren Geschwindigkeiten bei schönen Wetter zu schwereren Verkehrsunfällen kam. Dabei ist zu beachten, dass die Einflüsse von Alter, Geschlecht und Saison auf die Unfallwahrscheinlichkeit auch vom Typ des Unfalls abhängen.\\
+
+Zusammenfassend lässt sich sagen, dass die Unfallwahrscheinlichkeit unabhängig von bereits eingetretenen Unfällen ist, aber je nach Unfalltyp, vom Alter und Geschlecht des Versicherten abhängen und einer Saisonalität unterliegen kann. Darauf aufbauend werden nun zwei Modelle vorgestellt:
+
+\section{Modell - Poisson-Prozess}
+Für den ersten Modellansatz nehmen wir an, dass aufgrund des Charakters der Unfälle als seltene Ereignisse, die Genesungsdauer vernachlässigt werden kann. Das heißt die aus dem Unfall resultierenden Folgeleistung werden auf den Zeitpunkt des Unfalls konzentriert und es gibt keinen Zeitraum nach einem Unfall, in dem die Wahrscheinlichkeit für einen Weiteren angepasst wird. Laut Voraussetzung hängt die Unfallwahrscheinlichkeit vom Alter und Geschlecht der Versicherten, sowie von der Saison ab. Doch zunächst werden wir ein Modell entwickeln für den Fall das die Unfallwahrscheinlichkeit konstant ist. \textit{Diese ist intuitiv definiert als die Anzahl der Unfälle pro Zeiteinheit.} Anschließend kann dieses Modell erweitert werden um die verschieden Abhängigkeiten zu berücksichtigen.\\
+
+Zunächst werden wir grundlegende Bezeichnungen einführen:
+
+\begin{enumerate}[label=(\roman{*})]
+	\item Die Unfallwahrscheinlichkeit wird mit $\lambda$ bezeichnet.
+	\item Die Unfallzeitpunkte seien gegeben durch $t_0, t_1, t_2, t_3,...$ , wobei $t_0 = 0$ den Beginn der Beobachtung kennzeichnet.
+	\item Die Zeit zwischen den einzelnen Unfällen sei definiert als $\{T_k\}_{k \geq 0}$ mit $T_k := t_k-t_{k-1}$ und $T_0 := 0$.
+	\item Die Anzahl der Unfälle wird bezeichnet durch $N_t := max\{k : t_k \leq t\}$
+\end{enumerate}
+ 
+Sei nun die Wahrscheinlichkeit für einen Unfall $\lambda$ konstant. Dann gilt für die Wartezeiten $\{T_k\}_{k \geq 0}$, dass die Zeit bis zum nächsten Unfall unabhängig davon ist, wie viel Zeit bereits ohne Unfall verstrichen ist. Sei $F(x)$ die gemeinsame Verteilung der Wartezeiten, dann gilt also: 
+
+\begin{eqnarray*}
+F(x|t) &=& F(x) \\
+=> F(x+t) &=& F(x)F(t) 
+\end{eqnarray*}
+
+Damit folgt gemäß Lemma \ref{expLemma} das $F(x)\sim Exp(\lambda)$. Damit ist $N_{\lambda} = \{N_t\}_{t>0}$ gemäß Definition \ref{poiPro} ein Poisson-Prozess mit Parameter $\lambda $. Wie bereits am Anfang erwähnt, ist die Unfallwahrscheinlichkeit von verschieden Faktoren abhängen und dabei in erster Linie natürlich vom Unfalltyp. Deshalb zerlegen wir den Prozess in mehrere Teilprozesse:\\
+
+Seien $U_1, U_2,...,U_n$ mit $n\in \mathbb{N}$ die verschiedenen relevanten Unfalltypen und $\lambda _{U_1},\lambda _{U_2},...,\lambda _{U_n}$ die zugehörigen Unfallwahrscheinlichkeiten. Dann gilt für die daraus resultierenden Prozesse $N_\lambda = \sum^n_{i=1} N_{\lambda _{U_i}}$. Das heißt der Prozess lässt sich beliebig in Unterprozesse zerlegen die jeweils einen Typ bzw. auch eine Familie von Typen beschreiben. Dadurch lässt sich das Modell beliebig verfeinern, falls dies in einem Bereich notwendig ist.\\
+
+Da Unfälle sowohl vom Alter und Geschlecht, sowie von der aktuellen Jahreszeit abhängen können, reicht es nicht aus einen Homogenen Poisson-Prozess zu verwenden. Deshalb ist es notwendig das unfallspezifische $\lambda$ als Funktion dieser drei Einflüsse zu berücksichtigen. Die Stärke der jeweiligen Einflussfaktoren hängt natürlich in erster Linie vom Unfalltyp ab. Als praktikable Lösung zur Bestimmung der einzelnen Funktionen bietet es sich deshalb an, $\lambda$ als Treppenfunktion zu modellieren, bei der die einzelnen Stufen von der empirischen Verteilung der Unfallwahrscheinlichkeit abhängen. Das detaillierte Vorgehen bei der Bestimmung von $\lambda$ wird im weiteren Verlauf dieses Kapitels anhand eines Beispiels erläutert.\\
+
+Ein analoges Vorgehen (empirische Verteilung) würde sich auch bei der Modellierung der Kostenverteilung für die Unfälle anbieten, insbesondere wenn diese nur schlecht durch eine Verteilungsfunktion beschrieben werden können. Schwierigkeiten können entstehen, da bei Leistungskosten in der Krankenversicherung häufig zu beobachten ist, dass es viele Fälle mit niedrigen und durchschnittlichen Kosten gibt aber auch eine nicht zu vernachlässigende Anzahl an Hochkostenfällen (Verweis), die um ein vielfaches teurer sind.  Aus diesem Grund ist es wichtig eine Verteilungsfunktion zu wählen, die zu einen die Standardfälle abdeckt und zum Anderen noch genug Masse in den hohen Kostenbereichen hat, um die Hochkostenfälle nicht zu vernachlässigen. Verteilungsfunktionen mit dieser Eigenschaft werden auch als Heavy-Tail-Verteilung\footnote{z.B. Weibull-Verteilung mit Formparameter<1} bezeichnet. Das optimale Vorgehen bei der Modellierung der Kostenverteilung hängt letztendlich vom Unfalltyp und den zur Verfügung stehenden Daten ab. 
+
+
+- Zusammenfassung
+
+\section{Modell - Markov-Kette}
+
+-	Ansatz der den Prozess eines Unfalls mit den verschiedenen Phasen der Genesung gut abbildet
+-	Grundannahme: kein Lerneffekt  und Gleichverteilte Eintritts- bzw. Übergangswahrscheinlichkeiten
+-	Ergodisch (nur bei Unfällen) => Startverteilung spielt auf längere Sicht keine Rolle
+-	Übergangswahrscheinlichkeiten werden aus den Daten geschätzt (Mittelwert)
+-	Zur Bestimmung der zu Erwartenden Anzahlen evtl. Simulation? Monte-Carlo-Methode
+-	Verweildauer und Kosten evtl. aus DRG Katalog?
+
+
+\section{Ableitung und Test eines Modells}
+
+\subsection{Datengrundlage + Aufbereitung}
+
+-	Abrechnungsdaten von x Versicherten über 4 Jahre
+-	Anzahl Datensätze und Fälle
+-	Tabellen Vorstellen
+o	Beziehung (ER-Diagramm)
+o	Schlüssel
+o	Inhalt + Bedeutung der wichtigsten Spalten
+-	ICD Codierung erläutern
+o	Schwierigkeit mit Jahreswechsel und Änderungen in der Codierung
+-	Datenaufbereitung
+o	Zusammenführen der Tabellen
+o	Datenfehler entfernen
+o	Duplikate entfernen
+o	Beschreibungstexte anspielen
+
+\subsection{Identifizierung von Unfällen}
+-	Unfälle kündigen sich nicht an
+-	Nur versicherte werden betrachtet die im Gesamtenzeitraum da waren
+-	Einweisungsgrund + Entlassungsgrund
+-	Aufenthaltsdauer
+-	Nicht relevante Fälle herausfiltern
+-	Liste der häufigsten Unfälle
+-	Hochkostenfälle
+-	Spezialfälle: Unfall mit Todesfolge
+o	Wird vernachlässigt Versicherte mit diesen schweren Unfällen fallen in die letzte Phase (Walter fragen: Fälle gehören zwar zum Phänomen Unfall aber die entsprechenden Versicherten sind nicht die ganze Zeit da)
+-	Spezialfälle: Unfall mit Folgeschäden
+o	Pflegekosten => Singuläre Ereigniskette
+o	Keine Folgekosten = Vernachlässigen
+
+
+\subsection{Anwendung und Test der Modelle}
+
+-	Modell ableiten am Beispiel von „Gehirnerschütterung“
+-	Saissonalität und Geschlechts-/Altersabhängigkeit testen und Parameter schätzen
+-	Ergodizität voraussetzen
+-	Eingrenzung der Fälle
+-	Analyse der Daten
+o	Häufigkeitsverteilung
+o	Kostenverteilung
+o	Zeitpunktverteilung
+o	Altersverteilung
+o	Hochkostenfälle
+-	Anpassungstest an Poissonverteilung
+-	Verknüpfung mit Kosten
+-	Test des Modells

@@ -1,0 +1,242 @@
+\chapter{Fachliche Einführung}
+
+In diesem Kapitel sollen die in der Arbeit verwendeten mathematischen Hilfsmittel vorgestellt werden und die wichtigsten Eigenschaften bewiesen werden. Dabei wird vorausgesetzt das der Leser bereit Grundlegende Kenntnisse im Bereich der Wahrscheinlichkeitstheorie besitzt und Begriffe wie Wahrscheinlichkeitsraum, Zufallsvariable, Dichte- und Verteilungsfunktion bekannt sind. Im Folgenden sei stets der Wahrscheinlichkeitsraum $(\Omega,\mathfrak{A},\mathbb{P})$ gegeben.
+\\
+
+Zunächst werden wir die Vereitlungen vorstellen, die in dieser Arbeit verwendet werden, und die wichtigsten Eigenschaften ableiten.
+
+\begin{defini}
+Eine Zufallsvariable $X:\Omega\to \mathbb{R}$ heißt \textbf{exponentialverteilt zum Parameter $\lambda$} (kurz: $\sim exp(\lambda)$) wenn sie die folgende Dichtefunktion besitzt:
+	\begin{eqnarray*}
+		f(x)=
+		\begin{cases}
+			\lambda e^{-\lambda x} & ,\text{für } x\geq 0 \\ 	
+			0 & ,\text{für } x<0 \\ 
+		\end{cases}
+	\end{eqnarray*}
+\end{defini}
+
+\begin{figure}[ht]
+   \centering
+      \subfloat[Dichtefunktion]{\includegraphics[width=0.39\textwidth]{./bilder/ExpDichteF}}\qquad
+      \subfloat[Verteilungsfunktion]{\includegraphics[width=0.39\textwidth]{./bilder/ExpVerteilungF}}
+   \caption[Dichte- und Verteilungsfunktion der Exponentialverteilung]{Dichte- und Verteilungsfunktion der Exponentialverteilung}
+\end{figure}
+
+Die Exponentialverteilung hat folgende Eigenschaften:
+
+\begin{enumerate}[label=(\roman{*})]
+	\item Für die Verteilungsfunktion der Exponentialverteilung gilt: 
+	\begin{eqnarray*}
+		F_{\lambda}(x) = \int_{-\infty}^{x} f_{\lambda}(t) dt =
+		\begin{cases}
+			1-e^{-\lambda x} & ,\text{für } x\geq 0 \\ 	
+			0 & ,\text{für } x<0 \\ 
+		\end{cases}
+	\end{eqnarray*}
+	\item Der Erwartungswert ist gegeben durch:
+	\begin{eqnarray*}
+			\mathbb{E}(X) = \int_0^{\infty}\lambda xe^{-\lambda x} dx 
+										= \left[-\frac{e^{-\lambda x}(\lambda x +1)}{\lambda}\right]^{\infty}_0
+										= \frac{1}{\lambda}
+	\end{eqnarray*}
+	\item Die Varianz ist gegeben durch: 
+	\begin{eqnarray*}
+		Var(X) = \int_{\infty}^{0} \left(x-\frac{1}{\lambda}\right)^2 \lambda e^{-\lambda x} dx = \frac{1}{\lambda^2}
+	\end{eqnarray*}
+	\item Die Exponentialverteilung ist gedächtnislos (auch Nichtalterungseigenschaft genannt), d.h.:
+	\begin{eqnarray*}
+		F(x|t) = \mathbb{P}(x+t\leq X , t<X) &=& \frac{\mathbb{P}(t<X<x+t)}{\mathbb{P}(t<X)} \\
+					 &=& \frac{\mathbb{P}(X\leq x+t) - \mathbb{P}(t\leq X)}{1-\mathbb{P}(t\leq X)} \\
+					 &=& \frac{1-e^{-\lambda (x+t)} - (1-e^{-\lambda t})}{1-(1-e^{-\lambda t})} \\
+					 &=& \frac{-e^{-\lambda x -\lambda t} + e^{-\lambda t}}{e^{-\lambda t}} \\
+					 &=& \frac{e^{-\lambda t}(1-e^{-\lambda x})}{e^{-\lambda t}} \\
+					 &=& 1-e^{-\lambda x} = \mathbb{P}(x\leq X) = F(x)
+	\end{eqnarray*}
+\end{enumerate}
+
+
+\begin{lemma} \label{expLemma} Wenn die Überlebenswahrscheinlichkeit ($\overline{F}(x) := 1-F(x)$) einer nicht ausgearteten, nicht negativen Zufallsvariable X der folgenden Beziehung genügt:
+  \begin{eqnarray*}
+		\mathbb{P}(x+t\leq X) = \mathbb{P}(x\leq X)\mathbb{P}(t\leq X)
+	\end{eqnarray*}
+dann gilt $X\sim exp(\lambda)$ für ein $\lambda >0$.\end{lemma}
+\proof[Beweis]
+Mit $f(x) = \mathbb{P}(x<X)$ ergibt sich folgende Gleichung
+	\begin{eqnarray*}
+		f(x+t) = f(x)f(t) \text{, mit} f(0) = \mathbb{P}(0\leq X) = 1
+	\end{eqnarray*}
+die sich wie folgt umformen lässt:
+	\begin{eqnarray*}
+		ln(f(x+t)) = ln(f(x))=ln(f(t))
+	\end{eqnarray*}
+Unter der Voraussetzung, das die Dichte $p_X(t) = -f(t+0), t\geq 0$ existiert, ergibt sich durch Differentiation nach t:
+	\begin{eqnarray*}
+		\frac{f^{'}(x+t)}{f(x+t)} = \frac{f^{'}(t)}{f(t)} 
+	\end{eqnarray*}
+Für $t=0$ folgt damit:
+	\begin{eqnarray*}
+		\frac{f^{'}(x)}{f(x)} = f^{'}(t)
+	\end{eqnarray*}
+Da $f(0) = 1$ der maximale Wert der Funktion f(x) ist, gilt $0\geq f^{'}(0) := -\lambda$ und damit erhalten wir die bekannte Differentialgleichung:
+	\begin{alignat*}{2}
+		&& f^{'}(x) &= -\lambda f(x) \\
+		&\Rightarrow & f(x) &= e^{-\lambda x} \\
+		&\Rightarrow & F(x) &= 1-f(x) = 1-e^{-\lambda x} \\
+		&\Rightarrow & X &\sim exp(\lambda)
+	\end{alignat*}
+\qed
+
+\begin{defini}
+Eine diskrete Zufallsvariable $X:\Omega\to \mathbb{N}$ heißt \textbf{Poisson-verteilt zum Parameter $\lambda \in \mathbb{R}_{>0}$}, wenn gilt:
+\begin{eqnarray*}
+	\mathbb{P}(X=k) = \frac{\lambda^k}{k!}e^{-\lambda}, k=0,1,2,...
+\end{eqnarray*}
+\end{defini}
+
+Die Poisson-Verteilung hat folgende Eigenschaften:
+
+\begin{enumerate}[label=(\roman{*})]
+	\item Für die Verteilungsfunktion der Poisson-Verteilung gilt: 
+	\begin{eqnarray*}
+		F_{\lambda}(n) = \sum_{0}^{n} \mathbb{P}_{\lambda}(k) = e^{-\lambda} \sum_{0}^{n} \frac{\lambda^k}{k!}
+	\end{eqnarray*}
+	\item Der Erwartungswert ist gegeben durch:
+	\begin{eqnarray*}
+			\mathbb{E}(X) = \sum_{0}^{\infty} k\frac{\lambda^k}{k!} e^{-\lambda}
+										= \lambda e^{-\lambda} \sum_{0}^{\infty} \frac{\lambda^{k-1}}{(k-1)!}
+										= \lambda e^{-\lambda} e^{\lambda} 
+										= \lambda
+	\end{eqnarray*}
+	
+	Der Parameter $\lambda$ der Poisson-Verteilung kann also, als die erwartete Ereignishäufigkeit pro Zeiteinheit interpretiert werden.
+	
+	\item Die Varianz ist gegeben durch: 
+	\begin{eqnarray*}
+		\mathbb{E}(X^2) &=& \sum_{0}^{\infty} k^2 \frac{\lambda^k}{k!} e^{-\lambda} \\
+										&=& e^{-\lambda} \sum_{1}^{\infty} k \frac{\lambda^{k}}{(k-1)!} \\
+										&=& e^{-\lambda} \sum_{2}^{\infty} \frac{\lambda^{k}}{(k-2)!} + e^{-\lambda} \sum_{1}^{\infty} \frac{\lambda^{k}}{(k-1)!} \\
+										&=& \lambda^2 e^{-\lambda} \sum_{2}^{\infty} \frac{\lambda^{k-2}}{(k-2)!} + \lambda e^{-\lambda} \sum_{1}^{\infty} \frac{\lambda^{k-1}}{(k-1)!} \\
+										&=& \lambda^2+\lambda \\ \\
+						 Var(X) &=& \mathbb{E}(X^2) - \mathbb{E}(X)^2 = \lambda^2+\lambda - \lambda^2 = \lambda
+	\end{eqnarray*}
+\end{enumerate}
+
+Aufgrund dieser Eigenschaften werden Poisson-Prozesse häufig verwendet um seltene Ereignisse wie Schadensfälle bei Versicherungen oder Wartungsaufwände zu beschreiben.
+
+\begin{defini}
+Ein \textbf{Stochastischer Prozess $X$} ist eine Familie von Zufallsvariablen $X_t:\Omega\to \mathfrak{A}, t\in T$. Für die Indexmenge T gilt in der Regel $T\in \{\mathbb{R}_{\geq 0}, \mathbb{N}_0\}$. Das heißt $X$ ist eine Abbildung
+\begin{eqnarray*}
+	X:\Omega \times T \to Z, \; (\omega, t) \mapsto X_t(\omega)
+\end{eqnarray*}
+sodass $X_t: \omega \mapsto X_t(\omega)$ für alle  $t \in T$ eine messbare Abbildung ist.
+\end{defini}
+
+\begin{enumerate}[label=(\roman{*})]
+	\item Ein stochastische Prozess heißt \textbf{zeitdiskret} wenn $T$ abzählbar ist, z.B. $T = \mathbb{N}_0$. Ansonsten heißt er \textbf{zeitstetig}. 
+	Analog heißt ein Prozess mit diskreten Zustandsraum $\mathfrak{A}$ \textbf{wertdisktret} oder auch \textbf{Punktprozess}. 
+	\item Ein stochastische Prozess heißt \textbf{stationär} wenn gilt:
+		\begin{eqnarray*}
+			\mathbb{P}(X_{t_1+s}=x_1, X_{t_2+s}=x_2,..., X_{t_k+s}=x_k)=\mathbb{P}(X_{t_1}=x_1, X_{t_2}=x_2,..., X_{t_k}=x_k) \\ \\
+			\text{für alle } s>0, \text{ sowie } t_1,t_2,...,t_k\in T \text{ und } x_1,x_2,...,x_k \in \mathfrak{A} 			
+		\end{eqnarray*}
+		Das heißt, das zufällige Verhalten des Prozesses hängt nicht vom Zeitpunkt der Beobachtung ab.
+	\item Ein stochastischer Prozess besitzt \textbf{Unabhängige Zuwächse}, wenn die Zufallsvariablen $X_{t_0},X_{t_1}-X_{t_0},...,,X_{t_n}-X_{t_(n-1)}$ für alle n=1,2,... und $0\leq t_0<t_1<...<t_n$ unabhängig sind.
+	
+\end{enumerate}
+
+\begin{defini} \label{poiPro}
+Ein stationärer Punktprozess $(X_t)_{t\geq0}$ mit unabhängigen Zuwächsen heißt \textbf{Poisson-Prozess mit der Intensität $\lambda$} wenn gilt $X_t\sim Poi_{\lambda}(t)$
+\begin{eqnarray*}
+		x = x
+\end{eqnarray*}
+\end{defini}
+Allgemeine Eigenschaften
+Zusammengesetzter Poisson Prozess
+Wartezeit exponential verteilt 
+Gedächnislos
+
+Satz
+Equivalente Eigenschaften
+
+\begin{defini} 
+Ein Stochastischer Prozess $X$ heißt \textbf{Markov-Kette} wenn gilt:
+\end{defini}
+
+
+\textbf{Ergodizität}
+%Für eine Zufallsvariable $X:\Omega\to \mathbb{R}$ bezeichnen wir die Abbildung $F_X: \mathbb{R}\to [0,1]$, definiert durch
+%\begin{eqnarray*}
+%F_X\left(x\right):=\Pro\left(X \leq x\right)
+%\end{eqnarray*}
+%als \textbf{Verteilungsfunktion} von $X$. Wir schreiben $X\sim F_X$ um auszudrücken, dass $F_X$ die Verteilungsfunktion von $X$ ist. Weiterhin definieren wir mittels
+%\begin{eqnarray*}
+%\overline{F_X}\left(x\right):=1-F_X\left(x\right)
+%\end{eqnarray*}
+%die \textbf{Schwanzfunktion} $\overline{F_X}$ von $X$.
+%
+%Zudem definieren wir für eine Verteilungsfunktion $F$ die \textbf{verallgemeinerte inverse Verteilungsfunktion} $F^{-1}$ mittels
+%\begin{equation}
+%F^{-1}(x)=\inf\left\{t\in\mathbb{R}\mid F(t)\geq x\right\}\text{,}
+%\label{defAllgmeineInverse}
+%\end{equation}
+%wobei wir $\inf \emptyset :=\infty$ setzen.
+%
+%\begin{lemma}
+%Sei $F$ eine Verteilungsfunktion und sei die Zufallsvariable $U:\Omega\to [0,1]$ gleichförmig auf $[0,1]$ verteilt. Dann gilt
+%\begin{equation*}
+%F^{-1}(U)\sim F\text{.}
+%\end{equation*}
+%\label{lemmaInverse}
+%\end{lemma}
+%
+%\proof
+%Wir zeigen zunächst, dass für alle $x,y\in\mathbb{R}$ genau dann $F(x)\geq y$ erfüllt ist, wenn $x\geq F^{-1}(y)$ gilt.
+%
+%Falls $x,y$ derart sind, dass $F(x)\geq y$ erfüllt ist, so folgt direkt aus der Definition der verallgemeinerte inversen Verteilungsfunktion (\ref{defAllgmeineInverse}), dass $x\geq F^{-1}(y)$ gelten muss.
+%
+%Seien andererseits $x,y$ gegeben, so dass $x\geq F^{-1}(y)$ gilt. Sei weiter eine monoton fallende Folge $(x_n)_{n\in\mathbb{N}}$ mit $\lim\limits_{n\to\infty}x_n =x$ gegeben. Da $x\geq F^{-1}(y)$ gilt und $F$ als Verteilungsfunktion monoton wachsend ist, folgt $F(x_n)\geq y$ für alle $n\in\mathbb{N}$. Da $F$ als Verteilungsfunktion zudem rechtsstetig ist, folgt weiterhin
+%\begin{equation*}
+%F(x)=\lim_{n\to\infty}F(x_n)\geq y\text{.}
+%\end{equation*}
+%Damit gilt $F(x)\geq y$ genau dann, wenn $x\geq F^{-1}(y)$. 
+%
+%Mittels der Definition der verallgemeinerten inversen Verteilungsfunktion sehen wir, dass $F^{-1}$ eine monotone Funktion ist und somit auch messbar ist. Damit ist $F^{-1}(U)$ tatsächlich eine Zufallsvariable und es folgt aus obiger Äquivalenz
+%\begin{equation*}
+%\Pro(F^{-1}(U)\leq x) = \Pro(U \leq F(x)) = F(x)\text{,}
+%\end{equation*}
+%das heißt $F^{-1}(U)\sim F$ gilt.
+%\qed
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\section{Die stochastische Dominanz}
+%
+%Wir wollen nun Konzepte finden, um Risiken zu vergleichen. Ohne Zweifel würden wir sagen, dass ein Risiko $X$ im Vergleich mit einem zweiten Risiko $Y$ größer ist, wenn die Wahrscheinlichkeit, dass ein Schaden des Risikos $Y$ mindestens die Höhe $x$ aufweist für alle $x$ stets mindestens so groß ist wie dieselbe Wahrscheinlichkeit für das Risiko $X$. Dies motiviert uns zu folgender Definition:
+%
+%\begin{defi}
+%Für zwei nichtnegative Zufallsvariablen $X,Y$ sagen wir das Risiko $Y$ ist \textbf{größer} als das Risiko $X$ oder $Y$ \textbf{dominiert} $X$ \textbf{stochastisch}, falls 
+%\begin{eqnarray*}
+%\Pro\left(X>x\right)\leq\Pro\left(Y>x\right) 
+%\end{eqnarray*}
+%für alle $x\in \mathbb{R}$ gilt und schreiben dann $X\leq_{st}Y$.
+%\end{defi}
+%
+%\begin{bemerkung}
+%Somit gilt $X\leq_{st}Y$ genau dann, wenn $\overline{F_X}\left(x\right)\leq\overline{F_Y}\left(x\right)$ beziehungsweise $F_X\left(x\right)\geq F_Y\left(x\right)$ für alle $x\geq 0$ gilt. Wie man sofort sieht, ist obige Ordnung durch die Verteilungsfunktion der Zufallsvariablen bestimmt. Dies rechtfertigt das Nutzen dieser Ordnung auf der Menge der Verteilungen. Dementsprechend schreiben wir $F_X\preceq_{st}F_Y$ genau dann, wenn $X\leq_{st}Y$ für Zufallsvariablen $X\sim F_X$ und $Y\sim F_Y$ gilt und sagen, dass die Verteilung $F_Y$ die Verteilung $F_X$ stochastisch dominiert.
+%
+%Weiterhin bemerken wir, dass $\preceq_{st}$ eine Halbordnung auf der Menge der Verteilungsfunktionen ist, denn wie man leicht sieht ist $\preceq_{st}$ reflexiv, transitiv und antisymmetrisch.
+%\end{bemerkung}
+%
+%Mittels folgender Eigenschaften können wir die stochastische Dominanz ebenso charakterisieren:
+%
+%\begin{lemma}
+%\label{lemmaStochastischeAequivalenz}
+%Seien $X,Y$ nichtnegative Zufallsvariablen. Dann sind folgende Bedingungen äquivalent:
+%\begin{enumerate}[ label=\alph*)]
+	%\item Es gilt $X\leq_{st}Y$.
+	%
+	%\item Es existieren Zufallsvariablen $\tilde{X} \stackrel{D}{=} X$ und $\tilde{Y} \stackrel{D}{=} Y$, so dass $\Pro\left(\tilde{X}\leq\tilde{Y}\right)=1$ gilt.
+	%
+	%\item Es gilt $\EW\left(u(X)\right)\leq\EW\left(u(Y)\right)$ für jede monoton wachsende Funktion $u:\Rplus \to \mathbb{R}$.
+%\end{enumerate}
+%\end{lemma}
