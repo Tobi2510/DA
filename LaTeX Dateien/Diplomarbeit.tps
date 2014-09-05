@@ -17,8 +17,8 @@ Class=LaTeXView
 Document=kapitel\kapitelDrei_Unfaelle.tex
 
 [Frame0_View0,0]
-TopLine=49
-Cursor=8052
+TopLine=81
+Cursor=10070
 
 [Frame1]
 Flags=0
@@ -35,8 +35,8 @@ Class=LaTeXView
 Document=kapitel\kapitelZwei_fachlicheEinleitung.tex
 
 [Frame1_View0,0]
-TopLine=142
-Cursor=7937
+TopLine=9
+Cursor=1468
 
 [Frame2]
 Flags=0
