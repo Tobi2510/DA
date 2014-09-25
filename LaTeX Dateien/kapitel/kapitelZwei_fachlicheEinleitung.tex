@@ -56,12 +56,14 @@ Die Exponentialverteilung hat folgende Eigenschaften:
 \end{enumerate}
 
 
-\begin{lemma} \label{expLemma} Wenn die Überlebenswahrscheinlichkeit ($\overline{F}(x) := 1-F(x)$) einer nicht ausgearteten, nicht negativen Zufallsvariable X der folgenden Beziehung genügt:
+\begin{lemmas} \label{expLemma} Wenn die Überlebenswahrscheinlichkeit ($\overline{F}(x) := 1-F(x)$) einer nicht ausgearteten, nicht negativen Zufallsvariable X der folgenden Beziehung genügt:
   \begin{eqnarray*}
 		\mathbb{P}(x+t\leq X) = \mathbb{P}(x\leq X)\mathbb{P}(t\leq X)
 	\end{eqnarray*}
-dann gilt $X\sim exp(\lambda)$ für ein $\lambda >0$.\end{lemma}
-\proof[Beweis]
+dann gilt $X\sim exp(\lambda)$ für ein $\lambda >0$.
+\end{lemmas}
+
+\textbf{Beweis:}
 Mit $f(x) = \mathbb{P}(x<X)$ ergibt sich folgende Gleichung
 	\begin{eqnarray*}
 		f(x+t) = f(x)f(t) \text{, mit} f(0) = \mathbb{P}(0\leq X) = 1
@@ -88,7 +90,7 @@ Da $f(0) = 1$ der maximale Wert der Funktion f(x) ist, gilt $0\geq f^{'}(0) := -
 \qed
 
 \begin{defini}
-Eine diskrete Zufallsvariable $X:\Omega\to \mathbb{N}$ heißt \textbf{Poisson-verteilt zum Parameter $\lambda \in \mathbb{R}_{>0}$}, wenn gilt:
+Eine diskrete Zufallsvariable $X:\Omega\to \mathbb{N}$ heißt \textbf{Poisson-verteilt zum Parameter $\lambda \in \mathbb{R}_{>0}$} (kurz $X\sim Poi(\lambda)$), wenn gilt:
 \begin{eqnarray*}
 	\mathbb{P}(X=k) = \frac{\lambda^k}{k!}e^{-\lambda}, k=0,1,2,...
 \end{eqnarray*}
@@ -99,12 +101,12 @@ Die Poisson-Verteilung hat folgende Eigenschaften:
 \begin{enumerate}[label=(\roman{*})]
 	\item Für die Verteilungsfunktion der Poisson-Verteilung gilt: 
 	\begin{eqnarray*}
-		F_{\lambda}(n) = \sum_{0}^{n} \mathbb{P}_{\lambda}(k) = e^{-\lambda} \sum_{0}^{n} \frac{\lambda^k}{k!}
+		F_{\lambda}(n) = \sum_{k=0}^{n} \mathbb{P}_{\lambda}(k) = e^{-\lambda} \sum_{k=0}^{n} \frac{\lambda^k}{k!}
 	\end{eqnarray*}
 	\item Der Erwartungswert ist gegeben durch:
 	\begin{eqnarray*}
-			\mathbb{E}(X) = \sum_{0}^{\infty} k\frac{\lambda^k}{k!} e^{-\lambda}
-										= \lambda e^{-\lambda} \sum_{0}^{\infty} \frac{\lambda^{k-1}}{(k-1)!}
+			\mathbb{E}(X) = \sum_{k=0}^{\infty} k\frac{\lambda^k}{k!} e^{-\lambda}
+										= \lambda e^{-\lambda} \sum_{k=0}^{\infty} \frac{\lambda^{k-1}}{(k-1)!}
 										= \lambda e^{-\lambda} e^{\lambda} 
 										= \lambda
 	\end{eqnarray*}
@@ -113,19 +115,41 @@ Die Poisson-Verteilung hat folgende Eigenschaften:
 	
 	\item Die Varianz ist gegeben durch: 
 	\begin{eqnarray*}
-		\mathbb{E}(X^2) &=& \sum_{0}^{\infty} k^2 \frac{\lambda^k}{k!} e^{-\lambda} \\
-										&=& e^{-\lambda} \sum_{1}^{\infty} k \frac{\lambda^{k}}{(k-1)!} \\
-										&=& e^{-\lambda} \sum_{2}^{\infty} \frac{\lambda^{k}}{(k-2)!} + e^{-\lambda} \sum_{1}^{\infty} \frac{\lambda^{k}}{(k-1)!} \\
-										&=& \lambda^2 e^{-\lambda} \sum_{2}^{\infty} \frac{\lambda^{k-2}}{(k-2)!} + \lambda e^{-\lambda} \sum_{1}^{\infty} \frac{\lambda^{k-1}}{(k-1)!} \\
+		\mathbb{E}(X^2) &=& \sum_{k=0}^{\infty} k^2 \frac{\lambda^k}{k!} e^{-\lambda} \\
+										&=& e^{-\lambda} \sum_{k=1}^{\infty} k \frac{\lambda^{k}}{(k-1)!} \\
+										&=& e^{-\lambda} \sum_{k=2}^{\infty} \frac{\lambda^{k}}{(k-2)!} + e^{-\lambda} \sum_{k=1}^{\infty} \frac{\lambda^{k}}{(k-1)!} \\
+										&=& \lambda^2 e^{-\lambda} \sum_{k=2}^{\infty} \frac{\lambda^{k-2}}{(k-2)!} + \lambda e^{-\lambda} \sum_{1}^{\infty} \frac{\lambda^{k-1}}{(k-1)!} \\
 										&=& \lambda^2+\lambda \\ \\
 						 Var(X) &=& \mathbb{E}(X^2) - \mathbb{E}(X)^2 = \lambda^2+\lambda - \lambda^2 = \lambda
 	\end{eqnarray*}
-\end{enumerate}
+	\item Seien $X_1$ und $X_2$ unabhängige poissonverteilte Zufallsvariablen mit $X_1\sim Poi(\lambda _1)$ und $X_2\sim Poi(\lambda _2)$, dann gilt für $X := X_1 + X_2 $:
+		\begin{eqnarray*}
+			\mathbb{P}(X=x) &=& \sum_{k=0}^{x} \mathbb{P}(X_1=k)\mathbb{P}(X_2=x-k) \\
+											&=& e^{-\lambda_1}e^{-\lambda_2} \sum_{k=0}^{x} \frac{\lambda _{1} ^k}{k!} \frac{\lambda _{2} ^{x-k}}{(x-k)!} \\
+											&=& \frac{e^{-(\lambda_1+\lambda_2)}}{x!} \sum_{k=0}^{x} \frac{x!}{k!(x-k)!}\lambda _{1}^k \lambda _{2}^{x-k} \\
+											&=& e^{-(\lambda_1+\lambda_2)} \frac{(\lambda _{1} + \lambda _{2})^x}{x!} \\
+				\Rightarrow  X &\sim & Poi(\lambda _1 + \lambda _2) 
+		\end{eqnarray*}
+		Das heißt die Summer von poissonverteilten Zufallsvariablen ist wieder poissonverteilt.
+	\end{enumerate}
 
-Aufgrund dieser Eigenschaften werden Poisson-Prozesse häufig verwendet um seltene Ereignisse wie Schadensfälle bei Versicherungen oder Wartungsaufwände zu beschreiben.
+Die Poisson-Verteilung hat außerdem eine besondere Bedeutung, da sie unter den richtigen Voraussetzungen die Grenzverteilung der Binomialverteilung ist. Dieser Zusammenhang wird in folgendem Lemma verdeutlicht: \\
 
+\begin{lemmas} Die Poisson-Verteilung ist die Grenzverteilung der Binomial-Verteilung ($B_{n,p}(x)$ mit einer geringen Erfolgswahrscheinlichkeit $p\rightarrow 0$ und dafür einer hohen Anzahl an Versuchen $n\rightarrow \infty$, wenn gilt das $\lambda = np$ weder $0$ noch $\infty$ ist. 
+\end{lemmas}
+
+\textbf{Beweis:}
+	Wir zeigen, dass der Grenzwert $n\rightarrow \infty$ einer binomialverteilten Zufallsvariable an der Stelle x, gegen den Wert einer poissonverteilten Zufallsvariablen an der Stelle x geht.
+	\begin{eqnarray*}
+		\lim_{x\rightarrow \infty} \mathbb(P)(X=x) &=& \lim_{x\rightarrow \infty} \frac{n!}{x!(n-x)!} \frac{\lambda}{n}^x \left(1-\frac{\lambda}{n}\right)^{n-x} \\
+		&=& \lim_{x\rightarrow \infty} \frac{\lambda ^x}{x!} \frac{n(n-1)(n-2)...(n-x+1)}{n^x} \left( 1-\frac{\lambda}{n}\right)^{n} \left(1-\frac{\lambda}{n}\right)^{-x} \\
+		&=& \frac{\lambda ^x}{x!} * 1 * e^{-\lambda} * 1 \\
+		&=& \frac{\lambda ^x e^{-\lambda}}{x!}		
+	\end{eqnarray*}
+\qed
+	
 \begin{defini}
-Ein \textbf{Stochastischer Prozess $X$} ist eine Familie von Zufallsvariablen $X_t:\Omega\to \mathfrak{A}, t\in T$. Für die Indexmenge T gilt in der Regel $T\in \{\mathbb{R}_{\geq 0}, \mathbb{N}_0\}$. Das heißt $X$ ist eine Abbildung
+Ein \textbf{Stochastischer Prozess $X$} ist eine Familie von Zufallsvariablen $\{X_t\}$ mit $X_t:\Omega\to \mathfrak{A}, t\in T$. Für die Indexmenge T gilt in der Regel $T\in \{\mathbb{R}_{\geq 0}, \mathbb{N}_0\}$. Das heißt $X$ ist eine Abbildung
 \begin{eqnarray*}
 	X:\Omega \times T \to Z, \; (\omega, t) \mapsto X_t(\omega)
 \end{eqnarray*}
@@ -135,36 +159,100 @@ sodass $X_t: \omega \mapsto X_t(\omega)$ für alle  $t \in T$ eine messbare Abbil
 \begin{enumerate}[label=(\roman{*})]
 	\item Ein stochastische Prozess heißt \textbf{zeitdiskret} wenn $T$ abzählbar ist, z.B. $T = \mathbb{N}_0$. Ansonsten heißt er \textbf{zeitstetig}. 
 	Analog heißt ein Prozess mit diskreten Zustandsraum $\mathfrak{A}$ \textbf{wertdisktret} oder auch \textbf{Punktprozess}. 
-	\item Ein stochastische Prozess heißt \textbf{stationär} wenn gilt:
+	\item Ein stochastische Prozess heißt \textbf{stationär} wenn für alle $s>0$, sowie $t_1,t_2,...,t_k\in T$ und $x_1,x_2,...,x_k \in \mathfrak{A}$ gilt:
 		\begin{eqnarray*}
-			\mathbb{P}(X_{t_1+s}=x_1, X_{t_2+s}=x_2,..., X_{t_k+s}=x_k)=\mathbb{P}(X_{t_1}=x_1, X_{t_2}=x_2,..., X_{t_k}=x_k) \\ \\
-			\text{für alle } s>0, \text{ sowie } t_1,t_2,...,t_k\in T \text{ und } x_1,x_2,...,x_k \in \mathfrak{A} 			
+			\mathbb{P}(X_{t_1+s}=x_1, X_{t_2+s}=x_2,..., X_{t_k+s}=x_k)=\mathbb{P}(X_{t_1}=x_1, X_{t_2}=x_2,..., X_{t_k}=x_k)				
 		\end{eqnarray*}
 		Das heißt, das zufällige Verhalten des Prozesses hängt nicht vom Zeitpunkt der Beobachtung ab.
-	\item Ein stochastischer Prozess besitzt \textbf{Unabhängige Zuwächse}, wenn die Zufallsvariablen $X_{t_0},X_{t_1}-X_{t_0},...,,X_{t_n}-X_{t_(n-1)}$ für alle n=1,2,... und $0\leq t_0<t_1<...<t_n$ unabhängig sind.
-	
+	\item Ein stochastischer Prozess besitzt \textbf{Unabhängige Zuwächse}, wenn die Zufallsvariablen $X_{t_0},X_{t_1}-X_{t_0},...,,X_{t_n}-X_{t_{n-1}}$ für alle n=1,2,... und $0\leq t_0<t_1<...<t_n$ unabhängig sind.
+	\item 
 \end{enumerate}
 
-\begin{defini} \label{poiPro}
-Ein stationärer Punktprozess $(X_t)_{t\geq0}$ mit unabhängigen Zuwächsen heißt \textbf{Poisson-Prozess mit der Intensität $\lambda$} wenn gilt $X_t\sim Poi_{\lambda}(t)$
+\begin{defini}
+Sei $T_1, T_2, ... : \omega \rightarrow [0, \infty)$ eine Folge von unabhängig und identisch verteilten Zufallsvariablen, dann ist $N := \{N_t, t\geq 0\}$ mit
 \begin{eqnarray*}
-		x = x
+		N_t = \sum_{k=1}^{\infty} \mathbb{I}(S_k\leq t) \text{ und } S_n = T_1+...+T_n 
 \end{eqnarray*}
+ein stochastischer Prozess und wird als \textbf{Zähl- bzw. Erneuerungsprozess} bezeichnet. 
 \end{defini}
-Allgemeine Eigenschaften
-Zusammengesetzter Poisson Prozess
-Wartezeit exponential verteilt 
-Gedächnislos
 
-Satz
-Equivalente Eigenschaften
+Prozesse dieser Art werden z.B. in der Systemtheorie eingesetzt um die Ausfälle einer Komponente in einem bestimmten Zeitraum zu zählen. Deshalb werden die $T_n$ häufig als \textbf{Zwischenankunftszeiten} bezeichnet.
+
+\begin{defini} \label{poiPro}
+Ein Zählprozess $\{N_t, t\geq 0\}$ mit exponentialverteilten Zwischenankunftszeiten $T_n \sim exp(\lambda)$ heißt \textbf{homogener Poisson-Prozess mit der Intensität $\lambda$}.  
+\end{defini}
+
+In folgendem Theorem werden die wichtigsten Eigenschaften des Poisson deutlich:
+
+\begin{theorem} Die folgenden Aussagen sind äquivalent\footnote{siehe: \url{http://www.mathematik.uni-ulm.de/stochastik/lehre/ss05/wt/skript/node15.html}}:
+\begin{enumerate}[label=(\roman{*})]
+	\item $\{N_t, t\geq 0\}$ ist ein Poisson-Prozess mit der Intensität $\lambda$
+	\item Die Zufallsvariablen $N_t$ sind poissonverteilt zum Parameter $\lambda t$ für alle $t\geq 0$. Unter der Bedingung $\{N_t = n\}$, hat für beliebige $n=1,2,...$ der Zufallsvektor $(S_1, S_2,...,S_n)$, die gleiche Verteilung wie die Ordnungsstatistik von n unabhängigen, in $[0,t]$ gleichverteilten Zufallsvariablen.
+	\item Der stochastische Prozess $\{N_t\}$ hat unabhängige Zuwächse und es gilt $\mathbb{E}(N_1) = \lambda$. Unter der Bedingung $\{N_t = n\}$, hat für beliebige $n=1,2,...$ der Zufallsvektor $(S_1, S_2,...,S_n)$, die gleiche Verteilung wie die Ordnungsstatistik von n unabhängigen, in $[0,t]$ gleichverteilten Zufallsvariablen.
+	\item Der stochastische Prozess $\{N_t\}$ hat unabhängige Zuwächse und ist stationär und es gilt für $h \downarrow 0$:
+	\begin{eqnarray*}
+		\mathbb{P}(N_h =0) &=& 1-\lambda h + o(h) \text{, und} \\
+		\mathbb{P}(N_h =1) &=& \lambda h + o(h)\
+	\end{eqnarray*}
+	\item Der stochastische Prozess $\{N_t\}$ hat unabhängige Zuwächse und ist stationär. Außerdem gilt für jedes $t\geq 0$ das $N_t \sim Poi(\lambda t)$.
+\end{enumerate}
+\end{theorem}
+
+\textbf{Beweis:} 
+\begin{itemize}
+\item $(i) \Rightarrow (ii)$:
+	Aus $(i)$ folgt, dass $S_n=\sum_{i=1}^n T_i$ eine Summe von $n$ unabhängigen und zum Parameter $\lambda$ exponentialverteilten Zufallsvariablen ist, 	d.h., $S_n \sim Erl(n,\lambda)$, wobei $Erl(n,\lambda)$ die Erlang-Verteilung mit den Parametern $n$ und $\lambda$ bezeichnet. Hieraus folgt $\mathbb{P}(N_t = 0) = \mathbb{P}(S_1 > t) = e^{-\lambda t}$ und damit folgt:
+
+\begin{eqnarray*}	 
+\mathbb{P}(N_t = n) &=&\mathbb{P}(N_t \geq n) - \mathbb{P}(N_t \geq n+1) \\	 
+				&=&\mathbb{P}(S_n \leq t)- \mathbb{P}(S_{n+1} \leq t) \\
+				&=&\int_0^t \frac{\lambda^n v^{n-1}}{(n-1)!} e^{-\lambda v} \mathrm{d}v - \int_0^t \frac{\lambda^{n+1}v^n}{n!} e^{-\lambda v} \mathrm{d}v	 \\
+				&=&\int_0^t \frac{\mathrm{d}}{\mathrm{d}v} \left(\frac{(\lambda v)^n}{n!} e^{-\lambda v}\right) \mathrm{d}v \\
+				&=&\frac{(\lambda t)^n}{n!} e^{-\lambda t}
+\end{eqnarray*}
+Dies gilt für jedes $n\geq 1$, und damit folgt, dass $N_t \sim Poi(\lambda t)$, womit der erste.
+
+\item $(ii) \Rightarrow (iii)$:
+\end{itemize}
+\qed
+
+Die folgende sehr nützliche Eigenschaft ist bereits von der Poisson-Verteilung bekannt:
+
+\begin{lemmas}
+Die Überlagerung von zwei unabhängigen Poisson-Prozessen $\{N_t^1, t\geq 0\}$ und $\{N_t^1, t\geq 0\}$  mit der Intensität $\lambda _1$ bzw. $\lambda _2$ ist wieder ein Poisson-Prozess mit Intensität $\lambda = \lambda _1+\lambda _2$.
+\end{lemmas}
+\textbf{Beweis:} 
+Im vorangegangen Theorem hab wir gezeigt, dass für einen Poisson-Prozess $\{N_t, t\geq 0\}$ gilt $N_t \sim Poi(\lambda t)$. Da $\{N_t^1, t\geq 0\}$ und $\{N_t^1, t\geq 0\}$ unabhängig sind gilt für die Summe $N_t^1 + N_t^2 \sim Poi((\lambda _1 + \lambda _2)t)$. Damit ist die Überlagerung der beiden Poisson-Prozesse wieder ein Poisson-Prozess mit Intensität $\lambda = \lambda _1+\lambda _2$.
+\qed \\
+
+Als nächstes werden wir eine weitere wichtige Klasse an stochastischen Prozessen vorstellen, doch vorher müssen wir noch den Begriff der stochastischen Matrix einführen:
+
+\begin{defini} Eine Matrix $P = (p_{i,j})$ heißt \textbf{stochastisch}, falls für alle $i, j \in I$ (Indexmenge) gilt  $p_{i,j} \in [0, 1]$ und $\sum_{j \in I} p_{i,j} = 1$.
+\end{defini}
 
 \begin{defini} 
-Ein Stochastischer Prozess $X$ heißt \textbf{Markov-Kette} wenn gilt:
+Ein Stochastischer Prozess $\{X_t, t\geq 0\}$ besitzt die \textbf{Markoveigenschaft}, wenn für alle $i_0,i_1,...,i_{n+1} \in \mathfrak{A}$ gilt:
+\begin{eqnarray*}
+	\mathbb{P}(X_{t+1}=i_{t+1}|X_t=i_t,X_{t-1}=i_{t-1},...,X_0=i_0) = \mathbb{P}(X_{t+1}=i_{t+1}|X_t=i_t)
+\end{eqnarray*}
+Ein solcher Prozess heißt \textbf{Markovscher Prozess} oder \textbf{Markov-Kette}. Die \textbf{Startverteilung} der Markov-Kette ist definiert durch $v(i) = \mathbb{P}(X_0 = i)$ und die Wahrscheinlichkeiten $\mathbb{P}(X_{t+1}=i_{t+1}|X_t=i_t) =: p_{i_t , i_{t+1}}$ werden als \textbf{Übergangswahrscheinlichkeiten} bezeichnet.  Die Matrix $P = (p_{i,j})_{i, j \in \mathfrak{A}}$ die sich aus den Übergangswahrscheinlichkeiten ergibt, ist eine stochastische Matrix und heißt \textbf{Übergangsmatrix}.
 \end{defini}
 
+Der nächste Zustand einer Markov-Kette hängt also immer nur von dem aktuellen Zustand ab. D.h. die Kette wird durch die Übergangswahrscheinlichkeiten charakterisiert. 
 
-\textbf{Ergodizität}
+TODO:
+Eigenschaften der Markov-Kette charakterisieren
+Pfade durch Potenzen der Übergangsmatrix
+Irreduzibilität
+Rekurrenz und Transienz
+Absorbierende Zustände
+Stationäre Verteilung
+Ergodizität
+
+
+
+
+
 %Für eine Zufallsvariable $X:\Omega\to \mathbb{R}$ bezeichnen wir die Abbildung $F_X: \mathbb{R}\to [0,1]$, definiert durch
 %\begin{eqnarray*}
 %F_X\left(x\right):=\Pro\left(X \leq x\right)

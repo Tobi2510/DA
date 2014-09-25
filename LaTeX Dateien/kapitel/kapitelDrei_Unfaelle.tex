@@ -1,10 +1,10 @@
 \chapter{Modellierung Isolierte Ereignisse}
 
-In diesem Kapitel soll ein Risikomodell für die Isolierten Ereignisse in der Phase regen Lebens (im Folgenden alternativ auch als Unfälle bezeichnet) erstellt werden. Anschließend soll dieses Modell an einer ausgewählten Datenbasis verifiziert werden und an einem geeigneten Beispiel vorgestellt werden. Dazu werden zwei Ansätze vorgestellt um ein passendes Risikomodell zu erstellen. Einleitend soll die Definition der Isolierten Ereignisse genauer analysiert werden, um die Anforderungen an das spätere Risikomodell abzuleiten:\\
+In diesem Kapitel soll ein Risikomodell für die Isolierten Ereignisse in der Phase regen Lebens (im Folgenden alternativ auch als Unfälle bezeichnet) erstellt werden. Anschließend soll dieses Modell auf einen konkreten Datenbestand angewendet und überprüft werden. Dazu werden zwei Ansätze vorgestellt um ein passendes Risikomodell zu erstellen. Einleitend soll die Definition der Isolierten Ereignisse genauer analysiert werden, um die Anforderungen an das spätere Risikomodell abzuleiten:\\
 
 \section{Grundlegende Betrachtungen}
 
-Im Kohorten-Modell werden die Unfälle als \textbf{seltene Ereignisse}, welche die Gesundheit eines Versicherten beeinträchtigen, \textbf{sich nicht ankündigen} und bei denen der Eintrittszeitpunkt der eigentliche \textbf{Auslöser von begrenzten Leistungsabfolgen} sind, beschrieben. Außerdem sollen sie selten, und in der Regel \textbf{unabhängig voneinander}, auftreten. Das heißt die Eintrittswahrscheinlichkeit für einen Unfall hängt nicht davon ab, ob der Versicherte bereits einen Unfall hatte. Es gibt also insbesondere \textbf{keinen Lerneffekt} und \textbf{keine Folgeschäden} die im Modell berücksichtigt werden müssen. Außerdem ist die durch den Unfall hervorgerufene Leistungsfolge begrenzt was bedeutet, dass \textbf{keine Chronizität} durch einen Unfall entstehen kann.\footnote{Dieser Fall wird durch die singulären Ereignisketten im nächsten Kapitel abgedeckt.}\\
+Im Kohorten-Modell werden die Unfälle als \textbf{seltene Ereignisse}, welche die Gesundheit eines Versicherten beeinträchtigen, \textbf{sich nicht ankündigen} und bei denen der Eintrittszeitpunkt der eigentliche \textbf{Auslöser von begrenzten Leistungsabfolgen} ist, beschrieben. Außerdem sollen sie selten, und in der Regel \textbf{unabhängig voneinander}, auftreten. Das heißt die Eintrittswahrscheinlichkeit für einen Unfall hängt nicht davon ab, ob der Versicherte bereits einen Unfall hatte. Es gibt also insbesondere \textbf{keinen Lerneffekt} und \textbf{keine Folgeschäden} die im Modell berücksichtigt werden müssen. Außerdem ist die durch den Unfall hervorgerufene Leistungsfolge begrenzt was bedeutet, dass \textbf{keine Chronizität} durch einen Unfall entstehen kann.\footnote{Dieser Fall wird durch die singulären Ereignisketten im nächsten Kapitel abgedeckt.}\\
 
 Für das Kohorten-Modell müssen die isolierten Ereignisse in der Phase "`regen Lebens"' beschrieben werden. Deshalb werden für die Modellierung zwar alle Unfälle hinzugezogen, aber die Kosten von Unfällen aus den anderen beiden Phasen werden als jeweilige Phasen-Leistungen in der Krankenversicherungsbiographie kumuliert. Das heißt insbesondere, dass Unfälle mit Todesfolge keine besondere Betrachtung mehr benötigen, da sie bereits in der dritten Phase des Modells erfasst wurden.\\
 
@@ -52,11 +52,23 @@ Ein analoges Vorgehen (empirische Verteilung) würde sich auch bei der Modellieru
 -	Verweildauer und Kosten evtl. aus DRG Katalog?
 
 
-\section{Ableitung und Test eines Modells}
+\section{Anwendung und Test eines Modells}
+
+Im folgenden Abschnitt wird zunächst die Datengrundlage vorgestellt, auf der das Modell später getestet werden soll. Anschließend wird die Vorgehensweise zur Identifizierung der Unfälle beschrieben. Aus diesen werden dann die Parameter des Modells geschätzt und die Modellgüte bewertet.   
 
 \subsection{Datengrundlage + Aufbereitung}
 
--	Abrechnungsdaten von x Versicherten über 4 Jahre
+Als Datengrundlage stehen Versicherten- und Krankenhausabrechnungsdaten zur Verfügung, die über einen Zeitraum von 4 Jahren erfasst wurden. Die Grunddaten wurden aufbereitet und auf drei Tabellen verteilt. Während der Aufbereitung wurden Duplikate entfernt, die Datenformate vereinheitlicht und fehlerhafte bzw. unvollständige Datensätze herausgefiltert. Das Resultat wird in folgendem Diagramm veranschaulicht:
+
+\begin{figure}[htb]                     
+\centering 
+\includegraphics[width=0.8\textwidth]{./bilder/ER-Diagramm}
+\caption{ER-Diagramm Datengrundlage} 
+\label{fig:Datengrundlage} 
+\end{figure}
+
+Es ist zu sehen, das für jeden Versicherten das Geschlecht und Geburtsdatum hinterlegt sind. Außerdem gibt es Information über den Wohnort(Postleitzahl) und der Zeitraum in dem er versichert war. Letzteres ist wichtig, da logischerweise nur während dieses Zeitraums Daten über den entsprechenden Versicherten vorliegen. Jeder Versicherte kann über die Personen_ID mehreren Krankenhausfällen zugewiesen sein. Ein Fall ist durch die Fall_ID und durch das Institutionskennzeichen des Krankenhauses (IK) eindeutig festgelegt. Ein Fall   
+
 -	Anzahl Datensätze und Fälle
 -	Tabellen Vorstellen
 o	Beziehung (ER-Diagramm)
@@ -87,7 +99,7 @@ o	Keine Folgekosten = Vernachlässigen
 
 \subsection{Anwendung und Test der Modelle}
 
--	Modell ableiten am Beispiel von „Gehirnerschütterung“
+-	Modell ableiten am Beispiel von gehirnerschüterrung
 -	Saissonalität und Geschlechts-/Altersabhängigkeit testen und Parameter schätzen
 -	Ergodizität voraussetzen
 -	Eingrenzung der Fälle
