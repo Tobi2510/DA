@@ -58,7 +58,9 @@ Im folgenden Abschnitt wird zunächst die Datengrundlage vorgestellt, auf der das
 
 \subsection{Datengrundlage + Aufbereitung}
 
-Als Datengrundlage stehen Versicherten- und Krankenhausabrechnungsdaten zur Verfügung, die über einen Zeitraum von 4 Jahren erfasst wurden. Die Grunddaten wurden aufbereitet und auf drei Tabellen verteilt. Während der Aufbereitung wurden Duplikate entfernt, die Datenformate vereinheitlicht und fehlerhafte bzw. unvollständige Datensätze herausgefiltert. Das Resultat wird in folgendem Diagramm veranschaulicht:
+Als Datengrundlage zum Testen der Modelle stehen Versicherten- und Krankenhausabrechnungsdaten zur Verfügung, die über einen Zeitraum von 4 Jahren erfasst wurden. Bevor im Folgenden die Datengrundlage näher betrachtet wird, soll erst einmal ein kurzer Einblick in das deutsche Abrechnungssystem im Krankenhaus gegeben werden um die vorhandenen Information zu erläutern. Seit 2003 wird in Deutschland die Vergütung im Kranhausbereich über ein Fallpauschalensystem realisiert. Dieses basiert auf den sogenannten Diagnosis Related Groups (DRG) oder auf deutsch diagnosebezogene Fallgruppen. Jedem Behandlungsfall wird dabei auf Grundlage der gestellten Diagnosen (ICD) und vorgenommen Prozeduren (OPS) eine DRG zugeordnet. Für jede DRG gibt es eine Fallpauschale in die anschließend noch die Verweildauer und eventuelle Komplikationen eingerechnet werden, um die Kosten für die Behandlung zu ermitteln. Das System wird vom "`Institut für das Entgeltsystem im Krankenhaus"'\footnote{\url{www.g-drg.de}} (kurz InEK) gepflegt und weiterentwickelt. Zur Codierung der Diagnosen kommt in Deutschland eine angepasste Version der "`internationalen statistischen Klassifikation der Krankheiten und verwandter Gesundheitsprobleme"'(kurz ICD\footnote{aufgrund des englischen Namens: "`International Statistical Classification of Diseases and Related Health Problems"'}) zum Einsatz. Der zugehörige Katalog wird vom "`deutschen Institut für Medizinische Dokumentation und Information"'\footnote{\url{www.dimdi.de}} jährlich aktualisiert und angepasst. Er ist hierarchisch strukturiert und enthält 22 Krankheitskapitel die sich in über 12000 Subkategorien aufsplitten. \\
+
+Mit diesen Information können wirDie Grunddaten wurden aufbereitet und auf drei Tabellen verteilt. Während der Aufbereitung wurden Duplikate entfernt, die Datenformate vereinheitlicht und fehlerhafte bzw. unvollständige Datensätze herausgefiltert. Das Resultat wird in folgendem Diagramm veranschaulicht:
 
 \begin{figure}[htb]                     
 \centering 
@@ -67,7 +69,14 @@ Als Datengrundlage stehen Versicherten- und Krankenhausabrechnungsdaten zur Verf
 \label{fig:Datengrundlage} 
 \end{figure}
 
-Es ist zu sehen, das für jeden Versicherten das Geschlecht und Geburtsdatum hinterlegt sind. Außerdem gibt es Information über den Wohnort(Postleitzahl) und der Zeitraum in dem er versichert war. Letzteres ist wichtig, da logischerweise nur während dieses Zeitraums Daten über den entsprechenden Versicherten vorliegen. Jeder Versicherte kann über die Personen_ID mehreren Krankenhausfällen zugewiesen sein. Ein Fall ist durch die Fall_ID und durch das Institutionskennzeichen des Krankenhauses (IK) eindeutig festgelegt. Ein Fall   
+\textbf{Versicherter:} In der ersten Tabelle sind Information zu den Versicherten hinterlegt. Neben Geschlecht und Geburtsdatum, gibt es auch Information über den Wohnort(Postleitzahl) und der Zeitraum in dem er versichert war. Letzteres ist wichtig, da logischerweise nur während dieses Zeitraums Leistungsdaten über den entsprechenden Versicherten vorliegen. Als Primärschlüssel wird in dieser Tabelle die Personen\_ID verwendet, wodurch  dann auch eine Zuordnung zu den Krankenhaus Falldaten möglich ist. \\
+
+\textbd{Krankenhaus\_Fall: } Ein Krankenhausfall umfasst alle Maßnahmen die von der Einweisung bis zu Entlassung eines Versicherten fällig werden. In dieser Tabelle kommt ein zusammengesetzter Primärschlüssel aus Fall\_ID und Institutionskennzeichen des Krankenhauses (IK) zum Einsatz. Das ist notwendig da jedes Krankenhaus die Fall\_ID selbst vergibt und es so vorkommt das zwei Krankenhäuser die selbe ID vergeben. Für jeden Behandlungsfalls gibt es Daten zum Zeitpunkt und Grund der Aufnahme und Analog für die Entlassung. Außerdem wird die abgerechnete DRG und die damit verbundenen Kosten angegeben. 
+
+\textbd{Krankenhaus\_Fall: } Zu jedem Fall sind außerdem die dazugehörigen Diagnosen hinterlegt. Diese können wieder über die Kombination aus Institutionskennzeichen und Fall\_ID zugeordnet werden. Die Diagnosen werden nach dem oben beschrieben ICD-Katalog codiert und in Haupt- und Nebendiagnosen unterteilt, durch das Feld Diagnoseart. Jeder Datensatz enthält eine Primäre ICD zu der falls notwendig auch die Lokalisation angegeben wird. Das ist z.B. notwendig um zu spezifizieren, ob der linke oder der rechte Arm gebrochen ist. In einigen wenigen Fällen gibt es auch noch eine Sekundäre ICD.
+
+
+
 
 -	Anzahl Datensätze und Fälle
 -	Tabellen Vorstellen
