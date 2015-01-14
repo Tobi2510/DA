@@ -2,7 +2,7 @@
 
 In diesem Kapitel soll ein Risikomodell für die Isolierten Ereignisse in der Phase regen Lebens (im Folgenden alternativ auch als Unfälle bezeichnet) erstellt werden. Die Definition der Isolierten Ereignisse wird deshalb genauer analysiert, um die Anforderungen an das spätere Risikomodell abzuleiten. Es werden zwei Ansätze vorgestellt, die diese Anforderungen erfüllen. Zum Test werden mithilfe dieser Ansätze konkrete Modelle zu einem Anwendungsfall erstellt und ausgewertet.\\
 
-\section{Grundlegende Betrachtungen}
+\section{Grundlegende Betrachtungen}\label{sec:grundBet}
 
 Im Kohorten-Modell werden die Unfälle als \textbf{seltene Ereignisse}, welche die Gesundheit eines Versicherten beeinträchtigen, \textbf{sich nicht ankündigen} und bei denen der Eintrittszeitpunkt der eigentliche \textbf{Auslöser von begrenzten Leistungsabfolgen} ist, beschrieben. Außerdem sollen sie selten, und in der Regel \textbf{unabhängig voneinander}, auftreten. Das heißt die Eintrittswahrscheinlichkeit für einen Unfall hängt nicht davon ab, ob der Versicherte bereits einen Unfall hatte. Es gibt also insbesondere \textbf{keinen Lerneffekt} und \textbf{keine Folgeschäden} die im Modell berücksichtigt werden müssen. Außerdem ist die durch den Unfall hervorgerufene Leistungsfolge begrenzt was bedeutet, dass \textbf{keine Chronizität} durch einen Unfall entstehen kann. Dadurch sind die isolierten Ereignisse klar zu den singulären Ereignisketten abgegrenzt, die im nächsten Kapitel behandelt werden.\\
 
@@ -13,7 +13,7 @@ Die Erfahrung zeigt, dass die Unfallwahrscheinlichkeit in der Regel sowohl vom A
 Zusammenfassend lässt sich sagen, dass die Unfallwahrscheinlichkeit unabhängig von bereits eingetretenen Unfällen ist, aber je nach Unfalltyp, vom Alter und Geschlecht des Versicherten abhängen und einer Saisonalität unterliegen kann. Für die Modellierung werden wir die Saisonalität allerdings nicht besonders betrachten, da aufgrund des in der Regel sehr langen Beobachtungszeitraums, in der Phase regen Lebens, diese Effekte nur einen sehr geringen Einfluss auf das Modell haben werden. Auf Basis dieser Erkenntnisse werden nun zwei Modelle vorgestellt:
 
 \section{Modell - Poisson-Prozess}
-Für den ersten Modellansatz nehmen wir an, dass aufgrund des Charakters der Unfälle als seltene Ereignisse, die Genesungsdauer vernachlässigt werden kann. Das heißt die aus dem Unfall resultierenden Folgeleistung werden auf den Zeitpunkt des Unfalls konzentriert. Außerdem wird die Unfallwahrscheinlichkeit, selbst direkt nach einem Unfall, nicht verändert. Laut Voraussetzung hängt die Unfallwahrscheinlichkeit vom Alter und Geschlecht der Versicherten ab. Doch zunächst werden wir ein Modell entwickeln für den Fall das die Unfallwahrscheinlichkeit konstant ist. \textit{Diese ist intuitiv definiert als die Anzahl der Unfälle pro Zeiteinheit.} Anschließend wird ein erweitertes Modell um die verschiedenen Abhängigkeiten zu berücksichtigen.\\
+Für den ersten Modellansatz nehmen wir an, dass aufgrund des Charakters der Unfälle als seltene Ereignisse, die Genesungsdauer vernachlässigt werden kann. Das heißt die aus dem Unfall resultierenden Folgeleistung werden auf den Zeitpunkt des Unfalls konzentriert. Außerdem ist die Wahrscheinlichkeit für einen Unfall unabhängig davon, wann der vorherige Unfall gewesen ist. Laut Voraussetzung hängt die Unfallwahrscheinlichkeit vom Alter und Geschlecht der Versicherten ab. Doch zunächst werden wir einen Ansatz vorstellen für den Fall, dass die Unfallwahrscheinlichkeit konstant ist. Anschließend wird dieser Modellansatz erweitert, um die verschiedenen Abhängigkeiten zu berücksichtigen.\\
 
 Wir führen folgende Bezeichnungen ein:
 
@@ -24,41 +24,66 @@ Wir führen folgende Bezeichnungen ein:
 	\item Die Anzahl der Unfälle wird bezeichnet durch $N_t := max\{k : t_k \leq t\}$
 \end{enumerate}
  
-Sei nun die Wahrscheinlichkeit für einen Unfall $\lambda$ konstant. Dann gilt für die Wartezeiten $\{T_k\}_{k \geq 0}$, dass die Zeit bis zum nächsten Unfall unabhängig davon ist, wie viel Zeit bereits ohne Unfall verstrichen ist. Sei $F(x)$ die Verteilung der Wartezeiten, dann gilt also: 
+Wie definieren die Wahrscheinlichkeit für einen Unfall $\lambda$, als die relative Häufigkeit eines Unfalls im betrachteten Zeitraum\footnote{i.d.R. ein Kalenderjahr}. Diese sei im ersten Schritt unabhängig von Alter und Geschlecht, also konstant. Dann gilt für die Wartezeiten $\{T_k\}_{k \geq 0}$, dass die Zeit bis zum nächsten Unfall unabhängig davon ist, wie viel Zeit bereits ohne Unfall verstrichen ist. Sei $F(x)$ die Verteilung der Wartezeiten, dann gilt also: 
 
 \begin{eqnarray*}
 F(x|t) &=& F(x) \\
 => F(x+t) &=& F(x)F(t) 
 \end{eqnarray*}
 
-Damit folgt gemäß Lemma \ref{expLemma} das $F(x)\sim Exp(\lambda)$. Damit ist $N_{\lambda} = \{N_t\}_{t>0}$ gemäß Definition \ref{poiPro} ein Poisson-Prozess mit Parameter $\lambda $. Wie bereits am Anfang erwähnt, ist die Unfallwahrscheinlichkeit von verschiedenen Faktoren abhängen und dabei in erster Linie natürlich vom Unfalltyp. Deshalb zerlegen wir den Prozess in mehrere Teilprozesse:\\
+Damit folgt gemäß Lemma \ref{expLemma}, dass $F(x)\sim Exp(\lambda)$ und $N_{\lambda} = \{N_t\}_{t>0}$ ist gemäß Definition \ref{poiPro} ein Poisson-Prozess mit Parameter $\lambda $. Wie bereits am Anfang erwähnt, ist die Unfallwahrscheinlichkeit von verschiedenen Faktoren abhängen und dabei in erster Linie natürlich vom Unfalltyp. Deshalb zerlegen wir den Prozess in mehrere Teilprozesse:\\
 
-Seien $U_1, U_2,...,U_n$ mit $n\in \mathbb{N}$ die verschiedenen relevanten Unfalltypen und $\lambda _{U_1},\lambda _{U_2},...,\lambda _{U_n}$ die zugehörigen Unfallwahrscheinlichkeiten. Dann gilt für die daraus resultierenden Prozesse $N_\lambda = \sum^n_{i=1} N_{\lambda _{U_i}}$. Das heißt der Prozess lässt sich beliebig in Unterprozesse zerlegen die jeweils einen Typ bzw. auch eine Familie von Typen beschreiben. Dadurch lässt sich das Modell beliebig verfeinern, falls dies in einem Bereich notwendig ist.\\
+Seien $U_1, U_2,...,U_n$ mit $n\in \mathbb{N}$ die verschiedenen relevanten Unfalltypen und $\lambda _{U_1},\lambda _{U_2},...,\lambda _{U_n}$ die zugehörigen Unfallwahrscheinlichkeiten. Dann gilt wegen \ref{lem:zusammengesetzterPP} für die daraus resultierenden Prozesse $N_\lambda = \sum^n_{i=1} N_{\lambda _{U_i}}$. Das heißt der Prozess lässt sich beliebig in Unterprozesse zerlegen, die jeweils einen Typ oder auch eine Familie von Typen beschreiben. Dadurch lässt sich das Modell beliebig verfeinern, falls dies in einem Bereich notwendig ist. Die Voraussetzung dafür ist allerdings, dass die $N_{\lambda _{U_i}}$ unabhängig voneinander sind. Das heißt die einzelnen Unfalltypen müssen so abgrenzt werden, dass es nicht zu Überschneidungen kommt.\\
 
-Da Unfälle vom Alter und Geschlecht abhängen können, reicht es nicht aus einen Homogenen Poisson-Prozess zu verwenden. Deshalb ist es notwendig das unfallspezifische $\lambda$ als Funktion dieser drei Einflüsse zu berücksichtigen. Die Stärke der jeweiligen Einflussfaktoren hängt natürlich in erster Linie vom Unfalltyp ab. Als praktikable Lösung zur Bestimmung der einzelnen Funktionen bietet es sich deshalb an, $\lambda$ als Treppenfunktion zu modellieren, bei der die einzelnen Stufen von der empirischen Verteilung der Unfallwahrscheinlichkeit abhängen. Das detaillierte Vorgehen bei der Bestimmung von $\lambda$ wird im weiteren Verlauf dieses Kapitels anhand eines Beispiels erläutert.\\
+Da Unfälle vom Alter und Geschlecht abhängen können, reicht es nicht aus einen Homogenen Poisson-Prozess zu verwenden. Deshalb ist es notwendig das unfallspezifische $\lambda$ als Funktion dieser beiden Einflüsse zu berücksichtigen. Die Stärke der jeweiligen Einflussfaktoren hängt natürlich in erster Linie vom Unfalltyp ab. Als praktikable Lösung zur Bestimmung der einzelnen Funktionen bietet es sich deshalb an, $\lambda$ als Treppenfunktion zu modellieren, bei der die einzelnen Stufen von der empirischen Verteilung der Unfallwahrscheinlichkeit abhängen. Das detaillierte Vorgehen bei der Bestimmung von $\lambda$ wird im weiteren Verlauf dieses Kapitels anhand eines Beispiels erläutert.\\
 
-Ein analoges Vorgehen (empirische Verteilung) bietet sich auch bei der Modellierung der Kostenverteilung für die Unfälle an, insbesondere wenn diese nur schlecht durch eine Verteilungsfunktion beschrieben werden können. Bei Leistungskosten in der Krankenversicherung ist zu beobachten, dass es viele Fälle mit niedrigen Kosten und einige mit sehr hohen Kosten (Hochkostenfällen), aber nur einen sehr geringen Teil mit durchschnittlichen Kosten. Aus diesem Grund ist es wichtig eine Verteilungsfunktion zu wählen, die zu Einen die Standardfälle abdeckt und zum Anderen noch genug Masse in den hohen Kostenbereichen hat, um die Hochkostenfälle nicht zu vernachlässigen. Verteilungsfunktionen mit dieser Eigenschaft werden auch als Heavy-Tail-Verteilung\footnote{z.B. Weibull-Verteilung mit Formparameter<1 oder Log-Normalverteilung} bezeichnet. Das optimale Vorgehen bei der Modellierung der Kostenverteilung hängt letztendlich vom Unfalltyp und den zur Verfügung stehenden Daten ab. 
+Ein analoges Vorgehen (empirische Verteilung) bietet sich auch bei der Modellierung der Kostenverteilung für die Unfälle an, insbesondere wenn diese nur schlecht durch eine Verteilungsfunktion beschrieben werden kann. Bei Leistungskosten in der Krankenversicherung ist zu beobachten, dass es viele Fälle mit niedrigen Kosten und einige mit sehr hohen Kosten (Hochkostenfällen), aber nur einen sehr geringen Teil mit durchschnittlichen Kosten. Aus diesem Grund ist es wichtig eine Verteilungsfunktion zu wählen, die zu Einen die Standardfälle abdeckt und zum Anderen noch genug Masse in den hohen Kostenbereichen hat, um die Hochkostenfälle nicht zu vernachlässigen. Verteilungsfunktionen mit dieser Eigenschaft werden auch als Heavy-Tail-Verteilung\footnote{z.B. Weibull-Verteilung mit Formparameter<1 oder Log-Normalverteilung} bezeichnet. Das optimale Vorgehen bei der Modellierung der Kostenverteilung hängt letztendlich vom Unfalltyp und den zur Verfügung stehenden Daten ab.\\ 
 
+Zusammenfassend lässt sich festhalten, dass sich der Poisson-Prozess direkt aus den getroffen Modellannahmen ableiten lässt und die Möglichkeit bietet auf einfache Weise verschiedene Modelle für einzelne Unfalltypen zu erstellen und zu kombinieren. Außerdem spielt der Zeitpunkt zu dem die Beobachtung beginnt, aufgrund des Wartezeitparadoxons (siehe \ref{lem:wartezeit}), keine Rolle.
 
-- Zusammenfassung
+\section{Alternativer Modellansatz - Markov-Kette}
 
-\section{Modell - Markov-Kette}
+Ein alternativer Modellansatz für die isolierten Ereignisse, kann mit Hilfe von Markov-Ketten konstruiert werden. Im Gegensatz zum Poisson-Prozess Ansatz können wir mit einer Markov-Kette die Genesungszeiten abbilden. Dadurch kann ausgeschlossen werden, dass ein Patient der im Krankenhaus behandelt wird in dieser Zeit einen weiteren Unfall erleidet. Ansonsten gelten weiterhin die unter \ref{sec:grundBet} beschriebenen Grundannahmen.  Wie bereits in Abschnitt \ref{sec:markov} gezeigt wurde, ist eine Markov-Kette durch ihre Übergangsmatrix eindeutig definiert. Deshalb werden wir beschreiben wie die Zustände und Übergangswahrscheinlichkeiten modelliert werden können. \\
 
-\begin{itemize}
-  \item Grundannahme: kein Lerneffekt  und Gleichverteilte Eintritts- bzw. Übergangswahrscheinlichkeiten
-  \item Ergodisch (nur bei Unfällen) => Startverteilung spielt auf längere Sicht keine Rolle
-  \item Übergangswahrscheinlichkeiten werden aus den Daten geschätzt (Mittelwert) => exponentlialverteilte Genesungszeiten plausibel?
-	\item Ansatz der den Prozess eines Unfalls mit den verschiedenen Phasen der Genesung gut abbildet
-  \item Zur Bestimmung der zu Erwartenden Anzahlen evtl. Simulation? Monte-Carlo-Methode
-  \item Verweildauer und Kosten evtl. aus DRG Katalog?
-\end{itemize}
+Der Zustandsraum besteht im einfachsten Fall aus zwei Zuständen: $i_0 :=$ Patient ist gesund und $i_1 :=$ Patient erholt sich von einem Unfall. Als Zeitraum für einen Prozessschritt bieten sich dabei ein Tag an, da Informationen zum Unfallzeitpunkt und zur Genesungsdauer in der Regel nur Tag genau vorliegen. Die folgende Grafik veranschaulicht die möglichen Übergänge.\\
 
+\begin{figure}[htb]                     
+\centering 
+\includegraphics[width=0.8\textwidth]{./bilder/simpleMarkov}
+\caption{Einfaches Markov-Modell} 
+\label{fig:simpleMarkov} 
+\end{figure}
+ 
+Die Übergangswahrscheinlichkeiten sind dabei wie folgt definiert. Die Eintrittswahrscheinlichkeit für einen Unfall $p_{0,1}$ ist die auf den Tag heruntergerechnete relative Unfallhäufigkeit, die auf Basis der empirischen Daten ermittelt werden kann. Damit gilt für die Wahrscheinlichkeit gesund zu bleiben $p_{0,0} = 1-p_{0,1}$. Die Genesungswahrscheinlichkeit hängt von der Verweildauer, also der Genesungszeit, ab. Intuitiv könnte man wieder die mittlere Genesungsdauer $t_{Genesung}$ als Grundlage nehmen und damit definieren, dass und $p_{1,1}:= 1$/$t_{Genesung}$ und $p_{1,0} = 1- p_{1,1}$. In diesem Fall ist die Verweildauer im Zustand $i_1$ im stetigen Fall geometrisch verteilt und exponentialverteilt im kontinuierlichen Fall.\\
+
+An dieser Stelle wird die Schwäche dieses einfachen Ansatzes deutlich. In einer Markov-Kette sind die Verweilzeit immer geometrisch- bzw. exponentialverteilt. Aber gerade nach einem schweren Unfall, kann es passieren, dass der Patient eine gewisse Zeit im Krankenhaus bleiben muss, bevor die Möglichkeit einer Entlassung besteht. Um auch diese Fälle sauber abbilden zu können, ist es notwendig neue Zustände einzuführen. Deshalb wird für jeden Genesungstag ein eigener Zustand angelegt, der modellieren, ob die Behandlung abgeschlossen ist oder einen weiteren Tag dauert. Die daraus resultierenden Übergänge werden in de folgenden Grafik veranschaulicht.\\
+
+\begin{figure}[htb]                     
+\centering 
+\includegraphics[width=0.8\textwidth]{./bilder/komplexMarkov}
+\caption{Erweitertes Markov-Modell} 
+\label{fig:komplexMarkov} 
+\end{figure}
+
+Dieses Konzept ließe sich sogar noch erweitern, um verschiedene Genesungspfade zu modellieren. Zum Beispiel eine notwendige Reha des Patienten oder eine ambulante Betreuung. Es muss allerdings beachtet werden, dass je feiner das Modell aufgegliedert wird, es immer schwieriger wird für jeden Pfad eine ausreichende Menge an Daten zu finden um die Parameter zu schätzen. Wenn die Datenbasis zu klein wird, ist die Gefahr groß durch Extremfälle das Modell zu verzerren.\\  
+
+Bisher haben wir nur einen Unfalltyp betrachtet. Weitere Unfalltypen können als neue Zustände, $i_{U_n}$ für $n\in \mathbb{N}$, in das bestehendes Modell integriert werden. Dabei ist wieder zu beachten, dass die Unfälle so abgegrenzt sind, dass es zu keinen Überschneidungen kommt, da sonst die Übergangsmatrix keine stochastische Matrix mehr ist. Für jeden neu hinzugefügten Unfalltyp verringert sich die Wahrscheinlichkeit gesund zu bleiben $p_{0,0}$ genau um die jeweilige Eintrittswahrscheinlichkeit $p_{0,U_n}$. Die restlichen Übergangswahrscheinlichkeiten bleiben unverändert. Bei der Menge an möglich Unfällen und unter Berücksichtigung der benötigten Zustände um die Genesungszeiten zu modellieren, führt dies zu einem sehr großen Zustandsraum. In der Übergangsmatrix sind allerdings die meisten Einträge $0$ und müssen somit nicht modelliert werden.\\
+
+Der Vorteil dieser Vorgehensweise ist, dass nachvollziehbar dargestellt wird, was bei einem Unfall passiert. Jedes Mal wenn die Markov-Kette den Zustand $i_0$ verlässt ist ein Unfall passiert und es wird ein kleiner Teilprozess gestartet der die Genesung simuliert. Dieser Teilprozess ist abgeschlossen wenn die Markov-Kette wieder in den Zustand $i_0$ zurückkehrt. Der Nachteil jedoch ist, dass bevor ein neuer Unfall eintreten kann, die Markov-Kette in den Zustand $i_0$ zurückkehren muss. Dies führt dazu, dass nach jedem Unfall ein gesunder Tag eintreten muss, bevor eine neuer Unfall passieren kann. Um dies zu vermeiden, müssten für jeden Tag der Genesung Übergangswahrscheinlichkeiten zu den verschiedenen Unfalltypen modelliert werden. Dadurch würde sich die Komplexität des Modells und der Modellierungsaufwand sehr stark erhöhen. Allerdings sind Unfälle, wie Eingangs beschrieben, seltene Ereignisse und damit kann der Fall, dass zwei Unfälle direkt hintereinander eintreten, vernachlässigt werden, da der daraus resultierende Fehler entsprechend klein ist.  \\
+
+Die nächste notwendige Erweiterung dieses Modellansatzes ist der Wechsel von konstanten Übergangswahrscheinlichkeiten zu Alters- und Geschlechtsabhängigen. Wie bereits beim Poisson-Modell ist die praktikabelste Lösung die Wahrscheinlichkeiten als Treppenfunktion auf Basis der relativen Häufigkeit zu modellieren. Dabei ist es möglich nur die Unfallwahrscheinlichkeiten $\{p_{0,U_n}\}_{n \in \mathbb{N}}$ als Funktion von Alter und Geschlecht darzustellen. Dies hängt natürlich immer vom jeweiligen Unfalltyp ab.\\
+
+Die Kosten die für die Behandlung eines Unfalls entstehen, treten in diesem Modellansatz immer dann auf, wenn ein Patient aus dem Krankenhaus entlassen wird. Für die Modellierung der Kostenfunktion gelten die selben Überlegungen wie im Poisson-Modell. Allerdings ermöglicht es der Markov-Ansatz, unterschiedliche Kostenverteilungen für einen Unfalltyp zu verwenden und zwar abhängig davon, wie lange die Genesung benötigt hat. Dadurch lässt sich die Streuung der einzelnen Kostenverteilungen reduzieren.\\
+
+Dieser Modellansatz erzeugt sehr komplexe Modelle, die sich am Besten mit einem Simulationsansatz auswerten lassen. Dafür eignet sich das Monte-Carlo-Verfahren sehr gut, da auf diese Weise empirische Kostenverteilungen erzeugt werden können, die sich dann einfach weiterverarbeiten lassen. Außerdem sollte erwähnt werden, dass unabhängig von der Startverteilung die Markov-Kette nach ausreichend vielen Schritten immer wieder in den Ausgangszustand $i_0$ zurückkehrt. Es gibt keine absorbierenden Zustände, da Tod und Pflegefälle ausgeschlossen wurden. Außerdem ist jeder erreichbare Zustand rekurrent und kann somit immer, in endlich Zeit, erneut erreicht werden.\\
+
+Zusammenfassend lässt sich sagen, dass auch mit Hilfe von Markov-Ketten das Phänomen der isolierten Ereignisse beschrieben werden kann. Diese Herangehensweise erlaubt dabei eine detaillierte Modellierung des Genesungsprozesses und sie ist dabei hinsichtlich der modellierten Unfalltypen, ähnlich leicht skalierbar wie der Poisson-Ansatz. Der Nachteil ist die Komplexität der Modelle und die große Anzahl an Variablen die geschätzt werden müssen. Dadurch ist eine effiziente Auswertung nur mit Hilfe eines Simulationsansatzes möglich. Im weiteren Verlauf dieses Kapitels werden wir uns deshalb auf den Poisson-Ansatz konzentrieren. \\ 
 
 \section{Anwendung und Test eines Modells}
 
 Im folgenden Abschnitt wird zunächst die Datengrundlage vorgestellt, auf der das Modell später getestet werden soll. Anschließend wird die Vorgehensweise zur Identifizierung der Unfälle beschrieben. Aus diesen werden dann die Parameter des Modells geschätzt und die Modellgüte bewertet.   
 
-\subsection{Datengrundlage + Aufbereitung}
+\subsection{Datengrundlage und Aufbereitung}
 
 Die Datengrundlage für die Anwendung des Modells besteht aus Versicherten- und Krankenhausabrechnungsdaten, die über einen Zeitraum von 4 Jahren erfasst wurden.Für die Aufbereitung der Daten wurden Duplikate entfernt, die Datenformate vereinheitlicht und fehlerhafte bzw. unvollständige Datensätze herausgefiltert. Bevor im Folgenden die Datengrundlage näher betrachtet wird, soll erst einmal ein kurzer Einblick in das deutsche Abrechnungssystem im Krankenhaus gegeben werden um die vorhandenen Information zu erläutern. \\
 
@@ -149,8 +174,7 @@ Nachdem wir die möglichen Unfälle aufgrund des Aufnahme und Entlassungsgrundes e
 
 Aufgrund der Komplexität der mögliche Krankenhausfälle ist es schwierig eine allgemeine Vorgehensweise zu beschreiben um Unfälle zu identifizieren. Um geeignete Kandidaten für ein Unfallmodell zu finden, kann man allerdings die häufigsten oder teuersten Fälle betrachten, die nach den Filter des Aufnahme- und Entlassungsgrundes übrig bleiben. Der Vorteil des Kohorten-Modells ist es, dass unabhängig davon wie vollständig man die Unfalltypen modelliert keine Kosten verloren gehen. Es stets möglich das Phänomen der isolierten Ereignisse durch weitere Modelle genauer zu beschreiben, falls die erforderlich ist. Die restlichen Kosten werden alle in der Phase regen Lebens erfasst. \\
 
-In den verwendeten Daten waren z.B. die häufigsten Fälle Hypertonie, Herzinsuffizienz, Ohnmacht oder eine Gehirnerschütterung. Die konkreten DRGs und ICDs die man einem Unfalltyp zuordnen möchte lassen sich teilweise nur mit medizinischen Hintergrundwissen identifizieren. Aus diesem Grund wurde für die Erstellung der Modelle ein einfacher Fall ausgewählt: die Gehirnerschütterung. Für die Modellierung im nächsten Kapitel werden dabei nur Versicherte betrachtet, die über den gesamten Zeitraum bei der Kasse versichert waren und somit vollständige Datensätze besitzen. 
-
+In den verwendeten Daten waren die häufigsten Unfälle Hypertonie, Herzinsuffizienz, Ohnmacht oder eine Gehirnerschütterung. Die konkreten DRGs und ICDs die man einem Unfalltyp zuordnen möchte lassen sich teilweise nur mit medizinischen Hintergrundwissen identifizieren. Aus diesem Grund wurde für die Erstellung der Modelle ein einfacher Fall ausgewählt: die Gehirnerschütterung.
 \begin{itemize}
 	\item Hochkostenfälle ?
 	\item Fälle von Versicherten die nicht die ganze Zeit da sind gehören zwar zum Phänomen Unfall aber die Kosten können nicht berücksichtigt werden
@@ -158,7 +182,49 @@ In den verwendeten Daten waren z.B. die häufigsten Fälle Hypertonie, Herzinsuffi
 
 
 \subsection{Anwendung und Test der Modelle}
+
+General:
+
+Was Wie Warum
+
+		In diesem Kapitel werden wir am Beispiel von Gehirnerschütterungen den vorgestellten Modellansatz umsetzen und bewerten. Dazu werden die zur Verfügung stehenden 	Daten mit Hilfe von SQL und Excel ausgewertet. 
+
+Datenselktion
+
+	SQL: Eingrenzung der Fälle Jahre
+	- bevor parameter geschätzt werden können müssen unfalldaten eingegrenzt und aufbereitet werden.
+	Für die Modellierung werden dabei nur Versicherte betrachtet, die über den gesamten Zeitraum bei der Kasse versichert waren und somit vollständige Datensätze besitzen
+	Probleme bei der Eingrenzung
+
+Datenzusammenfürung und aggregation
+
+Problem mit personenDaten, Java Lösung => Fertige Datenbasis
+
+
+Schätzen der Modellparameter
+	schätzen der parameter über exel
+	allgemeine Unfallwahrscheinlicket
+	Geschlechts-/Altersabhängigkeit testen und Parameter schätzen
+	=> Verteilung
+	
+Schätzden der Kostenverteilung
+	evtl mit anpassungstest
+
+Prognose auf Basis der Schätzwerte auf Basis der Sterbewahrscheinlichkeit
+
+
+
+- anschließend müssen die für das Modell benötigten personendaten den unfällen zugewiesen werden
+- 
+
+- Selection der Daten....
+	- auswahl per sql
+	- aufbereitung der personendaten per java
+	- 
+
+                 
 \begin{itemize}
+
 	\item Modell ableiten am Beispiel von gehirnerschüterrung
 	\item Saissonalität und Geschlechts-/Altersabhängigkeit testen und Parameter schätzen
 	\item Ergodizität voraussetzen
