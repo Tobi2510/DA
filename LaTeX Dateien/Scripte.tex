@@ -1,0 +1,32 @@
+\section{Verwendete Abfragen} \label{sec:scripts}
+\subsection{SQL-Scripte}
+
+\begin{itemize}
+	\item Abfrage zur Eingrenzung der Unfälle nach Aufnahme- und Entlassunggrund
+\begin{lstlisting}[language=sql]
+SELECT KHD.[PERSONEN_ID]
+			,KHD.[FALL_ID]
+			,KHD.[IK]
+			,KHD.[DRG]
+			,KHD.[LEISTUNG_VON]
+			,KHD.[LEISTUNG_BIS]
+			,KHD.[VERWEILDAUER]
+			,KHD.[AUFNAHMEGRUND_301]
+			,KHD.[ENTLASSUNGSGRUND_301] 
+			,KHD.[FACHABTEILUNG_301]
+			,KHD.[ZAHLBETRAG]
+			,KH_ICD.[DIAGNOSEART]
+			,KH_ICD.[ICD_PRIMAER]     
+INTO [falldaten_unfaelle]
+FROM
+	(SELECT * FROM [Krankenhaus_Fall]
+	WERE (AUFNAHMEGRUND_301 LIKE '__03%' OR 
+		AUFNAHMEGRUND_301 LIKE '__02%' OR 
+		AUFNAHMEGRUND_301 LIKE '__07%') 
+	AND (ENTLASSUNGSGRUND_301 LIKE '01%' OR 
+		ENTLASSUNGSGRUND_301 LIKE '03%'))
+	AS KHD
+INNER JOIN [Fall_Diagnose] AS KH_ICD
+ON KHD.FALL_ID =KH_ICD.FALL_ID AND KHD.IK = KH_ICD.IK;
+\end{lstlisting}
+\end{itemize}

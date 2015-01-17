@@ -1,0 +1,81 @@
+\section{Markov-Kette}\label{sec:markov}
+Als nächstes werden wir eine weitere wichtige Klasse an stochastischen Prozessen vorstellen. Dieser Abschnitt basiert zum Großteil auf dem Skript von Professor Wolfgang König, "`Wahrscheinlichkeitstheorie I und II"'\footnote{Aktuelle Version unter \url{http://www.wias-berlin.de/people/koenig/www/Skripte.html} (Stand: 16.01.2015)}.
+
+\begin{defini} 
+Ein Stochastischer Prozess $\{X_t, t >0\}$ aus $I$-wertigen Zufallsvariablen, besitzt die \textbf{Markoveigenschaft}, wenn für $t_0, t_1,...t_n,t_{n+1} \in T$ und alle $i_0,i_1,...,i_{n+1} \in I$ gilt:
+\begin{eqnarray}
+\label{eq:markov}
+	\mathbb{P}(X_{t_{n+1}}=i_{n+1}\: | \:X_{t_n}=i_n,X_{t_{n-1}}=i_{n-1},...,X_{t_0}=i_0) = \mathbb{P}(X_{t_{n+1}}=i_{n+1}\: | \:X_{t_n}=i_n)
+\end{eqnarray}
+
+Ein diskreter stochastischer Prozess der \ref{eq:markov} erfüllt heißt \textbf{Markov-Kette}. Die \textbf{Startverteilung} der Markov-Kette ist definiert durch $v(i) = \mathbb{P}(X_0 = i)$ und die Wahrscheinlichkeiten $\mathbb{P}(X_{t_{n+1}}=i_{n+1}\: | \:X_{t_n}=i_n) =: p_{i_n , i_{n+1}}$ werden als \textbf{Übergangswahrscheinlichkeiten} bezeichnet. Die Matrix $P = (p_{i,j})_{i, j \in I}$ die sich aus den Übergangswahrscheinlichkeiten ergibt heißt \textbf{Übergangsmatrix}.
+\end{defini}
+
+Der nächste Zustand einer Markov-Kette hängt also immer nur von dem aktuellen Zustand ab. D.h. die Kette wird durch die Übergangswahrscheinlichkeiten charakterisiert. Deshalb hat die Übergangsmatrix auch eine besondere Struktur. Im folgenden betrachten wir lediglich den stetigen Fall, d.h die Zustandsmenge $I$ ist eine nichtleere, endliche oder höchstens abzählbar unendliche Menge und die Indexmenge T ist eine Teilmenge von $\mathbb{N}$. 
+
+\begin{defini} Eine Matrix $P = (p_{i,j})$ heißt \textbf{stochastisch}, falls für alle $i, j \in I$ (Indexmenge) gilt  $p_{i,j} \in [0, 1]$ und $\sum_{j \in I} p_{i,j} = 1$.
+\end{defini}
+
+Die Übergangsmatrix ist also eine stochastische Matrix, welche für jeden Zustand eine Zeile besitzt, in der die möglichen Übergänge des entsprechenden Zustands, in andere Zustände und die dazugehörigen Wahrscheinlichkeiten angegeben wird. 
+
+\begin{lemmas}
+Sei $\{X_n, n\in \mathbb{N}\}$ eine Folge von $I$-wertigen Zufallsgrößen, $v$ eine Verteilung auf $I$ und $P$ eine stochastische Matrix, dann ist $\{X_t,n\in \mathbb{N}\}$ genau dann eine Markov-Kette mit Übergangsmatrix $P$ und Startverteilung $v$, wenn für alle $n\in\mathbb{N}$ und alle $i_0,i_1,...,i_n \in I$ gilt
+\begin{eqnarray}
+\label{eq:markov1}
+	\mathbb{P}(X_0=i_0,X_1=i_1,...,X_n=i_n) = v(i_0)p_{i_0,i_1}p_{i_1,i_2}...p_{i_{n-1},i_n}
+\end{eqnarray}
+\end{lemmas}
+
+\textbf{Beweis:}
+Der Beweis das die Gleichung \ref{eq:markov1} für eine Markov-Kette gilt, erfolgt leicht mithilfe von vollständiger Induktion nach n zusammen mit der Definition der Übergangswahrscheinlichkeiten. \\
+
+Die andere Richtung folgt aus der Definition der bedingten Wahrscheinlichkeit:
+\begin{eqnarray*}
+	\mathbb{P}(X_{n+1}=i_{n+1}\: | \:X_0=i_0,...,X_n=i_n) &=& \frac{\mathbb{P}(X_{n+1}=i_{n+1})\mathbb{P}(X_0=i_0,...,X_n=i_n)}{\mathbb{P}(X_0=i_0,...,X_n=i_n)} \\
+	&=& \frac{p_{n,n+1} v(i_0)p_{i_0,i_1}p_{i_1,i_2}...p_{i_{n-1},i_n}}{v(i_0)p_{i_0,i_1}p_{i_1,i_2}...p_{i_{n-1},i_n}} \\
+	&=& p_{n,n+1} = \mathbb{P}(X_{n+1}=i_{n+1}\: | \:X_n=i_n)
+\end{eqnarray*}
+ 
+\qed
+
+Als nächstes wollen wir mithilfe der Übergangsmatrix die Wahrscheinlichkeit dafür bestimmen, dass sich der Prozess nach n Schritten in einem bestimmten Zustand $j \in I$ befindet.\\
+
+\begin{defini}
+Sei $\{X_t, n\in \mathbb{N}\}$ eine Markov-Kette mit Übergangsmatrix $P$. Dann sind 
+\begin{eqnarray*}
+	\mathbb{P}(X_n+m=j,X_n=i) = P_{i,j}^n := p_{i,j}^{(n)}
+\end{eqnarray*}
+die \textbf{n-stufigen Übergangswahrscheinlichkeiten} für alle $n\in \mathbb{N}$ und alle $i, j\in I$. Das heißt die Wahrscheinlichkeit dafür, dass die Markov Kette in n Schritten vom Zustand $i$ in den Zustand $j$ bewegt, entspricht der n-ten Potenz der Übergangsmatrix an der Stelle $(i,j)$. 
+\end{defini}
+
+Es gibt verschiedene Eigenschaften die eine Markov-Kette haben kann, wenn die Übergangsmatrix eine besondere Struktur hat. Diese wollen wir an dieser Stelle vorführen.\\
+
+\begin{defini} Im folgenden sei immer eine Markov-Kette $\{X_t, t\geq 0\}$ mit $I$-wertigen Zufallsgrößen und einer Übergangsmatrix $P$ gegeben. Außerdem seien $i, j \in I$ beliebige Zustand des Zustandsraums.
+
+\begin{enumerate}[label=(\roman{*})]
+	\item Eine Markov-Kette heißt irreduzibel oder ergodisch, wenn für alle $i,j \in I$ ein $n \in \mathbb{N}$ existiert, so dass
+		\begin{eqnarray*}
+			\mathbb{P}(X_n=j\: | \:X_0=i) = p_{i,j}^{(n)} > 0.
+		\end{eqnarray*}
+	Das heißt jeder Zustand der Kette kann jeden anderen Zustand mit positiver Wahrscheinlichkeit erreichen.
+                
+	\item Sei $T_{i,j} := min\{n\in \mathbb{N} : X_n = i \: | \: X_0=i\}$ die Wartezeit bis die Markovkette vom Zustand $i$ aus, das erste Mal den Zustand $j$ erreicht. Ein Zustand i heißt heißt \textbf{rekurrent} falls $\mathbb{P}(T_i<\infty) = 1$, ansonsten heißt er \textbf{transient}. D.h. ein rekurrenter Zustand wird also mit Sicherheit in endlicher Zeit erneut erreicht.
+	
+	\item Ein Zustand $i$ heißt absorbierend, wenn $\mathbb{P}(X_{n+m} = j \: | \: X_n = i) = 0$ für alle $m\in \mathbb{N}$ und alle $j \in I$. Anlog heißt eine Menge $A\subset I$ absorbierend, wenn $\mathbb{P}(X_{n+m} \notin A \: | \: X_n \in A) = 0$. Das heißt eine Markov-Kette, die einen absorbierenden Zustand bzw. eine absorbierende Teilmenge von $I$ erreicht, kann diese nicht mehr verlassen.
+	
+	\item Die Periode eines Zustands $i$ ist definiert als:
+		\begin{eqnarray*}
+			d_i = ggT\{n\geq 1 \: | \: p_{i,i}^{(n)}> 0\}.
+		\end{eqnarray*}
+		Ein Zustand heißt \textbf{aperiodisch}, wenn $d_i=1$ und \textbf{periodisch} sonst.
+		
+	\item Die Startverteilung $v$ einer Markov-Kette heißt \textbf{stationär}, wenn gilt dass $\mathbb{P}(X_n=i) = v(i)$ für alle $n\in \mathbb{N}$ und alle $i$. Das heißt die Wahrscheinlichkeit hängt zu jedem Zeitpunkt nur von der Startverteilung ab. Anders ausgedrückt gilt $vP = v$, d.h. v ist ein Eigenvektor der Übergangsmatrix zum Eigenwert 1.
+	
+\end{enumerate}
+\end{defini}
+
+Da Markov-Ketten mitunter sehr komplex werden können, ist es nicht immer möglich alle gewünschten Informationen analytisch zu berechnen. Aus diesem Grund wird in der Praxis häufig ein Simulationsansatz verwendet, um das Verhalten der Kette zu untersuchen.
+
+\begin{defini}
+Ein Verfahren, dass durch die wiederholte Durchführung eines Zufallsexperiments Aussagen über das Verhalten des Systems ableitet, wird als \textbf{Monte-Carlo-Verfahren} oder \textbf{Monte-Carlo-Simulation} bezeichnet. Dieses Vorgehen basiert auf dem Gesetz der großen Zahlen. Das heißt die relativen Häufigkeiten nähern sich im Grenzwert den Wahrscheinlichkeiten der zugrunde liegenden Verteilung an. Die Verteilung der Häufigkeiten wird dabei als \textbf{empirische Verteilung} bezeichnet.
+\end{defini}

@@ -8,9 +8,9 @@ Im Kohorten-Modell werden die Unfälle als \textbf{seltene Ereignisse}, welche di
 
 Für das Kohorten-Modell müssen die isolierten Ereignisse in der Phase "`regen Lebens"' beschrieben werden. Deshalb werden für die Modellierung zwar alle Unfälle hinzugezogen, aber die Kosten von Unfällen aus den anderen beiden Phasen werden als jeweilige Phasen-Leistungen in der Krankenversicherungsbiographie kumuliert. Das heißt insbesondere, dass Unfälle mit Todesfolge keine besondere Betrachtung mehr benötigen, da sie bereits in der dritten Phase des Modells erfasst wurden.\\
 
-Die Erfahrung zeigt, dass die Unfallwahrscheinlichkeit in der Regel sowohl vom Alter- als auch vom Geschlecht des Versicherten abhängt. Einen guten Beleg dafür liefert die Statistik über die "`Unfallentwicklung auf deutschen Straßen 2012"' vom Statistischen Bundesamt\footnote{Quelle: Statistisches Bundesamt unter \url{https://www.destatis.de/DE/Publikationen/Thematisch/TransportVerkehr/Verkehrsunfaelle/PK_Unfallentwicklung.html}}. Daraus geht hervor das besonders junge Erwachsene im Alter zwischen 18 und 24 Jahren in schwere Verkehrsunfälle mit Personenschäden verwickelt sind. Hinzukommt dass in 86\% aller Motorradunfälle in diesem Altersbereich der Verunglückte männlich war. Neben Alter und Geschlecht hat auch die Saison in bestimmten Fällen Einfluss auf die Unfallwahrscheinlichkeit. Dies spiegelt sich zum Beispiel bei Verkehrsunfällen wieder, denn im Zeitraum von Mai bis September gab es die meisten Unfälle mit Personenschäden, da es aufgrund der höheren Geschwindigkeiten bei schönen Wetter zu schwereren Verkehrsunfällen kam. Dabei ist zu beachten, dass die Einflüsse von Alter, Geschlecht und Saison auf die Unfallwahrscheinlichkeit auch vom Typ des Unfalls abhängen.\\
+Die Erfahrung zeigt, dass die Unfallwahrscheinlichkeit sowohl vom Alter- als auch vom Geschlecht des Versicherten abhängen kann. Dabei ist zu beachten, dass es vom Unfalltyp anhängen wird, ob ein Zusammenhang besteht und wie stark dieser Zusammenhang ist. Des Weiteren können bestimmte Unfälle auch von der Saison abhängen und so zum Beispiel häufiger im Winter auftreten, als im Sommer.\\
 
-Zusammenfassend lässt sich sagen, dass die Unfallwahrscheinlichkeit unabhängig von bereits eingetretenen Unfällen ist, aber je nach Unfalltyp, vom Alter und Geschlecht des Versicherten abhängen und einer Saisonalität unterliegen kann. Für die Modellierung werden wir die Saisonalität allerdings nicht besonders betrachten, da aufgrund des in der Regel sehr langen Beobachtungszeitraums, in der Phase regen Lebens, diese Effekte nur einen sehr geringen Einfluss auf das Modell haben werden. Auf Basis dieser Erkenntnisse werden nun zwei Modelle vorgestellt:
+Zusammenfassend lässt sich sagen, dass die zu modellierende Unfallwahrscheinlichkeit unabhängig von bereits eingetretenen Unfällen ist, aber je nach Unfalltyp, vom Alter und Geschlecht des Versicherten abhängen und einer Saisonalität unterliegen kann. Für die Modellierung werden wir die Saisonalität allerdings nicht besonders betrachten, da aufgrund des in der Regel sehr langen Beobachtungszeitraums, in der Phase regen Lebens, diese Effekte nur einen sehr geringen Einfluss auf das Modell haben werden. Auf Basis dieser Erkenntnisse werden nun zwei Modelle vorgestellt:
 
 \section{Modell - Poisson-Prozess}
 Für den ersten Modellansatz nehmen wir an, dass aufgrund des Charakters der Unfälle als seltene Ereignisse, die Genesungsdauer vernachlässigt werden kann. Das heißt die aus dem Unfall resultierenden Folgeleistung werden auf den Zeitpunkt des Unfalls konzentriert. Außerdem ist die Wahrscheinlichkeit für einen Unfall unabhängig davon, wann der vorherige Unfall gewesen ist. Laut Voraussetzung hängt die Unfallwahrscheinlichkeit vom Alter und Geschlecht der Versicherten ab. Doch zunächst werden wir einen Ansatz vorstellen für den Fall, dass die Unfallwahrscheinlichkeit konstant ist. Anschließend wird dieser Modellansatz erweitert, um die verschiedenen Abhängigkeiten zu berücksichtigen.\\
@@ -24,14 +24,14 @@ Wir führen folgende Bezeichnungen ein:
 	\item Die Anzahl der Unfälle wird bezeichnet durch $N_t := max\{k : t_k \leq t\}$
 \end{enumerate}
  
-Wie definieren die Wahrscheinlichkeit für einen Unfall $\lambda$, als die relative Häufigkeit eines Unfalls im betrachteten Zeitraum\footnote{i.d.R. ein Kalenderjahr}. Diese sei im ersten Schritt unabhängig von Alter und Geschlecht, also konstant. Dann gilt für die Wartezeiten $\{T_k\}_{k \geq 0}$, dass die Zeit bis zum nächsten Unfall unabhängig davon ist, wie viel Zeit bereits ohne Unfall verstrichen ist. Sei $F(x)$ die Verteilung der Wartezeiten, dann gilt also: 
+Wir schätzen $\lambda$, auf Basis relative Häufigkeit eines Unfalls im betrachteten Zeitraum\footnote{i.d.R. ein Kalenderjahr}. Im ersten Schritt betrachten wir diese unabhängig von Alter und Geschlecht, d.h. sie ist für den gesamten Beobachtungszeitraum konstant. Dann gilt für die Wartezeiten $\{T_k\}_{k \geq 0}$, dass die Zeit bis zum nächsten Unfall unabhängig davon ist, wie viel Zeit bereits ohne Unfall verstrichen ist. Sei $F(x)$ die Verteilung der Wartezeiten, dann gilt also: 
 
 \begin{eqnarray*}
 F(x|t) &=& F(x) \\
 => F(x+t) &=& F(x)F(t) 
 \end{eqnarray*}
 
-Damit folgt gemäß Lemma \ref{expLemma}, dass $F(x)\sim Exp(\lambda)$ und $N_{\lambda} = \{N_t\}_{t>0}$ ist gemäß Definition \ref{poiPro} ein Poisson-Prozess mit Parameter $\lambda $. Wie bereits am Anfang erwähnt, ist die Unfallwahrscheinlichkeit von verschiedenen Faktoren abhängen und dabei in erster Linie natürlich vom Unfalltyp. Deshalb zerlegen wir den Prozess in mehrere Teilprozesse:\\
+Damit folgt gemäß Lemma \ref{expLemma}, dass $F(x)\sim exp(\lambda)$ und $N_{\lambda} = \{N_t\}_{t>0}$ ist gemäß Definition \ref{poiPro} ein Poisson-Prozess mit Parameter $\lambda $. Damit folgt aufgrund von \ref{lem:wartezeit}, dass der Zeitpunkt zu dem die Beobachtung beginnt keinen Einfluss auf den Zeitpunkt des ersten beobachteten Unfalls hat. Wie bereits am Anfang erwähnt, ist die Unfallwahrscheinlichkeit von verschiedenen Faktoren abhängen und dabei in erster Linie natürlich vom Unfalltyp. Deshalb zerlegen wir den Prozess in mehrere Teilprozesse:\\
 
 Seien $U_1, U_2,...,U_n$ mit $n\in \mathbb{N}$ die verschiedenen relevanten Unfalltypen und $\lambda _{U_1},\lambda _{U_2},...,\lambda _{U_n}$ die zugehörigen Unfallwahrscheinlichkeiten. Dann gilt wegen \ref{lem:zusammengesetzterPP} für die daraus resultierenden Prozesse $N_\lambda = \sum^n_{i=1} N_{\lambda _{U_i}}$. Das heißt der Prozess lässt sich beliebig in Unterprozesse zerlegen, die jeweils einen Typ oder auch eine Familie von Typen beschreiben. Dadurch lässt sich das Modell beliebig verfeinern, falls dies in einem Bereich notwendig ist. Die Voraussetzung dafür ist allerdings, dass die $N_{\lambda _{U_i}}$ unabhängig voneinander sind. Das heißt die einzelnen Unfalltypen müssen so abgrenzt werden, dass es nicht zu Überschneidungen kommt.\\
 
@@ -39,7 +39,7 @@ Da Unfälle vom Alter und Geschlecht abhängen können, reicht es nicht aus einen H
 
 Ein analoges Vorgehen (empirische Verteilung) bietet sich auch bei der Modellierung der Kostenverteilung für die Unfälle an, insbesondere wenn diese nur schlecht durch eine Verteilungsfunktion beschrieben werden kann. Bei Leistungskosten in der Krankenversicherung ist zu beobachten, dass es viele Fälle mit niedrigen Kosten und einige mit sehr hohen Kosten (Hochkostenfällen), aber nur einen sehr geringen Teil mit durchschnittlichen Kosten. Aus diesem Grund ist es wichtig eine Verteilungsfunktion zu wählen, die zu Einen die Standardfälle abdeckt und zum Anderen noch genug Masse in den hohen Kostenbereichen hat, um die Hochkostenfälle nicht zu vernachlässigen. Verteilungsfunktionen mit dieser Eigenschaft werden auch als Heavy-Tail-Verteilung\footnote{z.B. Weibull-Verteilung mit Formparameter<1 oder Log-Normalverteilung} bezeichnet. Das optimale Vorgehen bei der Modellierung der Kostenverteilung hängt letztendlich vom Unfalltyp und den zur Verfügung stehenden Daten ab.\\ 
 
-Zusammenfassend lässt sich festhalten, dass sich der Poisson-Prozess direkt aus den getroffen Modellannahmen ableiten lässt und die Möglichkeit bietet auf einfache Weise verschiedene Modelle für einzelne Unfalltypen zu erstellen und zu kombinieren. Außerdem spielt der Zeitpunkt zu dem die Beobachtung beginnt, aufgrund des Wartezeitparadoxons (siehe \ref{lem:wartezeit}), keine Rolle.
+Zusammenfassend lässt sich festhalten, dass sich der Poisson-Prozess direkt aus den getroffen Modellannahmen ableiten lässt und die Möglichkeit bietet auf einfache Weise verschiedene Modelle für einzelne Unfalltypen zu erstellen und zu kombinieren.
 
 \section{Alternativer Modellansatz - Markov-Kette}
 
@@ -47,20 +47,45 @@ Ein alternativer Modellansatz für die isolierten Ereignisse, kann mit Hilfe von 
 
 Der Zustandsraum besteht im einfachsten Fall aus zwei Zuständen: $i_0 :=$ Patient ist gesund und $i_1 :=$ Patient erholt sich von einem Unfall. Als Zeitraum für einen Prozessschritt bieten sich dabei ein Tag an, da Informationen zum Unfallzeitpunkt und zur Genesungsdauer in der Regel nur Tag genau vorliegen. Die folgende Grafik veranschaulicht die möglichen Übergänge.\\
 
-\begin{figure}[htb]                     
-\centering 
-\includegraphics[width=0.8\textwidth]{./bilder/simpleMarkov}
+\begin{figure}[htb]
+\centering
+	\begin{tikzpicture}[->, >=stealth', auto, semithick, node distance=3cm]
+	\tikzstyle{every state}=[fill=white,draw=black,thick,text=black,scale=1]
+	\node[state]    (A)                     {$i_0$};
+	\node[state]    (B)[right of=A]   {$i_1$};
+	\path
+	(A) edge[loop left]     node{$p_{0,0}$}         (A)
+			edge[bend left,above]      node{$p_{0,1}$}      (B)
+	(B) edge[loop right]    node{$p_{1,1}$}     (B)
+			edge[bend left,below]    node{$p_{1,0}$}      (A);
+	\end{tikzpicture}
 \caption{Einfaches Markov-Modell} 
 \label{fig:simpleMarkov} 
 \end{figure}
- 
+
 Die Übergangswahrscheinlichkeiten sind dabei wie folgt definiert. Die Eintrittswahrscheinlichkeit für einen Unfall $p_{0,1}$ ist die auf den Tag heruntergerechnete relative Unfallhäufigkeit, die auf Basis der empirischen Daten ermittelt werden kann. Damit gilt für die Wahrscheinlichkeit gesund zu bleiben $p_{0,0} = 1-p_{0,1}$. Die Genesungswahrscheinlichkeit hängt von der Verweildauer, also der Genesungszeit, ab. Intuitiv könnte man wieder die mittlere Genesungsdauer $t_{Genesung}$ als Grundlage nehmen und damit definieren, dass und $p_{1,1}:= 1$/$t_{Genesung}$ und $p_{1,0} = 1- p_{1,1}$. In diesem Fall ist die Verweildauer im Zustand $i_1$ im stetigen Fall geometrisch verteilt und exponentialverteilt im kontinuierlichen Fall.\\
 
 An dieser Stelle wird die Schwäche dieses einfachen Ansatzes deutlich. In einer Markov-Kette sind die Verweilzeit immer geometrisch- bzw. exponentialverteilt. Aber gerade nach einem schweren Unfall, kann es passieren, dass der Patient eine gewisse Zeit im Krankenhaus bleiben muss, bevor die Möglichkeit einer Entlassung besteht. Um auch diese Fälle sauber abbilden zu können, ist es notwendig neue Zustände einzuführen. Deshalb wird für jeden Genesungstag ein eigener Zustand angelegt, der modellieren, ob die Behandlung abgeschlossen ist oder einen weiteren Tag dauert. Die daraus resultierenden Übergänge werden in de folgenden Grafik veranschaulicht.\\
 
-\begin{figure}[htb]                     
-\centering 
-\includegraphics[width=0.8\textwidth]{./bilder/komplexMarkov}
+\begin{figure}[htb]
+\centering
+	\begin{tikzpicture}[->, >=stealth', auto, semithick, node distance=2.5cm]
+	\tikzstyle{every state}=[fill=white,draw=black,thick,text=black,scale=1]
+	\node[state]    (A)                     {$i_0$};
+	\node[state]    (B)[right of=A]   {$i_1$};
+	\node[state]    (C)[below right=0.7cm and 1.5cm of B]   {$i_2$};
+	\node[state]    (D)[below right=0.7cm and 1.5cm of C]   {$i_3$};
+	\node[state]    (E)[below right=0.7cm and 1.5cm of D]   {$...$};
+	\path
+	(A) edge[loop left]     		 node{$p_{0,0}$}      (A)
+			edge[bend left,above]    node{$p_{0,1}$}      (B)
+	(B) edge[bend left,below]    node{$p_{1,0}$}      (A)
+			edge[bend left,above]    node{$p_{1,2}$}      (C)
+	(C) edge[bend left,below]    node{$p_{2,0}$}      (A)
+			edge[bend left,above]    node{$p_{2,3}$}      (D)
+	(D) edge[bend left,below]    node{$p_{3,0}$}      (A)
+			edge[bend left,above]    node{$p_{3,...}$}      (E);
+	\end{tikzpicture}
 \caption{Erweitertes Markov-Modell} 
 \label{fig:komplexMarkov} 
 \end{figure}
@@ -79,19 +104,19 @@ Dieser Modellansatz erzeugt sehr komplexe Modelle, die sich am Besten mit einem 
 
 Zusammenfassend lässt sich sagen, dass auch mit Hilfe von Markov-Ketten das Phänomen der isolierten Ereignisse beschrieben werden kann. Diese Herangehensweise erlaubt dabei eine detaillierte Modellierung des Genesungsprozesses und sie ist dabei hinsichtlich der modellierten Unfalltypen, ähnlich leicht skalierbar wie der Poisson-Ansatz. Der Nachteil ist die Komplexität der Modelle und die große Anzahl an Variablen die geschätzt werden müssen. Dadurch ist eine effiziente Auswertung nur mit Hilfe eines Simulationsansatzes möglich. Im weiteren Verlauf dieses Kapitels werden wir uns deshalb auf den Poisson-Ansatz konzentrieren. \\ 
 
-\section{Anwendung und Test eines Modells}
+\section{Anwendung und Test des Modells}
 
-Im folgenden Abschnitt wird zunächst die Datengrundlage vorgestellt, auf der das Modell später getestet werden soll. Anschließend wird die Vorgehensweise zur Identifizierung der Unfälle beschrieben. Aus diesen werden dann die Parameter des Modells geschätzt und die Modellgüte bewertet.   
+Im folgenden Abschnitt wird zunächst die Datengrundlage vorgestellt, auf der das Modell später getestet werden soll. Anschließend wird die Vorgehensweise zur Identifizierung der Unfälle beschrieben. Aus diesen werden dann im letzten Teil die Parameter des Modells geschätzt und die Modellgüte bewertet. In diesem Abschnitt werden nur stationäre Fälle betrachtet, also Fälle die zu einer Aufnahme im Krankenhaus geführt haben.
 
 \subsection{Datengrundlage und Aufbereitung}
 
-Die Datengrundlage für die Anwendung des Modells besteht aus Versicherten- und Krankenhausabrechnungsdaten, die über einen Zeitraum von 4 Jahren erfasst wurden.Für die Aufbereitung der Daten wurden Duplikate entfernt, die Datenformate vereinheitlicht und fehlerhafte bzw. unvollständige Datensätze herausgefiltert. Bevor im Folgenden die Datengrundlage näher betrachtet wird, soll erst einmal ein kurzer Einblick in das deutsche Abrechnungssystem im Krankenhaus gegeben werden um die vorhandenen Information zu erläutern. \\
+Die Datengrundlage für die Anwendung des Modells besteht aus Versicherten- und Krankenhausabrechnungsdaten, die über einen Zeitraum von 4 Jahren erfasst wurden.Für die Aufbereitung der Daten wurden Duplikate entfernt, die Datenformate vereinheitlicht und fehlerhafte bzw. unvollständige Datensätze herausgefiltert. Die wichtigsten Informationen in den Krankenhausdaten sind die abgerechnete DRG's und die gestellten Diagnosen (ICD's). Deshalb wird, bevor die Datengrundlage näher betrachtet, im Folgenden ein kurzer Einblick in das deutsche Abrechnungssystem im Krankenhaus gegeben werden, um diese Abkürzungen zu erklären. \\
 
-Seit 2003 wird in Deutschland die Vergütung im Kranhausbereich über ein Fallpauschalensystem realisiert. Dieses basiert auf den sogenannten Diagnosis Related Groups (DRG) oder auf deutsch diagnosebezogene Fallgruppen. Behandlungsfälle, die medizinisch und hinsichtlich des Ressourcenverbrauchs ähnlich sind, sind dort zu Fallgruppen zusammengefasst. Die Zuordnung erfolgt auf Basis der Patienten- und Falldaten die während eines Krankenhausaufenthaltes gesammelt werden. Dazu gehören neben dem Alter und Geschlecht des Patienten auch die gestellten Diagnosen und die vorgenommen Prozeduren. Komplikationen oder erschwerende Begleiterkrankungen (Komorbiditäten) werden über verschiedene Schweregrade berücksichtigt. Für jede DRG gibt es eine Fallpauschale die in Verbindung mit der Verweildauer die Kosten für den Behandlungsfall bestimmt. Das System wird vom "`Institut für das Entgeltsystem im Krankenhaus"'\footnote{\url{www.g-drg.de}} (kurz InEK) gepflegt und weiterentwickelt. \\
+Seit 2003 wird in Deutschland die Vergütung im Kranhausbereich über ein Fallpauschalensystem realisiert. Dieses basiert auf den sogenannten Diagnosis Related Groups (DRG) oder auf deutsch diagnosebezogene Fallgruppen. Behandlungsfälle, die medizinisch und hinsichtlich des Ressourcenverbrauchs ähnlich sind, sind dort zu Fallgruppen zusammengefasst. Die Zuordnung erfolgt auf Basis der Patienten- und Falldaten die während eines Krankenhausaufenthaltes gesammelt werden. Dazu gehören neben dem Alter und Geschlecht des Patienten auch die gestellten Diagnosen und die vorgenommen Prozeduren. Komplikationen oder erschwerende Begleiterkrankungen (Komorbiditäten) werden über verschiedene Schweregrade berücksichtigt. Für jede DRG gibt es eine Fallpauschale. Abhängig von der Verweildauer können zu dieser Pauschale noch Zu- bzw. Abschläge hinzukommen. Der endgültige Betrag ergibt dann die Kosten für einen Behandlungsfall. Das System wird vom "`Institut für das Entgeltsystem im Krankenhaus"'\footnote{\url{www.g-drg.de}} (kurz InEK) gepflegt und weiterentwickelt. \\
 
-Damit die DRG sauber bestimmt werden kann, müssen die Diagnosen und die Prozeduren nach den medizinischen Klassifikationen ICD-10-GM und OPS kodiert werden. Das ICD-10-GM ist eine für Deutschland angepasste Version der "`internationalen statistischen Klassifikation der Krankheiten und verwandter Gesundheitsprobleme"'(kurz ICD\footnote{Aufgrund des englischen Namens: "`International Statistical Classification of Diseases and Related Health Problems"'}). Der zugehörige Katalog wird vom "`deutschen Institut für Medizinische Dokumentation und Information"'\footnote{\url{www.dimdi.de}},kurz DIMDI, jährlich aktualisiert und angepasst. Er ist hierarchisch strukturiert und enthält 22 Krankheitskapitel, die sich in Gruppen, Kategorien und Subkategorien aufsplitten. Das DIMDI schätzt die Anzahl der Schlüsselnummern auf ca. 13.400.  Die jährlichen Anpassungen stellen auch eine besondere Herausforderung bei der Arbeit mit ICD-Schlüsseln dar. Es kann vorkommen das in zwei unterschiedlichen Jahren einem ICD-Schlüssel eine völlig neue Diagnose zu geordnet wird. Der Operationen- und Prozedurenschlüssel (OPS) wird ebenfalls vom DIMDI gepflegt und ist die amtliche Klassifikation zum Verschlüsseln von Operationen, Prozeduren und allgemein medizinischen Maßnahmen im stationären Bereich und beim ambulanten Operieren. \\
+Die während eines Krankenhausaufenthalts gestellten Diagnosen und die durchgeführten Prozeduren werden nach den medizinischen Klassifikationen ICD-10-GM und OPS kodiert. Das ICD-10-GM ist eine für Deutschland angepasste Version der "`internationalen statistischen Klassifikation der Krankheiten und verwandter Gesundheitsprobleme"'(kurz ICD\footnote{Aufgrund des englischen Namens: "`International Statistical Classification of Diseases and Related Health Problems"'}). Der zugehörige Katalog wird vom "`deutschen Institut für Medizinische Dokumentation und Information"'\footnote{\url{www.dimdi.de}},kurz DIMDI, jährlich aktualisiert und angepasst. Er ist hierarchisch strukturiert und enthält 22 Krankheitskapitel, die sich in Gruppen, Kategorien und Subkategorien aufsplitten. Das DIMDI schätzt die Anzahl der Schlüsselnummern auf ca. 13.400.  Die jährlichen Anpassungen stellen auch eine besondere Herausforderung bei der Arbeit mit ICD-Schlüsseln dar. Es kann vorkommen, dass in zwei unterschiedlichen Jahren einem ICD-Schlüssel unterschiedliche Diagnosen zugeordnet werden. Der Operationen- und Prozedurenschlüssel (OPS) wird ebenfalls vom DIMDI gepflegt und ist die amtliche Klassifikation zum Verschlüsseln von Operationen, Prozeduren und allgemein medizinischen Maßnahmen im stationären Bereich und beim ambulanten Operieren. \\
 
-Sowohl die DRG- als auch ICD-Informationen finden sich in den Grunddaten wieder und sind für jeden einzelnen Krankenhausfall aufgeschlüsselt. Es ist zu beachten, dass alle während eines Kranhausfalles gestellten Diagnosen erfasst werden. Das heißt es können auch Diagnosen vorkommen die mit der DRG nicht in Zusammenhang stehen\footnote{z.B. ein Herzinfarkt während einer Operation}. Die Datenstruktur der aufbereiteten Daten wird in folgendem Diagramm veranschaulicht:
+Sowohl die DRG- als auch ICD-Informationen sind, in den Grunddaten, für jeden einzelnen Krankenhausfall aufgeschlüsselt. Es ist zu beachten, dass alle während eines Kranhausfalles gestellten Diagnosen erfasst werden. Das heißt es können auch Diagnosen vorkommen, die mit der DRG nicht in Zusammenhang stehen\footnote{z.B. ein Herzinfarkt während einer Operation}. Die Datenstruktur der aufbereiteten Daten wird in folgendem Diagramm veranschaulicht:
 
 \begin{figure}[htb]                     
 \centering 
@@ -101,9 +126,9 @@ Sowohl die DRG- als auch ICD-Informationen finden sich in den Grunddaten wieder 
 \end{figure}
 
 \begin{enumerate}[label=(\roman{*})]
-	\item \textbf{Versicherter:} In der ersten Tabelle sind Information zu den Versicherten hinterlegt. Neben Geschlecht und Geburtsdatum, gibt es auch Information über den Wohnort(Postleitzahl) und den Zeitraum in dem er versichert war. Letzteres ist wichtig, da logischerweise nur während dieses Zeitraums Leistungsdaten über den entsprechenden Versicherten vorliegen. Als Primärschlüssel wird in dieser Tabelle die Personen\_ID verwendet, wodurch dann auch eine Zuordnung zu den Krankenhaus Falldaten möglich ist. \\
+	\item \textbf{Versicherter:} In der ersten Tabelle sind Information zu den Versicherten hinterlegt. Neben Geschlecht und Geburtsdatum, gibt es auch Information über den Wohnort(Postleitzahl) und den Zeitraum in dem er versichert war. Letzteres ist wichtig, da nur während dieses Zeitraums Leistungsdaten über den entsprechenden Versicherten vorliegen. Als Primärschlüssel wird in dieser Tabelle die Personen\_ID verwendet, wodurch dann auch eine Zuordnung zu den Krankenhaus Falldaten möglich ist. Leider besitzt jeder Versicherte mehrere Einträge in dieser Tabelle, da für jede Änderungsmeldung eine neue Zeile angelegt wurde.\\
 
-	\item \textbf{Krankenhaus\_Fall:} Ein Krankenhausfall umfasst alle Maßnahmen die von der Einweisung bis zu Entlassung eines Versicherten fällig werden. In dieser Tabelle kommt ein zusammengesetzter Primärschlüssel aus Fall\_ID und Institutionskennzeichen des Krankenhauses (IK) zum Einsatz \footnote{Das ist notwendig da jedes Krankenhaus die Fall\_ID selbst vergibt und es so vorkommt das zwei Krankenhäuser die selbe ID vergeben.}. Für jeden Behandlungsfalls gibt es Daten zum Zeitpunkt und Grund der Aufnahme und Analog für die Entlassung. Außerdem wird die abgerechnete DRG und die damit verbundenen Kosten angegeben. 
+	\item \textbf{Krankenhaus\_Fall:} Ein Krankenhausfall umfasst alle Maßnahmen, die von der Einweisung bis zu Entlassung eines Versicherten fällig werden. In dieser Tabelle kommt ein zusammengesetzter Primärschlüssel aus Fall\_ID und Institutionskennzeichen des Krankenhauses (IK) zum Einsatz \footnote{Das ist notwendig da jedes Krankenhaus die Fall\_ID selbst vergibt und es so vorkommt das zwei Krankenhäuser die selbe ID vergeben.}. Für jeden Behandlungsfall gibt es Daten zum Zeitpunkt und Grund der Aufnahme und Analog für die Entlassung. Außerdem wird die abgerechnete DRG und die damit verbundenen Kosten angegeben. 
 
 	\item \textbf{Fall\_Diagnose:} Zu jedem Fall sind außerdem die dazugehörigen Diagnosen hinterlegt. Diese können wieder über die Kombination aus Institutionskennzeichen und Fall\_ID zugeordnet werden. Die Diagnosen werden nach dem oben beschrieben ICD-Katalog codiert und in Haupt- und Nebendiagnosen unterteilt, durch das Feld Diagnoseart. Jeder Datensatz enthält eine Primäre ICD zu der falls notwendig auch die Lokalisation angegeben wird. Das ist z.B. notwendig um zu spezifizieren, ob der linke oder der rechte Arm gebrochen ist. In einigen wenigen Fällen gibt es auch noch eine Sekundäre ICD.
 
@@ -111,9 +136,9 @@ Sowohl die DRG- als auch ICD-Informationen finden sich in den Grunddaten wieder 
 
 \subsection{Identifizierung von Unfällen}
 
-Eine Herausforderung dieser Arbeit war es, aus den sehr umfangreichen Abrechnungsdaten, die Fälle zu identifizieren, die als Unfälle im Sinne des Kohorten-Modells interpretiert werden können. In diesem Zusammenhang sollte nochmal erwähnt werden, das alle Fälle die nicht über die in diesem Abschnitt beschrieben Methodik erfasst werden können, trotzdem bilanziell im Kohorten Modell erfasst sind. Diese werden dann der Phase regen Lebens zugeordnet und somit gehen keine Kosten verloren. \\
+Eine Herausforderung dieser Arbeit war es, aus den sehr umfangreichen Abrechnungsdaten, die Fälle zu identifizieren, die als Unfälle im Sinne des Kohorten-Modells interpretiert werden können. In diesem Zusammenhang sollte nochmal erwähnt werden, dass alle Fälle die nicht über die in diesem Abschnitt beschrieben Methodik erfasst werden können, trotzdem bilanziell im Kohorten Modell erfasst sind. Diese werden dann der Phase regen Lebens zugeordnet und somit gehen keine Kosten verloren. \\
 
-Das wichtigste Erkennungsmerkmal der Unfälle ist, wie bereits beschrieben, dass sie sich nicht ankündigen. Deshalb ist der Aufnahmegrund im Krankenhaus ein guter Indikator dafür, ob der Patient mit Überweisung oder Termin aufgenommen wurde oder nicht. In den Daten ist der Aufnahmegrund entsprechend den gesetzlichen Vorgaben codiert\footnote{siehe \ref{sec:301}}. Die für uns relevanten Information sind in der 3. und 4. Stelle codiert. Die folgenden Tabelle liefert eine Übersicht der möglichen Ausprägungen und der relativen Häufigkeiten in den Daten: \\
+Das wichtigste Erkennungsmerkmal der Unfälle ist, dass sie sich nicht ankündigen. Deshalb ist der Aufnahmegrund im Krankenhaus ein guter Indikator dafür, ob der Patient mit Überweisung oder Termin aufgenommen wurde oder nicht. In den Daten ist der Aufnahmegrund entsprechend den gesetzlichen Vorgaben codiert\footnote{siehe Anhang \ref{sec:301}}. Die für uns relevanten Information sind in der 3. und 4. Stelle codiert. Die folgenden Tabelle liefert eine Übersicht der möglichen Ausprägungen und der relativen Häufigkeiten in den Daten: \\
 
 \begin{table}[H]
 	\centering
@@ -133,7 +158,7 @@ Das wichtigste Erkennungsmerkmal der Unfälle ist, wie bereits beschrieben, dass 
 		\hline
 		04 & Hinweis auf Einwirkung von äußerer Gewalt	& 0,002\% \\
 		\hline
-		05 & (frei) früher Hinweis auf Selbstmord / Selbstbeschädigung\footnote{Wird wegen Datenschutz nicht mehr codiert und ist für uns nicht relevant.}	& 0,001\% \\
+		05 & frei (früher Hinweis auf Selbstmord / Selbstbeschädigung\footnote{Wird wegen Datenschutz nicht mehr codiert und ist für uns nicht relevant.})	& 0,001\% \\
 		\hline
 		\hline
 			 &\textit{Keine Angabe (Feld nicht gefüllt)}	& 4,598\% \\
@@ -143,9 +168,9 @@ Das wichtigste Erkennungsmerkmal der Unfälle ist, wie bereits beschrieben, dass 
 	\label{tbl:Aufnahme}
 \end{table}
 
-Mehr als die Hälfte der Krankenhausfälle werden als Normalfall klassifiziert und kommen somit über eine Überweisung oder mit Termin ins Krankenhaus. Ein sehr kleiner Teil wird aufgrund einer Kriegsbeschädigung(06) behandelt oder aufgrund eines Gewaltverbrechens(04).  Für uns interessant sind also die Notfälle und die Fälle die tatsächlich als Unfall aufgenommen werden (02 und 03). Letztere machen leider nur einen sehr kleinen Teil aus, was auf die Natur der Daten zurückzuführen ist. Diese Schlüssel werden nur vergeben wenn es versicherungsrelevant ist. Damit konnten wir den Anteil der möglich Unfälle bereits auf ca. 40\% der Krankenhausfälle einschränken. \\
+Mehr als die Hälfte der Krankenhausfälle werden als Normalfall klassifiziert und kommen somit über eine Überweisung oder mit Termin ins Krankenhaus. Ein sehr kleiner Teil wird aufgrund einer Kriegsbeschädigung(06) behandelt oder aufgrund eines Gewaltverbrechens(04).  Für uns interessant sind also die Notfälle und die Fälle die tatsächlich als Unfall aufgenommen werden (02 und 03). Letztere machen leider nur einen sehr kleinen Teil aus, was auf die Natur der Daten zurückzuführen ist. Diese Schlüssel werden nur vergeben, wenn es versicherungsrelevant ist. Damit konnten wir den Anteil der möglich Unfälle bereits auf ca. 40\% der Krankenhausfälle einschränken. \\
 
-Den nächsten Anhaltspunkt liefert der Entlassungs- bzw. Verlegungsgrund. Allerdings gibt es 25 verschiedene Ausprägungen und zusätzlich die Information, ob der Versicherte arbeitsfähig entlassen wurde\footnote{siehe \ref{sec:301}}. Deshalb erläutern wir lediglich die interessanten Fälle, welche in der nachfolgenden Tabelle zusammengefasst sind. Die Anteile beziehen sich dabei bereits nur auf Notfälle und Unfälle:  \\
+Den nächsten Anhaltspunkt liefert der Entlassungs- bzw. Verlegungsgrund. Allerdings gibt es 25 verschiedene Ausprägungen und zusätzlich die Information, ob der Versicherte arbeitsfähig entlassen wurde\footnote{siehe Anhang \ref{sec:301}}. Deshalb erläutern wir lediglich die interessanten Fälle, welche in der nachfolgenden Tabelle zusammengefasst sind. Die Anteile beziehen sich dabei bereits nur auf Notfälle und Unfälle:  \\
 
 \begin{table}[H]
 	\centering
@@ -168,26 +193,20 @@ Den nächsten Anhaltspunkt liefert der Entlassungs- bzw. Verlegungsgrund. Allerdi
 	\label{tbl:Entlassung}
 \end{table} 
 
-Für den Großteil der Not- und Unfälle, endet mit dem Krankenhausaufenthalt auch die Behandlung. Ein Teil der Patient stirbt oder muss in ein Hospiz verlegt werden. Diese Fälle werden in der Prämortalitätsphase des Kohorten-Modells erfasst und sind somit für die Singulären Ereignisse, zumindest kostentechnisch, nicht relevant. Allerdings kann die Tatsache, dass ein entsprechender Unfall passiert ist, bei der Modellierung der Unfallhäufigkeiten verwendet werden. Fälle mit anschließender Pflege sind für die Singulären Ereignisketten von Relevanz. Diese werden im nächsten Kapitel behandelt. Unter Sonstige sind insbesondere die nicht trivialen Fälle zusammengefasst. Das bedeutet in erster Linie eine Verlegung oder eine Entlassungen aus abrechnungstechnischen Gründen. In diesen Fällen muss der weitere Fallverlauf von aufwändig rekonstruiert werden, was nicht immer gelingt. Insbesondere bei einen Kassenwechsel des Patient stehen die Information i.d.R. nicht zur Verfügung. Hier muss dann abhängig vom jeweiligen Unfalltyp entschieden werden, ob sich der Aufwand lohnt. In diese Fall müssten die Kosten aller relevanten Anschlussbehandlung zu den Unfallkosten hinzugezählt werden. \\
+Für den Großteil der Not- und Unfälle, endet mit dem Krankenhausaufenthalt auch die Behandlung. Ein Teil der Patient stirbt oder muss in ein Hospiz verlegt werden. Diese Fälle werden in der Prämortalitätsphase des Kohorten-Modells erfasst und sind somit für die Singulären Ereignisse, zumindest kostentechnisch, nicht relevant. Allerdings kann die Tatsache, dass ein entsprechender Unfall passiert ist, bei der Modellierung der alters und geschlechtsabhängigen Unfallwahrscheinlichkeiten verwendet werden. Fälle mit anschließender Pflege sind für die Singulären Ereignisketten von Relevanz. Diese werden im nächsten Kapitel behandelt. Unter Sonstige sind insbesondere die nicht trivialen Fälle zusammengefasst. Das bedeutet in erster Linie eine Verlegung oder eine Entlassungen aus abrechnungstechnischen Gründen. In diesen Fällen muss der weitere Verlauf aufwändig rekonstruiert werden, was nicht immer gelingt. Insbesondere bei einen Kassenwechsel des Patient stehen die Information i.d.R. nicht zur Verfügung. Hier muss dann abhängig vom jeweiligen Unfalltyp entschieden werden, ob sich der Aufwand lohnt. Gelingt die Rekonstruktion der Behandlungspfade, müssten die Kosten aller relevanten Anschlussbehandlung zu den Unfallkosten hinzugezählt werden. \\
 
-Nachdem wir die möglichen Unfälle aufgrund des Aufnahme und Entlassungsgrundes eingegrenzt haben, sind in den Daten nur noch die DRG und ICD Informationen vorhanden. Deshalb an dieser Stelle eine kurze Erläuterung wie diese Informationen zusammenhängen. Zu jedem Fall gibt es eine DRG und mehrere Diagnosen, wobei eine davon als Hauptdiagnose ausgezeichnet wird. Die Hauptdiagnose ist in der Regel der Grund für die Hospitalisierung. Es kommt vor das während der Behandlung andere Erkrankung entdeckt werden und dadurch die Hauptdiagnose am Ende für die DRG und damit für die Kosten, kaum eine Rolle spielt\footnote{Z.B. wenn ein Patient wegen einer Ohnmacht eingeliefert wird, kommt es vor, dass am Ende das einsetzen eines Herzschrittmachers abgerechnet wird.}. \\
+Nachdem die möglichen Unfälle aufgrund des Aufnahme und Entlassungsgrundes eingegrenzt wurden, sind in den Daten nur noch die DRG und ICD Informationen vorhanden. Zu jedem Fall gibt es eine DRG und mehrere Diagnosen, wobei eine davon als Hauptdiagnose ausgezeichnet wird. Die Hauptdiagnose ist in der Regel der Grund für die Hospitalisierung. Es kommt vor, dass während der Behandlung andere Erkrankung entdeckt werden und dadurch die Hauptdiagnose am Ende für die DRG und damit für die Kosten, kaum eine Rolle spielt\footnote{Z.B. wenn ein Patient wegen einer Ohnmacht eingeliefert wird, kommt es vor, dass am Ende das einsetzen eines Herzschrittmachers abgerechnet wird.}. \\
 
-Aufgrund der Komplexität der mögliche Krankenhausfälle ist es schwierig eine allgemeine Vorgehensweise zu beschreiben um Unfälle zu identifizieren. Um geeignete Kandidaten für ein Unfallmodell zu finden, kann man allerdings die häufigsten oder teuersten Fälle betrachten, die nach den Filter des Aufnahme- und Entlassungsgrundes übrig bleiben. Der Vorteil des Kohorten-Modells ist es, dass unabhängig davon wie vollständig man die Unfalltypen modelliert keine Kosten verloren gehen. Es stets möglich das Phänomen der isolierten Ereignisse durch weitere Modelle genauer zu beschreiben, falls die erforderlich ist. Die restlichen Kosten werden alle in der Phase regen Lebens erfasst. \\
+Aufgrund der Komplexität der mögliche Krankenhausfälle ist es schwierig eine allgemeine Vorgehensweise zu beschreiben um weiter Unfälle einzugrenzen. Um geeignete Kandidaten für ein Unfallmodell zu finden, kann man allerdings die häufigsten oder teuersten Fälle betrachten, die nach den Filter des Aufnahme- und Entlassungsgrundes übrig bleiben. Der Vorteil des Kohorten-Modells ist es, dass unabhängig davon wie vollständig man die Unfalltypen modelliert keine Kosten verloren gehen. Außerdem lässt sich das Phänomen der isolierten Ereignisse jederzeit durch weitere Modelle genauer zu beschreiben, falls die erforderlich ist. Die restlichen Kosten werden alle in der Phase regen Lebens erfasst. \\
 
-In den verwendeten Daten waren die häufigsten Unfälle Hypertonie, Herzinsuffizienz, Ohnmacht oder eine Gehirnerschütterung. Die konkreten DRGs und ICDs die man einem Unfalltyp zuordnen möchte lassen sich teilweise nur mit medizinischen Hintergrundwissen identifizieren. Aus diesem Grund wurde für die Erstellung der Modelle ein einfacher Fall ausgewählt: die Gehirnerschütterung.
-\begin{itemize}
-	\item Hochkostenfälle ?
-	\item Fälle von Versicherten die nicht die ganze Zeit da sind gehören zwar zum Phänomen Unfall aber die Kosten können nicht berücksichtigt werden
-\end{itemize}
-
+In den verwendeten Daten waren die häufigsten Unfälle Hypertonie, Herzinsuffizienz, Ohnmacht oder eine Gehirnerschütterung. Die konkreten DRGs und ICDs, die man einem Unfalltyp zuordnen möchte, lassen sich teilweise nur mit medizinischen Hintergrundwissen identifizieren. Aus diesem Grund wurde für die Erstellung der Modelle ein einfacher Fall ausgewählt: die Gehirnerschütterung.
 
 \subsection{Anwendung und Test der Modelle}
 
-General:
+In diesem Abschnitt werden wir, am Beispiel vom Unfall Gehirnerschütterung, den vorgestellten Poisson-Ansatz implementieren und bewerten. Dazu ist es notwendig eine saubere Datenbasis auszuwählen, auf der die notwendigen Parameter geschätzt werden können. Außerdem werden wir eine Testmenge definieren, die später zur Bewertung des fertigen Modells verwendet wird.\\
 
-Was Wie Warum
+Im vorangegangenen Abschnitt haben wir bereits erläutert, wie die Abrechnungsdaten nach Aufnahme und Entlassungsgrund gefiltert werden können, um die relevanten Fälle zu identifizieren. Die selben Filter wurden auch verwendet, um die Grundtabelle mit allen potentiellen Unfällen zu erstellen\footnote{siehe Anhang \ref{sec:scripts}}. Dazu wurde MS SQL Server als Datenbank verwendet und die benötigten Abfragen per SQL formuliert. 
 
-		In diesem Kapitel werden wir am Beispiel von Gehirnerschütterungen den vorgestellten Modellansatz umsetzen und bewerten. Dazu werden die zur Verfügung stehenden 	Daten mit Hilfe von SQL und Excel ausgewertet. 
 
 Datenselktion
 
@@ -221,6 +240,10 @@ Prognose auf Basis der Schätzwerte auf Basis der Sterbewahrscheinlichkeit
 	- auswahl per sql
 	- aufbereitung der personendaten per java
 	- 
+\begin{itemize}
+	\item Hochkostenfälle ?
+	\item Fälle von Versicherten die nicht die ganze Zeit da sind gehören zwar zum Phänomen Unfall aber die Kosten können nicht berücksichtigt werden
+\end{itemize}
 
                  
 \begin{itemize}

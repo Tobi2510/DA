@@ -1,23 +1,25 @@
 \contentsline {chapter}{\numberline {1}Einf\"uhrung in das Thema}{5}{chapter.1}
 \contentsline {section}{\numberline {1.1}Mitnahme von Alterungsr\"uckstellung in der PKV - Auswirkungen auf das Versichertenkollektiv}{5}{section.1.1}
 \contentsline {section}{\numberline {1.2}Kohorten Modell}{7}{section.1.2}
-\contentsline {subsection}{\numberline {1.2.1}Lebensabschnitt: \active@dq \dq@prtct {`}0-j\"ahrige\active@dq \dq@prtct {'}}{9}{subsection.1.2.1}
+\contentsline {subsection}{\numberline {1.2.1}Lebensabschnitt: \active@dq \dq@prtct {`}0-j\"ahrige\active@dq \dq@prtct {'}}{8}{subsection.1.2.1}
 \contentsline {subsection}{\numberline {1.2.2}Lebensabschnitt: \active@dq \dq@prtct {`}Pr\"amortalit\"atsphase\active@dq \dq@prtct {'}}{9}{subsection.1.2.2}
 \contentsline {subsection}{\numberline {1.2.3}Lebensabschnitt: \active@dq \dq@prtct {`}Phase regen Lebens\active@dq \dq@prtct {'}}{9}{subsection.1.2.3}
 \contentsline {subsection}{\numberline {1.2.4}Ereignis: Isolierte Ereignisse}{9}{subsection.1.2.4}
-\contentsline {subsection}{\numberline {1.2.5}Ereignis: Singul\"are Ereignisketten}{9}{subsection.1.2.5}
+\contentsline {subsection}{\numberline {1.2.5}Ereignis: Singul\"are Ereignisketten}{10}{subsection.1.2.5}
 \contentsline {chapter}{\numberline {2}Theoretische Grundlagen f\"ur die Modellierung}{11}{chapter.2}
 \contentsline {section}{\numberline {2.1}Verwendete Verteilungen}{11}{section.2.1}
-\contentsline {section}{\numberline {2.2}Poisson Prozess}{15}{section.2.2}
-\contentsline {section}{\numberline {2.3}Markov-Kette}{21}{section.2.3}
-\contentsline {chapter}{\numberline {3}Modellierung Isolierte Ereignisse}{24}{chapter.3}
-\contentsline {section}{\numberline {3.1}Grundlegende Betrachtungen}{24}{section.3.1}
-\contentsline {section}{\numberline {3.2}Modell - Poisson-Prozess}{25}{section.3.2}
-\contentsline {section}{\numberline {3.3}Alternativer Modellansatz - Markov-Kette}{27}{section.3.3}
-\contentsline {section}{\numberline {3.4}Anwendung und Test eines Modells}{30}{section.3.4}
-\contentsline {subsection}{\numberline {3.4.1}Datengrundlage und Aufbereitung}{30}{subsection.3.4.1}
-\contentsline {subsection}{\numberline {3.4.2}Identifizierung von Unf\"allen}{32}{subsection.3.4.2}
-\contentsline {subsection}{\numberline {3.4.3}Anwendung und Test der Modelle}{35}{subsection.3.4.3}
-\contentsline {chapter}{\numberline {A}Anhang}{36}{appendix.A}
-\contentsline {section}{\numberline {A.1}Abk\"urzungsverzeichnis und Zeichenerkl\"arungen}{37}{section.A.1}
-\contentsline {section}{\numberline {A.2}Codierung nach \IeC {\S } 301 Abs. 3 SGB V}{38}{section.A.2}
+\contentsline {section}{\numberline {2.2}Poisson Prozess}{16}{section.2.2}
+\contentsline {section}{\numberline {2.3}Markov-Kette}{23}{section.2.3}
+\contentsline {chapter}{\numberline {3}Modellierung Isolierte Ereignisse}{26}{chapter.3}
+\contentsline {section}{\numberline {3.1}Grundlegende Betrachtungen}{26}{section.3.1}
+\contentsline {section}{\numberline {3.2}Modell - Poisson-Prozess}{27}{section.3.2}
+\contentsline {section}{\numberline {3.3}Alternativer Modellansatz - Markov-Kette}{28}{section.3.3}
+\contentsline {section}{\numberline {3.4}Anwendung und Test des Modells}{31}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Datengrundlage und Aufbereitung}{31}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}Identifizierung von Unf\"allen}{33}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}Anwendung und Test der Modelle}{36}{subsection.3.4.3}
+\contentsline {chapter}{\numberline {A}Anhang}{38}{appendix.A}
+\contentsline {section}{\numberline {A.1}Abk\"urzungsverzeichnis und Zeichenerkl\"arungen}{39}{section.A.1}
+\contentsline {section}{\numberline {A.2}Codierung nach \IeC {\S } 301 Abs. 3 SGB V}{40}{section.A.2}
+\contentsline {section}{\numberline {A.3}Verwendete Abfragen}{42}{section.A.3}
+\contentsline {subsection}{\numberline {A.3.1}SQL-Scripte}{42}{subsection.A.3.1}

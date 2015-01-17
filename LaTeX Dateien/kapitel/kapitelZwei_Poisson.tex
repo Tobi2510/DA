@@ -1,0 +1,253 @@
+\section{Poisson Prozess}	
+Ein weiteres Hilfsmittel, dass zur Modellierung verwendet wird, sind Stochastische Prozesse. Diese eignen sich sehr gut dazu geordnete zufällige Vorgänge zu beschreiben. 
+\\ 
+	
+\begin{defini}
+Sei $(Z, \mathcal{Z})$ ein mit einer $\sigma$-Algebra versehener Raum, dann ist ein \textbf{Stochastischer Prozess} ist eine Familie von Zufallsvariablen $\{X_t, t\in T\}$ mit $X_t:\Omega\to Z$. Für die Indexmenge T gilt in der Regel $T\in \{\mathbb{R}_{\geq 0}, \mathbb{N}_0\}$. Das heißt $X$ ist eine Abbildung
+\begin{eqnarray*}
+	X:\Omega \times T \to Z, \; (\omega, t) \mapsto X_t(\omega)
+\end{eqnarray*}
+sodass $X_t: \omega \mapsto X_t(\omega)$ für alle  $t \in T$ eine messbare Abbildung ist. Z heißt dann die \textbf{Zustandsmenge} und $(Z, \mathcal{Z})$ der \textbf{Zustandsraum}.
+\end{defini}
+
+\begin{enumerate}[label=(\roman{*})]
+	\item Ein stochastische Prozess heißt \textbf{zeitdiskret}, wenn $T$ abzählbar ist, z.B. $T = \mathbb{N}_0$. Ansonsten heißt er \textbf{zeitstetig}. 
+	Analog heißt ein Prozess mit diskreten Zustandsraum Z \textbf{wertdisktret} oder auch \textbf{Punktprozess}. 
+	\item Ein stochastische Prozess heißt \textbf{stationär}, wenn für alle $s>0$, sowie $t_1,t_2,...,t_k\in T$ und $x_1,x_2,...,x_k \in Z$ gilt:
+		\begin{eqnarray*}
+			\mathbb{P}(X_{t_1+s}=x_1, X_{t_2+s}=x_2,..., X_{t_k+s}=x_k)=\mathbb{P}(X_{t_1}=x_1, X_{t_2}=x_2,..., X_{t_k}=x_k)				
+		\end{eqnarray*}
+		Das heißt, das zufällige Verhalten des Prozesses hängt nicht vom Zeitpunkt der Beobachtung ab.
+	\item Ein stochastischer Prozess besitzt \textbf{Unabhängige Zuwächse}, wenn die Zufallsvariablen $X_{t_0},X_{t_1}-X_{t_0},...,,X_{t_n}-X_{t_{n-1}}$ für alle n=1,2,... und $0\leq t_0<t_1<...<t_n$ unabhängig sind.
+\end{enumerate}
+
+\begin{defini}
+Sei $T_1, T_2, ... : \omega \rightarrow [0, \infty)$ eine Folge von unabhängig und identisch verteilten Zufallsvariablen und $S_n := T_1+...+T_n$ für alle $n\in \mathbb{N}$, dann ist $N := \{N_t, t\geq 0\}$ mit
+\begin{eqnarray*}
+		N_t = \sum_{k=1}^{\infty} \mathbb{I}(S_k\leq t)
+\end{eqnarray*}
+ein stochastischer Prozess und wird als Zählprozess bezeichnet. 
+\end{defini}
+
+Prozesse dieser Art werden z.B. in der Zuverlässigkeitstheorie eingesetzt um die Ausfälle einer Komponente in einem bestimmten Zeitraum zu zählen. Deshalb werden die $T_n$ häufig als \textbf{Zwischenankunftszeiten} bezeichnet und die $S_n$ als $n$-te \textbf{Sprungzeit}.
+
+\begin{defini} \label{poiPro}
+Ein Zählprozess $\{N_t, t\geq 0\}$ mit exponentialverteilten Zwischenankunftszeiten $T_n \sim exp(\lambda)$ heißt \textbf{homogener Poisson-Prozess mit der Intensität $\lambda$}.  
+\end{defini}
+
+In dem nachfolgendem Theorem werden die wichtigsten Eigenschaften und äquivalenten Definitionen des Poisson-Prozesses deutlich. Vorher benötigen wir jedoch folgende Definition: \\
+%Wir schreiben $f(h) = o(g(h))$  (für $h \rightarrow 0$), falls $\lim_{h \rightarrow 0} f(h)/g(h) = 0$ und $f(h) = O(g(h)$, falls $|f(h)/g(h)|$ für $h \leq 1$ beschränkt ist. 
+
+\begin{defini}
+Seien $X_1, X_2,..., X_n$ Zufallsvariablen, dann bezeichnen wir die geordneten Variablen $X_{1:n} \leq X_{2:n} \leq ... \leq X_{n:n}$ als die \textbf{Ordnungsstatistik} der Variablen $\{X_i: 1 \leq i \leq n\}$.
+\end{defini}
+
+\begin{theorem} Die folgenden Aussagen sind äquivalent\footnote{Quelle siehe: \url{http://www.mathematik.uni-ulm.de/stochastik/lehre/ss05/wt/skript/node15.html}}:
+\begin{enumerate}[label=(\roman{*})]
+	\item $\{N_t, t\geq 0\}$ ist ein Poisson-Prozess mit der Intensität $\lambda$
+	\item Die Zufallsvariablen $N_t$ sind poissonverteilt zum Parameter $\lambda t$ für alle $t\geq 0$. \\
+	
+	Unter der Bedingung $\{N_t = n\}$, hat für beliebige $n=1,2,...$ der Zufallsvektor $(S_1, S_2,...,S_n)$, die gleiche Verteilung wie die Ordnungsstatistik von n unabhängigen, in $[0,t]$ gleichverteilten Zufallsvariablen.
+	\item Der stochastische Prozess $\{N_t, t\geq 0\}$ hat unabhängige Zuwächse und es gilt $\mathbb{E}(N_1) = \lambda$. \\
+	
+	Unter der Bedingung $\{N_t = n\}$, hat für beliebige $n=1,2,...$ der Zufallsvektor $(S_1, S_2,...,S_n)$, die gleiche Verteilung wie die Ordnungsstatistik von n unabhängigen, in $[0,t]$ gleichverteilten Zufallsvariablen.
+	\item Der stochastische Prozess $\{N_t, t\geq 0\}$ hat unabhängige Zuwächse und ist stationär und es gilt für $h \rightarrow 0$:
+	\begin{eqnarray*}
+		\mathbb{P}(N_h =0) &=& 1-\lambda h + o(h) \text{, und} \\
+		\mathbb{P}(N_h =1) &=& \lambda h + o(h)\
+	\end{eqnarray*}
+	\item Der stochastische Prozess $\{N_t, t\geq 0\}$ hat unabhängige Zuwächse und ist stationär. Außerdem gilt für jedes $t\geq 0$ das $N_t \sim Poi(\lambda t)$.
+\end{enumerate}
+\end{theorem}
+
+\textbf{Beweis:} 
+Da der Beweis sehr umfangreich ist, werden an dieser Stelle nur die wesentliche Schritte vorgestellt. \\
+\begin{itemize}
+\item $(i) \Rightarrow (ii)$:
+	Aus $(i)$ folgt, dass $S_n=\sum_{i=1}^n T_i$ eine Summe von $n$ unabhängigen und zum Parameter $\lambda$ exponentialverteilten Zufallsvariablen ist, 	d.h., $S_n \sim Erl(n,\lambda)$, wobei $Erl(n,\lambda)$ die Erlang-Verteilung mit den Parametern $n$ und $\lambda$ bezeichnet. Hieraus folgt $\mathbb{P}(N_t = 0) = \mathbb{P}(S_1 > t) = e^{-\lambda t}$ und damit folgt:
+
+\begin{eqnarray*}	 
+	\mathbb{P}(N_t = n) &=&\mathbb{P}(N_t \geq n) - \mathbb{P}(N_t \geq n+1) \\	 
+				&=&\mathbb{P}(S_n \leq t)- \mathbb{P}(S_{n+1} \leq t) \\
+				&=&\int_0^t \frac{\lambda^n v^{n-1}}{(n-1)!} e^{-\lambda v} \mathrm{d}v - \int_0^t \frac{\lambda^{n+1}v^n}{n!} e^{-\lambda v} \mathrm{d}v	 \\
+				&=&\int_0^t \frac{\mathrm{d}}{\mathrm{d}v} \left(\frac{(\lambda v)^n}{n!} e^{-\lambda v}\right) \mathrm{d}v \\
+				&=&\frac{(\lambda t)^n}{n!} e^{-\lambda t}
+\end{eqnarray*}
+
+Dies gilt für jedes $n\geq 1$, und damit folgt, dass $N_t \sim Poi(\lambda t)$. Dies ist der erste Teil von $(ii)$ und für den zweiten Teil betrachten wir die gemeinsame Dichte $f_{S_1,...,S_{n+1}}(t_1,...,t_{n+1})$ von $S_1,...,S_{n+1}$. Diese ist für beliebige $t_0=0 \leq t_1 \leq ... \leq t_n \leq t_{n+1}$ gegeben durch
+
+\begin{eqnarray*}	 
+	f_{S_1,...,S_{n+1}}(t_1,...,t_{n+1}) = \prod_{k=1}^{n+1} \lambda e^{-\lambda(t_k-t_{k-1})} = \lambda^{n+1}e^{-\lambda t_{n+1}}
+\end{eqnarray*}
+
+und 0 sonst. Somit gilt unter der Bedingung $N_t=n$ und $0 \leq t_1 \leq ... \leq t_n \leq t$ für die gemeinsame bedingte Dichte
+
+\begin{eqnarray*}	 
+	f_{S_1,...,S_n}(t_1,...,t_n\: | \:N_t=n) &=& f_{S_1,...,S_n}(t_1,...,t_n\: | \:S_1 \leq t_1,...,S_n\leq t, S_{n+1} > t) \\
+																						&=& \frac{\int_t^{\infty} \lambda^{n+1} e^{-\lambda x_{n+1}} dx_{n+1}}
+																						{\int_0^t \int_{x_1}^t .. .\int_{x_{n-1}}^t \int_t^{\infty} \lambda^{n+1} e^{-\lambda x_{n+1}} dx_{n+1}...dx_1} \\
+																						&=& \frac{n!}{t^n}
+\end{eqnarray*}
+
+und $f_{S_1,...,S_n}(t_1,...,t_n\: | \:N_t=n) = 0$ sonst. Dies ist die Dichte der Ordnungsstatistik von n unabhängigen in[0,t] gleichverteilten Zufallsvariablen und damit der zweite Teil dieses Beweisschritts. 
+
+\item $(ii) \Rightarrow (iii)$: 
+
+Aufgrund von $(ii)$ gilt $N_t \sim Poi(\lambda t)$ und damit ist $\mathbb{E} N_1 = \lambda$. Seien $x_1,...,x_n \in \mathbb{N}$ und $t_0=0 \leq t_1 \leq ... \leq t_n$, dann gilt für $x=x_1+...+x_n$
+
+\begin{eqnarray*}	 
+	\mathbb{P}(\bigcap_{k=1}^n\{N_{t_k}-N_{t_{k-1}}=x_k\})&=& \mathbb{P}(N_{t_1}-N_{t_0} = x_1,...,N_{t_n}-N_{t_{n-1}} = x_n)\\
+	&=& \mathbb{P}(N_{t_1}-N_{t_0} = x_1,...,N_{t_n}-N_{t_{n-1}} = x_n \: | \: N_{t_n}=x)\mathbb{P}(N_{t_n}=x)\\
+	&=& \frac{(\lambda t_n)^x}{x!}e^{-\lambda t_n} \frac{x!}{x_1!...x_n!} \prod_{k=1}^n \left(\frac{t_k-t_{k-1}}{t_n}\right)^{x_k} \\
+	&=& \prod_{k=1}^n \frac{(\lambda (t_k-t_{k-1}))^{x_k}}{x_k!} e^{-\lambda (t_k - t_{k-1})}
+\end{eqnarray*}
+
+und damit hat der Zählprozess ${N_t}$ unabhängige Zuwächse.
+
+\item $(iii) \Rightarrow (iv)$: 
+
+Aus $(iii)$ folgt, dass der Zufallsvektor $(S_1,...,S_m)$, unter der Bedingung $N(t_n + h) = m$, die gleiche Verteilung hat, wie die Ordnungstatistik vom m unabhängigen in $[0, t_n + h]$ gleichverteilten Zufallsvariablen hat. Deshalb gilt für beliebige $x_1,...,x_n \in \mathbb{N}$, $t_0=0 \leq t_1 \leq ... \leq t_n$ und$h>0$ 
+
+\begin{eqnarray*}	 
+	\mathbb{P}(\bigcap_{k=1}^n\{N_{t_k+h}-N_{t_{k-1}+h}=x_k\}\: | \:N_{t_n}+h=m)
+	= \mathbb{P}(\bigcap_{k=1}^n\{N_{t_k}-N_{t_{k-1}}=x_k\}\: | \:N_{t_n}+h=m)
+\end{eqnarray*}
+
+Aufgrund der Formel der totalen Wahrscheinlichkeit folgt damit, dass ${N_t}$ stationär ist. Die Gleichverteilungseigenschaft aus $(iii)$ liefert außerdem für $0<h<1$
+
+\begin{eqnarray*}	 
+	\mathbb{P}(N_h=0) &=& \sum_{k=0}^\infty \mathbb{P}(N_h=0,N_1-N_h=k)\\
+		&=& \sum_{k=0}^\infty \mathbb{P}(N_1=k)\mathbb{P}(N_1-N_h=k\: | \:N_1=k)\\
+		&=& \sum_{k=0}^\infty \mathbb{P}(N_1=k)(1-h)^k
+\end{eqnarray*}
+
+und somit gilt
+
+\begin{eqnarray*}	 
+	\frac{1}{h}(1-\mathbb{P}(N_h=0)) &=& \frac{1}{h}\left(1-\sum_{k=0}^\infty \mathbb{P}(N_1=k)(1-h)^k\right)\\
+		&=& \sum_{k=1}^\infty \mathbb{P}(N_1=k) \frac{1-(1-h)^k}{h}
+\end{eqnarray*}
+
+Da $(1-h)^k\geq1-kh$ für beliebige $0<h<1$ und $k=1,2,...$ gilt, folgt, dass die Funktionen $g_h(k)=\frac{1-(1-h^k)}{h}$ die gemeinsame Schranke $g(k)=k$ besitzen.
+Diese Schranke ist integrierbar, da gilt
+
+\begin{eqnarray*}	 
+	\sum_{k=1}^\infty k\mathbb{P}(N_1=k) = \mathbb{E}(N_1) = \lambda < \infty .
+\end{eqnarray*}
+
+Durch die Vertauschung von Summe und Grenzwert, ergibt sich
+
+\begin{eqnarray*}	 
+	\lim_{h \rightarrow 0} \frac{1}{h} \mathbb{P}(N_h>0) = \lambda
+\end{eqnarray*}
+
+und damit der erste Grenzwert von $(iv)$. Analog dazu gilt
+
+\begin{eqnarray*}	 
+	\lim_{h \rightarrow 0} \frac{1}{h} \mathbb{P}(N_h=1) = \lim_{h \rightarrow 0} \sum_{k=1}^\infty \mathbb{P}(N_1=k)k(1-h)^{k-1} = \lambda
+\end{eqnarray*}
+
+was äquivalent zur zweiten Bedingung in $(iv)$ ist.
+
+\item $(iv) \Rightarrow (v)$: 
+
+Sei $\mathbb{P}(N_t=n) := p_n(t)$ mit $n\in \mathbb{N}$ und $t\geq0$, dann gilt für $h>0$
+
+\begin{eqnarray} \label{eq:th1a}
+	p_0(t+h)=\mathbb{P}(N_t=0,N_{t+h}-N_t=0)=p_0(t)(1-\lambda h + o(h))
+\end{eqnarray}
+
+und für $t\geq h>0$
+
+\begin{eqnarray} \label{eq:th1b} 
+	p_0(t)=p_0(t-h)(1-\lambda h + o(h))
+\end{eqnarray}
+
+Damit ist $p_0(t)$ stetig in $(0,\infty)$ und rechtsstetig im Punkt $t=0$. Da $p_0(t-h)=p_0(t)+o(1)$ folgt aus \ref{eq:th1a} und \ref{eq:th1b}, dass für beliebige $h\geq -t$ gilt
+
+\begin{eqnarray*}	 
+	\frac{p_0(t+h)-p_0(t)}{h}=-\lambda p_0(t) + o(1)
+\end{eqnarray*}
+
+Das zeigt das $p_0(t)$ differenzierbar ist und es ergibt sich für t>0 folgende Differenzialgleichung
+
+\begin{eqnarray*}	 
+	p_0'(t)=-\lambda p_0(t).
+\end{eqnarray*}
+
+Durch die Randbedingung $p_0(0) = \mathbb{P}(N_0=0) = 1$ ist die eindeutig bestimmte Lösung 
+
+\begin{eqnarray*}	 
+	p_0(t)= e^{-\lambda t} , t\geq 0.
+\end{eqnarray*} 
+
+Für beliebige $n\in \mathbb{N}$ gilt 
+
+\begin{eqnarray*}	 
+	p_n(t)= \frac{(\lambda t)^n}{n!}e^{-\lambda t} , t\geq 0.
+\end{eqnarray*} 
+
+Dies lässt sich analog zum vorherigen Fall zeigen und durch vollständige Induktion nach n folgt $(v)$.
+
+\item $(v) \Rightarrow (i)$:
+ 
+Sei $ b_0 = 0 \le a_1 < b_1 \leq ...\leq a_n < b_n$, dann gilt 
+
+\begin{eqnarray*}	 
+	&& \mathbb{P}(\cap_{k=1}^n\{ a_k < S_k \leq b_k\})	= \\[6pt]
+	&& \mathbb{P}(\cap_{k=1}^{n-1}\{N_{a_k} -N_{b_{k-1}} = 0, N_{b_k} - N_{a_k} = 1\} \cap \{N_{a_n} - N_{b_{n-1}} = 0, N_{b_n} - N_{a_n} \geq 1\})
+\end{eqnarray*} 
+
+und zusammen mit $(v)$ 
+
+\begin{eqnarray*}
+	&& \mathbb{P}(\cap_{k=1}^n\{ a_k < S_k \leq b_k\}) \\
+	&=& e^{-\lambda(a_n - b_{n-1})} (1 - e^{-\lambda(b_n - a_n)}) \prod_{k=1}^{n-1} e^{-\lambda(a_k - b_{k-1})} \lambda (b_k -a_k) e^{-\lambda(b_k - a_k)} \\
+	&=& (e^{-\lambda a_n} - e^{-\lambda b_n})\lambda^{n-1} \prod_{k=1}^{n-1} (b_k - a_k) \\
+	&=& \int_{a_1}^{b_1}...\int_{a_n}^{b_n} \lambda^n e^{-\lambda y_n} dy_n...dy_1 \\
+	&=& \int_{a_1}^{b_1}\int_{a_2 - x_1}^{b_2 - x_1}...\int_{a_n-x_1-...-x_{n-1}}^{b_n-x_1-...-x_{n-1}} \lambda^n e^{-\lambda(x_1 +...+x_n)} dx_n...dx_1
+\end{eqnarray*}
+
+Die gemeinsame Dichte von  $ S_1, S_2 - S_1, ...,S_n - S_{n-1}$ ist somit gegeben durch
+
+\begin{eqnarray*}
+	\mathbb{P}(\cap_{k=1}^n \{S_k-S_{k-1}\in dx_k\})=\lambda^n e^{-\lambda(x_1 + ... +x_n)}dx_1...dx_n.
+\end{eqnarray*}
+
+Dies bedeutet, dass die Zufallsvariablen  $ S_1, S_2 - S_1, ...,S_n - S_{n-1}$ unabhängig und exponentialverteilt zum Parameter $\lambda$ sind, d.h., $ \{N_t\}$ ist ein Poisson-Prozess mit der Intensität $ \lambda$. 
+
+\end{itemize}
+\qed
+
+Die folgende sehr nützliche Eigenschaft ist bereits von der Poisson-Verteilung bekannt:
+
+\begin{lemmas} \label{lem:zusammengesetzterPP}
+Die Überlagerung von zwei unabhängigen Poisson-Prozessen $\{N_t^1, t\geq 0\}$ und $\{N_t^1, t\geq 0\}$  mit der Intensität $\lambda _1$ bzw. $\lambda _2$ ist wieder ein Poisson-Prozess mit Intensität $\lambda = \lambda _1+\lambda _2$.
+\end{lemmas}
+\textbf{Beweis:} 
+Im vorangegangen Theorem hab wir gezeigt, dass für einen Poisson-Prozess $\{N_t, t\geq 0\}$ gilt $N_t \sim Poi(\lambda t)$. Da $\{N_t^1, t\geq 0\}$ und $\{N_t^1, t\geq 0\}$ unabhängig sind gilt für die Summe $N_t^1 + N_t^2 \sim Poi((\lambda _1 + \lambda _2)t)$. Damit ist die Überlagerung der beiden Poisson-Prozesse wieder ein Poisson-Prozess mit Intensität $\lambda = \lambda _1+\lambda _2$.
+\qed \\
+
+Ein interessantes Phänomen ist zu beobachten, wenn bei sich bei einem Poisson-Prozess die Zeit bis zum nächsten Ereignis, zu einem beliebigen Zeitpunkt, betrachtet.
+\begin{defini} 
+Sei $\{N_t, t\geq 0\}$ ein Zählprozess mit Zwischenankunftszeiten $T_1, T_2, ...$ und Sprungzeiten $\{S_n, n\in \mathbb{N}\}$. Dann bezeichnet $W_t$ Wartezeiten bis zum nächsten Sprung und $V_t$ die Zeit seit dem letzten Sprung. Des Weiteren bezeichne $T_{N_{t+1}}$ die $t$ enthaltende Zwischenankunftszeit und Analog sind $S_{N_t}$ bzw. $S_{N_{t+1}}$ die letzte Sprungzeit vor $t$ bzw. die nächste nach $t$. Dann gilt:
+\begin{eqnarray*}
+	V_t+W_t &=& T_{N_{t+1}} = S_{N_{t+1}}- S_{N_t} \\
+	V_t &=& t-S_{N_t} \\
+	W_t &=& S_{N_{t+1}}-t
+\end{eqnarray*}
+\end{defini}
+
+\begin{lemmas}\label{lem:wartezeit}
+Sei $\{N_t, t\geq 0\}$ homogener Poisson-Prozess mit Intensität $\lambda$. Dann ist $W_t \sim exp(\lambda)$ für alle $t > 0$.
+\end{lemmas}
+
+\textbf{Beweis:} 
+Da die Zwischenankunftszeiten eines Poisson-Prozesses exponentialverteilt sind, folgt der Beweis direkt aus der Gedächtnislosigkeit der Exponentialverteilung:
+\begin{eqnarray*}
+	\mathbb{P}(W_t \leq s) &=& \mathbb{P}(S_{N_{t+1}}- S_{N_t} \leq V_t+s) \\
+	&=& \mathbb{P}(T_{N_{t+1}} \leq V_t+s \: | \: T_{N_{t+1}} > V_t) \\
+	&=& \mathbb{P}(T_{N_{t+1}} \leq s) =1-e^{-\lambda s}
+\end{eqnarray*}
+D.h. die Wartezeit zum Zeitpunkt t ist genauso verteilt wie die Zwischenankunftszeiten und damit unabhängig davon, wie viel Zeit bereits seit dem letzten Ereignis vergangen ist.
+\qed \\
