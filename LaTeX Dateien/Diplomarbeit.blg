@@ -4,10 +4,11 @@ A level-1 auxiliary file: kapitel/abstract.aux
 A level-1 auxiliary file: kapitel/kapitelEins_einleitung.aux
 A level-1 auxiliary file: kapitel/kapitelZwei_theoretischeGrundlagen.aux
 A level-1 auxiliary file: kapitel/kapitelDrei_Unfaelle.aux
+A level-1 auxiliary file: Zitierte_Saetze.aux
 A level-1 auxiliary file: Zeichen.aux
 A level-1 auxiliary file: Paragraph_301.aux
 A level-1 auxiliary file: Scripte.aux
-I found no \citation commands---while reading file Diplomarbeit.aux
+A level-1 auxiliary file: Literaturverzeichnis.aux
 I found no \bibdata command---while reading file Diplomarbeit.aux
 I found no \bibstyle command---while reading file Diplomarbeit.aux
-(There were 3 error messages)
+(There were 2 error messages)

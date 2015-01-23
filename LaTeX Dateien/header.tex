@@ -18,6 +18,8 @@
 \usepackage{float}
 \usepackage{listings}
 \usepackage{tikz}
+\usepackage{dsfont}
+
 \usetikzlibrary{automata,arrows,positioning,calc}
 
 \usepackage[linktocpage,bookmarks,bookmarksopen={false},bookmarksnumbered,pdfstartview={FitH},
@@ -51,6 +53,11 @@
 \newenvironment{THEOREM}
 {\begin{theorem} \ \newline}
 {\end{theorem}}
+
+\newtheorem{satz}[defini]{Satz}
+\newenvironment{Satz}
+{\begin{satz} \ \newline}
+{\end{satz}}
 
 \newtheorem{folg}[defini]{Folgerung}
 \newenvironment{folgerung}

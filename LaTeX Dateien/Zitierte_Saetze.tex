@@ -1,0 +1,19 @@
+\section{Zitierte Erkenntnisse} \label{sec:zitate}
+
+\begin{satz}\label{sa:trafo} (Transformationssatz)\\
+Seien U und V offene Teilmengen des $\mathbb{R}^n$ und sei weiterhin $T:U\rightarrow V$ ein Diffeomorphismus. Das ist die Funktion $f$ auf $V$ genau dann über V integrierbar, wenn die Funktion $(f\circ T)|det DT|$ über U integrierbar ist. Es gilt dann:
+\begin{eqnarray*}
+	\int_U f(T(x))|det(D*T(x))|dx = \int_V f(y) dy.
+\end{eqnarray*}
+Dabei ist $D$ die Jacobi-Matrix und $det DT(x)$ die Funktionaldeterminante von T. \\
+Vergleiche \cite[Kapitel 9 - Abschnitt 1]{koenig04}.
+\end{satz}
+
+\begin{satz}\label{sa:monotoneKonv} (Satz von der monotonen Konvergenz)\\
+Seien $(\Omega,\mathfrak{A},\mathbb{P})$ ein Wahrscheinlichkeitsraum und $\{X_n\}_{n\in \mathbb{N}}$ eine nicht negative, fast sicher monoton wachsende Folge von Zufallsvariablen, dann gilt für ihre Erwartungswerte
+\begin{eqnarray*}
+	\lim_{n\rightarrow \infty}\mathbb{E}(X_n) = \mathbb{E}(\lim_{n\rightarrow \infty} X_n).
+\end{eqnarray*}
+Das heißt Integration und Grenzwertbildung können vertauscht werden.\\
+Vergleiche TODO:.
+\end{satz}

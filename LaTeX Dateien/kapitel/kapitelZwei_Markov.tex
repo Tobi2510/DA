@@ -8,7 +8,7 @@ Ein Stochastischer Prozess $\{X_t, t >0\}$ aus $I$-wertigen Zufallsvariablen, be
 	\mathbb{P}(X_{t_{n+1}}=i_{n+1}\: | \:X_{t_n}=i_n,X_{t_{n-1}}=i_{n-1},...,X_{t_0}=i_0) = \mathbb{P}(X_{t_{n+1}}=i_{n+1}\: | \:X_{t_n}=i_n)
 \end{eqnarray}
 
-Ein diskreter stochastischer Prozess der \ref{eq:markov} erfüllt heißt \textbf{Markov-Kette}. Die \textbf{Startverteilung} der Markov-Kette ist definiert durch $v(i) = \mathbb{P}(X_0 = i)$ und die Wahrscheinlichkeiten $\mathbb{P}(X_{t_{n+1}}=i_{n+1}\: | \:X_{t_n}=i_n) =: p_{i_n , i_{n+1}}$ werden als \textbf{Übergangswahrscheinlichkeiten} bezeichnet. Die Matrix $P = (p_{i,j})_{i, j \in I}$ die sich aus den Übergangswahrscheinlichkeiten ergibt heißt \textbf{Übergangsmatrix}.
+Ein diskreter stochastischer Prozess der \ref{eq:markov} erfüllt heißt \textbf{Markov-Kette}. Die \textbf{Startverteilung} der Markov-Kette ist definiert durch $v(i) := \mathbb{P}(X_0 = i)$ und die Wahrscheinlichkeiten $\mathbb{P}(X_{t_{n+1}}=i_{n+1}\: | \:X_{t_n}=i_n) =: p_{i_n , i_{n+1}}$ werden als \textbf{Übergangswahrscheinlichkeiten} bezeichnet. Die Matrix $P = (p_{i,j})_{i, j \in I}$ die sich aus den Übergangswahrscheinlichkeiten ergibt heißt \textbf{Übergangsmatrix}.
 \end{defini}
 
 Der nächste Zustand einer Markov-Kette hängt also immer nur von dem aktuellen Zustand ab. D.h. die Kette wird durch die Übergangswahrscheinlichkeiten charakterisiert. Deshalb hat die Übergangsmatrix auch eine besondere Struktur. Im folgenden betrachten wir lediglich den stetigen Fall, d.h die Zustandsmenge $I$ ist eine nichtleere, endliche oder höchstens abzählbar unendliche Menge und die Indexmenge T ist eine Teilmenge von $\mathbb{N}$. 
@@ -27,28 +27,79 @@ Sei $\{X_n, n\in \mathbb{N}\}$ eine Folge von $I$-wertigen Zufallsgrößen, $v$ ei
 \end{lemmas}
 
 \textbf{Beweis:}
-Der Beweis das die Gleichung \ref{eq:markov1} für eine Markov-Kette gilt, erfolgt leicht mithilfe von vollständiger Induktion nach n zusammen mit der Definition der Übergangswahrscheinlichkeiten. \\
+Der Beweis das die Gleichung \ref{eq:markov1} für eine Markov-Kette gilt, erfolgt leicht mithilfe von vollständiger Induktion nach n zusammen mit der Definition der Übergangswahrscheinlichkeiten: \\
+
+\textit{Induktionsanfang}: 
+\begin{eqnarray*}
+	\mathbb{P}(X_0=i_0) &=& v(i_0) \\
+	\mathbb{P}(X_0=i_0, X_1=i_1) &=& v(i_0) * \mathbb{P}(X_1=i_1 \:|\: X_0=i_0) = v(i_0)*p_{i_0,i_1}									
+\end{eqnarray*}
+
+\textit{Induktionsschritt}:
+\begin{eqnarray*}
+	&& \mathbb{P}(X_0=i_0, X_1=i_1,...,X_{n+1}=i_{n+1}) \\
+	&=& \frac{\mathbb{P}(X_0=i_0,X_1=i_1,...,X_{n+1}=i_{n+1})}{\mathbb{P}(X_0=i_0,X_1=i_1,...,X_n=i_n)} \mathbb{P}(X_0=i_0,X_1=i_1,...,X_n=i_n)\\
+	&=& \mathbb{P}(X_{n+1}=i_{n+1} \: |\: X_0=i_0,X_1=i_1,...,X_n = i_n) * v(i_0)p_{i_0,i_1}p_{i_1,i_2}...p_{i_{n-1},i_n} \\
+	&=& \mathbb{P}(X_{n+1}=i_{n+1}\:|\:X_n=i_n) * v(i_0)p_{i_0,i_1}p_{i_1,i_2}...p_{i_{n-1},i_n}\\
+	&=& v(i_0)p_{i_0,i_1}p_{i_1,i_2}...p_{i_{n-1},i_n}*p_{i_n,i_{n+1}}						
+\end{eqnarray*}
 
 Die andere Richtung folgt aus der Definition der bedingten Wahrscheinlichkeit:
+
 \begin{eqnarray*}
-	\mathbb{P}(X_{n+1}=i_{n+1}\: | \:X_0=i_0,...,X_n=i_n) &=& \frac{\mathbb{P}(X_{n+1}=i_{n+1})\mathbb{P}(X_0=i_0,...,X_n=i_n)}{\mathbb{P}(X_0=i_0,...,X_n=i_n)} \\
-	&=& \frac{p_{n,n+1} v(i_0)p_{i_0,i_1}p_{i_1,i_2}...p_{i_{n-1},i_n}}{v(i_0)p_{i_0,i_1}p_{i_1,i_2}...p_{i_{n-1},i_n}} \\
-	&=& p_{n,n+1} = \mathbb{P}(X_{n+1}=i_{n+1}\: | \:X_n=i_n)
+	\mathbb{P}(X_{n+1}=i_{n+1}\: | \:X_0=i_0,...,X_n=i_n) &=& \frac{\mathbb{P}(X_0=i_0,...,X_n=i_n, X_{n+1}=i_{n+1})}{\mathbb{P}(X_0=i_0,...,X_n=i_n)} \\
+	&=& \frac{v(i_0)p_{i_0,i_1}p_{i_1,i_2}...p_{i_{n-1},i_n}p_{i_n,i_{n+1}}}{v(i_0)p_{i_0,i_1}p_{i_1,i_2}...p_{i_{n-1},i_n}} \\
+	&=& p_{i_n,i_{n+1}} = \mathbb{P}(X_{n+1}=i_{n+1}\: | \:X_n=i_n)
 \end{eqnarray*}
  
 \qed
 
 Als nächstes wollen wir mithilfe der Übergangsmatrix die Wahrscheinlichkeit dafür bestimmen, dass sich der Prozess nach n Schritten in einem bestimmten Zustand $j \in I$ befindet.\\
 
-\begin{defini}
-Sei $\{X_t, n\in \mathbb{N}\}$ eine Markov-Kette mit Übergangsmatrix $P$. Dann sind 
+\begin{lemmas} \label{lem:übergangsws}
+Sei $\{X_t, n\in \mathbb{N}\}$ eine Markov-Kette im Zustand $i$ mit Übergangsmatrix $P$. Dann gilt für alle $n\in \mathbb{N}$ und alle $i, j\in I$
 \begin{eqnarray*}
-	\mathbb{P}(X_n+m=j,X_n=i) = P_{i,j}^n := p_{i,j}^{(n)}
+	p_{i,j}^{(n)} := \mathbb{P}(X_n=j,X_0=i) = (P^n)_{i,j}
 \end{eqnarray*}
-die \textbf{n-stufigen Übergangswahrscheinlichkeiten} für alle $n\in \mathbb{N}$ und alle $i, j\in I$. Das heißt die Wahrscheinlichkeit dafür, dass die Markov Kette in n Schritten vom Zustand $i$ in den Zustand $j$ bewegt, entspricht der n-ten Potenz der Übergangsmatrix an der Stelle $(i,j)$. 
-\end{defini}
+und $p_{i,j}^{(n)}$ wird als \textbf{n-stufigen Übergangswahrscheinlichkeiten} bezeichnet. Das heißt die Wahrscheinlichkeit dafür, dass die Markov Kette in n Schritten vom Zustand $i$ in den Zustand $j$ bewegt, entspricht der n-ten Potenz der Übergangsmatrix an der Stelle $(i,j)$. 
+\end{lemmas}
 
-Es gibt verschiedene Eigenschaften die eine Markov-Kette haben kann, wenn die Übergangsmatrix eine besondere Struktur hat. Diese wollen wir an dieser Stelle vorführen.\\
+Bevor wir diese Aussage beweisen können benötigen wir noch einen kleinen Satz zu den Übergangswahrscheinlichkeiten:
+\begin{satz} (\textbf{Chapman-Kolmogorov-Gleichung})
+$\{X_t, n\in \mathbb{N}\}$ eine Markov-Kette dann gilt für alle $m, n\in \mathbb{N}$ und alle $i, j\in I$
+\begin{equation} \label{eq:chapKol}
+	p_{i,j}^{(m+n)} = \sum_{k\in I} p_{i,k}^{(m)}*p_{k,j}^{(n)}.
+\end{equation}
+\end{satz}
+
+\textbf{Beweis:}
+\begin{eqnarray*}
+	p_{i,j}^{(m+n)} &=& \mathbb{P}(X_{n+m}=j,X_0=i) \\
+									&=& \sum_{k \in I} \mathbb{P}(X_{m+n} = j, X_m =k \:|\: X_0=i) \\
+									&=& \sum_{k \in I} \frac{\mathbb{P}(X_{m+n} = j, X_m =k, X_0=i)}{\mathbb{P}(X_0=i)} \\
+									&=& \sum_{k \in I} \frac{\mathbb{P}(X_{m+n} = j, X_m =k, X_0=i)}{\mathbb{P}(X_m = k, X_0=i)}  \frac{\mathbb{P}(X_m = k, X_0=i)}{\mathbb{P}(X_0=i)}\\
+									&=& \sum_{k \in I} \mathbb{P}(X_{m+n} = j \:|\: X_m =k, X_0=i) \mathbb{P}(X_m = k \:|\: X_0=i)\\
+									&=& \sum_{k \in I} \mathbb{P}(X_{m+n} = j \:|\: X_m =k) \mathbb{P}(X_m = k \:|\: X_0=i)\\
+									&=& \sum_{k \in I} \mathbb{P}(X_n = j \:|\: X_0 =k) \mathbb{P}(X_m = k \:|\: X_0=i)\\
+									&=& \sum_{k \in I} p_{i,k}^{(m)}*p_{k,j}^{(n)}
+\end{eqnarray*}
+\qed
+
+Mit Hilfe der Chapman-Kolmogorov-Gleichung können wir beweisen, dass die \textbf{n-stufigen Übergangswahrscheinlichkeiten} der n-ten Potenz der Übergangsmatrix an der Stelle $(i,j)$ entsprechen.\\
+
+\textbf{Beweis: Lemma \ref{lem:übergangsws}}\\
+Sei $P^{(n)} := \{p_{i,j}^{(n)}\}_{i,j\in I}$ die Matrix der n-stufigen Übergangswahrscheinlichkeiten. Dann gilt aufgrund von \ref{eq:chapKol}
+\begin{eqnarray*}
+	P^{(n+m)} = P^{(n)}*P^{(m)}.
+\end{eqnarray*}
+
+Damit folgt dann
+\begin{eqnarray*}
+	P^{(n)} = P^{(1+n-1)} = P*P^{(n-1)}=P^2*P^{(n-2)}=...=P^n.
+\end{eqnarray*}
+\qed
+
+Nun wollen wir die verschiedene Eigenschaften vorstellen, die eine Markov-Kette haben kann, wenn die Übergangsmatrix eine besondere Struktur hat.\\
 
 \begin{defini} Im folgenden sei immer eine Markov-Kette $\{X_t, t\geq 0\}$ mit $I$-wertigen Zufallsgrößen und einer Übergangsmatrix $P$ gegeben. Außerdem seien $i, j \in I$ beliebige Zustand des Zustandsraums.
 
@@ -59,7 +110,9 @@ Es gibt verschiedene Eigenschaften die eine Markov-Kette haben kann, wenn die Üb
 		\end{eqnarray*}
 	Das heißt jeder Zustand der Kette kann jeden anderen Zustand mit positiver Wahrscheinlichkeit erreichen.
                 
-	\item Sei $T_{i,j} := min\{n\in \mathbb{N} : X_n = i \: | \: X_0=i\}$ die Wartezeit bis die Markovkette vom Zustand $i$ aus, das erste Mal den Zustand $j$ erreicht. Ein Zustand i heißt heißt \textbf{rekurrent} falls $\mathbb{P}(T_i<\infty) = 1$, ansonsten heißt er \textbf{transient}. D.h. ein rekurrenter Zustand wird also mit Sicherheit in endlicher Zeit erneut erreicht.
+	\item Sei $T_{i,j} := min\{n\in \mathbb{N} : X_n = i \: | \: X_0=i\}$ die Wartezeit bis die Markovkette vom Zustand $i$ aus, das erste Mal den Zustand $j$ erreicht. Ein Zustand $i$ heißt heißt \textbf{rekurrent} falls $\mathbb{P}(T_i<\infty) = 1$, ansonsten heißt er \textbf{transient}. D.h. ein rekurrenter Zustand wird also mit Sicherheit in endlicher Zeit erneut erreicht.
+	
+	\item Sei $\mu _i := \mathbb{E}(T_{i,i}) = \sum_{n\in\mathbb{N}} n \mathbb{P}(T_{i,i} =n)$ die erwartete Rückkkehrzeit zu einem Zustand $i$ bei Start in $i$. Ein Zustand $i$ heißt \textbf{positiv rekurrent} falls $\mu _i < \infty$ und \textbf{nullrekurrent}, wenn $i$ rekurrent ist, aber nicht positiv rekurrent.
 	
 	\item Ein Zustand $i$ heißt absorbierend, wenn $\mathbb{P}(X_{n+m} = j \: | \: X_n = i) = 0$ für alle $m\in \mathbb{N}$ und alle $j \in I$. Anlog heißt eine Menge $A\subset I$ absorbierend, wenn $\mathbb{P}(X_{n+m} \notin A \: | \: X_n \in A) = 0$. Das heißt eine Markov-Kette, die einen absorbierenden Zustand bzw. eine absorbierende Teilmenge von $I$ erreicht, kann diese nicht mehr verlassen.
 	
@@ -69,13 +122,71 @@ Es gibt verschiedene Eigenschaften die eine Markov-Kette haben kann, wenn die Üb
 		\end{eqnarray*}
 		Ein Zustand heißt \textbf{aperiodisch}, wenn $d_i=1$ und \textbf{periodisch} sonst.
 		
-	\item Die Startverteilung $v$ einer Markov-Kette heißt \textbf{stationär}, wenn gilt dass $\mathbb{P}(X_n=i) = v(i)$ für alle $n\in \mathbb{N}$ und alle $i$. Das heißt die Wahrscheinlichkeit hängt zu jedem Zeitpunkt nur von der Startverteilung ab. Anders ausgedrückt gilt $vP = v$, d.h. v ist ein Eigenvektor der Übergangsmatrix zum Eigenwert 1.
+	\item Die Startverteilung $v$ einer Markov-Kette heißt \textbf{stationär} oder \textbf{Gleichgewichtsverteilung}, wenn für alle $n\in \mathbb{N}$ und alle $i$ gilt 
+	\begin{eqnarray*}
+		\mathbb{P}(X_n=i) = v(i).
+	\end{eqnarray*}
+	Das heißt die Wahrscheinlichkeit hängt zu jedem Zeitpunkt nur von der Startverteilung ab. Anders ausgedrückt gilt $vP = v$, d.h. v ist ein Eigenvektor der Übergangsmatrix zum Eigenwert 1.
 	
 \end{enumerate}
 \end{defini}
 
-Da Markov-Ketten mitunter sehr komplex werden können, ist es nicht immer möglich alle gewünschten Informationen analytisch zu berechnen. Aus diesem Grund wird in der Praxis häufig ein Simulationsansatz verwendet, um das Verhalten der Kette zu untersuchen.
+Die Gleichgewichtsverteilung kann nicht immer explizit angegeben werden, aber in einigen Sonderfällen ist dies möglich.
 
-\begin{defini}
-Ein Verfahren, dass durch die wiederholte Durchführung eines Zufallsexperiments Aussagen über das Verhalten des Systems ableitet, wird als \textbf{Monte-Carlo-Verfahren} oder \textbf{Monte-Carlo-Simulation} bezeichnet. Dieses Vorgehen basiert auf dem Gesetz der großen Zahlen. Das heißt die relativen Häufigkeiten nähern sich im Grenzwert den Wahrscheinlichkeiten der zugrunde liegenden Verteilung an. Die Verteilung der Häufigkeiten wird dabei als \textbf{empirische Verteilung} bezeichnet.
-\end{defini}
+\begin{satz} Sei $\{X_t, t\geq 0\}$ eine irreduzible Markov-Kette mit Übergangsmatrix $P$, dann sind folgende Aussagen äquivalent: 
+	\begin{enumerate}[label=(\roman{*})]
+		\item Es existiert eine Gleichgewichtsverteilung.
+		\item Es existiert ein positiv rekurrenter Zustand $i \ in I$.
+		\item Alle Zustände in $I$ sind positiv rekurrent.
+	\end{enumerate}
+	Außerdem gilt falls eine dieser Bedingungen erfüllt, dass die Gleichgewichtsverteilung $v$ eindeutig bestimmt ist und gilt $v(i) = \frac{1}{\mu _i}$.
+\end{satz}
+
+\textbf{Beweis:}\\
+\begin{itemize}
+\item $(iii) \Rightarrow (ii)$: Diese Richtung ist trivial.
+
+\item $(ii) \Rightarrow (i)$:
+Wir definieren ein Maß, das für eine, in einem beliebigen Zustand $k\in I$ gestartete Markov-Kette, die erwartete Anzahl an Besuchen in einem Zustand $i \in I$ bis zur ersten Rückkehr der Kette nach $k$ zählt:
+\begin{eqnarray*}
+	\gamma_k(i) = \mathbb{E}\left(\sum_{n=1}^{T_{k,k}} \mathds{1}_{\{X_n=i\}}\right)
+\end{eqnarray*}
+Durch Anwendung des Satzes der monotonen Konvergenz\footnote{siehe Anhang } und ausnutzen der Markov-Eigenschaft, können wir zeigen, dass dies ist ein invariantes Maß\footnote{d.h. $ \gamma P = \gamma$}:
+\begin{eqnarray*}
+	\gamma_k(i) &=& \mathbb{E}\left(\sum_{n=1}^{T_{k,k}} \mathds{1}_{\{X_n=i, n\leq T_k\}}\right)\\
+							&=& \sum_{n\in \mathbb{N}} \mathbb{P}(X_n=i, n\leq T_{k,k}) \\
+							&=& \sum_{n\in \mathbb{N}} \sum_{j\in I} \mathbb{P}(X_n=i, X_{n-1} = j, n\leq T_{k,k}) \\
+							&=& \sum_{n\in \mathbb{N}} \sum_{j\in I} \mathbb{P}(X_{n-1}=j, n\leq T_{k,k}) \mathbb{P}(X_n=i | X_{n-1} = j) \\
+							&=& \sum_{n\in \mathbb{N}} \sum_{j\in I} \mathbb{P}(X_{n-1}=j, n-1\leq T_{k,k}-1) p_{j,i} \\
+							&=& \sum_{j\in I} p_{j,i} \sum_{n\in \mathbb{N}_0}  \mathbb{P}(X_n=j, n\leq T_{k,k}-1)  \\
+							&=& \sum_{j\in I} p_{j,i} \mathbb{E}\left(\sum_{n=0}^{T_{k,k}-1} \mathds{1}_{\{X_n=j\}}\right)  \\
+							&=& \sum_{j\in I} p_{j,i} \mathbb{E}\left(\sum_{n=1}^{T_{k,k}} \mathds{1}_{\{X_n=j\}}\right)  \\
+							&=& \sum_{j\in I} \gamma_k(j) p_{j,i}   
+\end{eqnarray*}
+
+Nun zeigen wir, dass $\gamma$ auch zu einer Verteilung normiert werden kann und damit dann eine Gleichgewichtsverteilung ist.
+\begin{eqnarray*}
+	\sum_{j\in I} \gamma_k(j) &=& \sum_{j\in I}\mathbb{E}\big(\sum_{n=1}^{T_{k,k}} \mathds{1}_{\{X_n=j\}}\big)\\
+							&=& \mathbb{E}\big(\sum_{n=1}^{T_{k,k}} \underbrace{\sum_{j\in I}\mathds{1}_{\{X_n=j\}}}_{1}\big) \\
+							&=& \mathbb{E}(T_{k,k}) = \mu _k <\infty
+\end{eqnarray*}
+
+\item $(i) \Rightarrow (iii)$:
+Sei $v$ eine Gleichgewichtsverteilung und sei $k\in I$, dann ist $\gamma = \frac{v}{v(k)}$ ein invariantes Maß mit $\gamma(k) =1$ und es gilt $\gamma(k)=\gamma$\footnote{Vergleiche Script König Satz 9.5.3}. Damit folgt
+\begin{eqnarray*}
+	\mu _k = \sum_{j\in I}\gamma _k(j) = \sum_{j\in I}\gamma(j) = \frac{1}{v(k)}\sum_{j\in I} v{j} = \frac{1}{v(k)} < \infty
+\end{eqnarray*}
+Da dies für alle k gilt, sind alle Zustände positiv rekurrent. Der letzte Teil des Satzes folgt direkt aus dem diesem Beweisschritt.
+\end{itemize}
+\qed
+
+Leider ist es gerade bei komplexeren Markov-Ketten nicht immer möglich die stationäre Verteilung analytisch zu bestimmen. Unter bestimmten Voraussetzungen kann sie aber zumindest angenähert werden.
+
+\begin{satz} Sei $\{X_t, t\geq 0\}$ eine irreduzible Markov-Kette mit aperiodischen und positiv rekurrenten Zuständen und Gleichgewichtsverteilung $\pi$. Dann gilt für alle $i, j \in I$ 
+\begin{eqnarray*}
+	\lim_{n\rightarrow \infty} p_{i,j}^{(n)} = \pi(j). 
+\end{eqnarray*}
+Das heißt, durch wiederholtes Potenzieren der Matrix der Übergangswahrscheinlichkeiten konvergiert jede Zeilen gegen die Gleichgewichtsverteilung.
+\end{satz}
+
+Auf den Beweis dieser Aussage wird an dieser Stelle verzichtet. Eine vollständige Ausführung des Satzes findet sich in \cite[Kapitel 4 -Theorem 4.1.4]{kemenySnell}.

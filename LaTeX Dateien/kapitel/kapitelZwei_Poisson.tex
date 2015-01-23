@@ -21,17 +21,17 @@ sodass $X_t: \omega \mapsto X_t(\omega)$ für alle  $t \in T$ eine messbare Abbil
 	\item Ein stochastischer Prozess besitzt \textbf{Unabhängige Zuwächse}, wenn die Zufallsvariablen $X_{t_0},X_{t_1}-X_{t_0},...,,X_{t_n}-X_{t_{n-1}}$ für alle n=1,2,... und $0\leq t_0<t_1<...<t_n$ unabhängig sind.
 \end{enumerate}
 
-\begin{defini}
+\begin{defini} \label{def:zaehlPro}
 Sei $T_1, T_2, ... : \omega \rightarrow [0, \infty)$ eine Folge von unabhängig und identisch verteilten Zufallsvariablen und $S_n := T_1+...+T_n$ für alle $n\in \mathbb{N}$, dann ist $N := \{N_t, t\geq 0\}$ mit
 \begin{eqnarray*}
-		N_t = \sum_{k=1}^{\infty} \mathbb{I}(S_k\leq t)
+		N_t = \sum_{k=1}^{\infty} \mathds{1}(S_k\leq t)
 \end{eqnarray*}
 ein stochastischer Prozess und wird als Zählprozess bezeichnet. 
 \end{defini}
 
 Prozesse dieser Art werden z.B. in der Zuverlässigkeitstheorie eingesetzt um die Ausfälle einer Komponente in einem bestimmten Zeitraum zu zählen. Deshalb werden die $T_n$ häufig als \textbf{Zwischenankunftszeiten} bezeichnet und die $S_n$ als $n$-te \textbf{Sprungzeit}.
 
-\begin{defini} \label{poiPro}
+\begin{defini} \label{def:poiPro}
 Ein Zählprozess $\{N_t, t\geq 0\}$ mit exponentialverteilten Zwischenankunftszeiten $T_n \sim exp(\lambda)$ heißt \textbf{homogener Poisson-Prozess mit der Intensität $\lambda$}.  
 \end{defini}
 
@@ -39,10 +39,29 @@ In dem nachfolgendem Theorem werden die wichtigsten Eigenschaften und äquivalent
 %Wir schreiben $f(h) = o(g(h))$  (für $h \rightarrow 0$), falls $\lim_{h \rightarrow 0} f(h)/g(h) = 0$ und $f(h) = O(g(h)$, falls $|f(h)/g(h)|$ für $h \leq 1$ beschränkt ist. 
 
 \begin{defini}
-Seien $X_1, X_2,..., X_n$ Zufallsvariablen, dann bezeichnen wir die geordneten Variablen $X_{1:n} \leq X_{2:n} \leq ... \leq X_{n:n}$ als die \textbf{Ordnungsstatistik} der Variablen $\{X_i: 1 \leq i \leq n\}$.
+Seien $X_1, X_2,..., X_n$, mit $n\in \mathbb{N}$ Zufallsvariablen, dann bezeichnen wir die geordneten Variablen $X_{1:n} \leq X_{2:n} \leq ... \leq X_{n:n}$ als die \textbf{Ordnungsstatistik} der Variablen $\{X_i: 1 \leq i \leq n\}$.
 \end{defini}
 
-\begin{theorem} Die folgenden Aussagen sind äquivalent\footnote{Quelle siehe: \url{http://www.mathematik.uni-ulm.de/stochastik/lehre/ss05/wt/skript/node15.html}}:
+\begin{satz}
+Seien $X_1, X_2,..., X_n$, mit $n\in \mathbb{N}$, unabhängige und identisch verteilte Zufallsvariablen mit Dichte $f$ und sei $X_{1:n} \leq X_{2:n} \leq ... \leq X_{n:n}$ die entsprechende Ordnungsstatistik. Dann gilt für die gemeinsame Dichte:
+\begin{eqnarray}\label{eq:ordnungsstatistik}
+f_{X_{1:n},X_{2:n},...,X_{n:n}}(t_1,t_2...,t_n)=
+		\begin{cases}
+			n!f(t_1)f(t_2)...f(t_n) & \text{falls } t_1\leq t_2\leq ... \leq t_n \\ 	
+			0 & \text{sonst} \\ 
+		\end{cases}
+\end{eqnarray}
+\end{satz} 
+
+\textbf{Beweis:} 
+Da aufgrund der Definition der Ordnungsstatistik die Werte aufsteigend geordnet sind, ist die Dichte gleich 0, wenn die Bedingung $t_1\leq t_2\leq ... \leq t_n$ nicht erfüllt ist. Sei nun diese Bedingung erfüllt. Dann existieren genau $n!$ Möglichkeiten die Zufallsvariablen $X_1, X_2,..., X_n$ anzuordnen. Zum Beispiel gilt für $n=2$, dass $\{X_{1:2} = t_1, X_{2:2} = t_2\}$ genau dann Eintritt wenn entweder $\{X_1 = t_1, X_2 = t_2\}$ oder $\{X_2 = t_1, X_1 = t_2\}$ eintritt. Diese Möglichkeiten unterscheiden sich nur durch Permutation und besitzen somit die gleiche Dichte. Deshalb reicht es aus nur eine Möglichkeit zu betrachtet und das Ergebnis anschließend mit der Anzahl der möglichen Permutationen $n!$ zu multiplizieren. Es gilt für die einfachste Möglichkeit
+\begin{eqnarray*}
+f_{X_1,X_2,...,X_n}(t_1,t_2...,t_n)=f(t_1)f(t_2)...f(t_n)
+\end{eqnarray*}
+da die Zufallsvariablen $X_1, X_2,..., X_n$ unabhängig voneinander sind. Nach Multiplikation mit $n!$ ist erhält man \ref{eq:ordnungsstatistik}.
+\qed \\
+
+\begin{theorem} \label{th:poiPro} Die folgenden Aussagen sind äquivalent\footnote{Quelle siehe: \url{http://www.mathematik.uni-ulm.de/stochastik/lehre/ss05/wt/skript/node15.html}}:
 \begin{enumerate}[label=(\roman{*})]
 	\item $\{N_t, t\geq 0\}$ ist ein Poisson-Prozess mit der Intensität $\lambda$
 	\item Die Zufallsvariablen $N_t$ sind poissonverteilt zum Parameter $\lambda t$ für alle $t\geq 0$. \\
@@ -64,7 +83,7 @@ Seien $X_1, X_2,..., X_n$ Zufallsvariablen, dann bezeichnen wir die geordneten V
 Da der Beweis sehr umfangreich ist, werden an dieser Stelle nur die wesentliche Schritte vorgestellt. \\
 \begin{itemize}
 \item $(i) \Rightarrow (ii)$:
-	Aus $(i)$ folgt, dass $S_n=\sum_{i=1}^n T_i$ eine Summe von $n$ unabhängigen und zum Parameter $\lambda$ exponentialverteilten Zufallsvariablen ist, 	d.h., $S_n \sim Erl(n,\lambda)$, wobei $Erl(n,\lambda)$ die Erlang-Verteilung mit den Parametern $n$ und $\lambda$ bezeichnet. Hieraus folgt $\mathbb{P}(N_t = 0) = \mathbb{P}(S_1 > t) = e^{-\lambda t}$ und damit folgt:
+Seien ${T_i}_i\in \mathbb{N}$	die Zwischenankunftszeiten des Poisson-Prozesses $\{N_t, t\geq 0\}$, dann folgt, dass $S_n=\sum_{i=1}^n T_i$ eine Summe von $n$ unabhängigen und zum Parameter $\lambda$ exponentialverteilten Zufallsvariablen ist. 	Nach \ref{lem:gamma} gilt also $S_n \sim \gamma_{\lambda, n}$. Hieraus folgt $\mathbb{P}(N_t = 0) = \mathbb{P}(S_1 > t) = e^{-\lambda t}$ und damit gilt:
 
 \begin{eqnarray*}	 
 	\mathbb{P}(N_t = n) &=&\mathbb{P}(N_t \geq n) - \mathbb{P}(N_t \geq n+1) \\	 
@@ -74,22 +93,23 @@ Da der Beweis sehr umfangreich ist, werden an dieser Stelle nur die wesentliche 
 				&=&\frac{(\lambda t)^n}{n!} e^{-\lambda t}
 \end{eqnarray*}
 
-Dies gilt für jedes $n\geq 1$, und damit folgt, dass $N_t \sim Poi(\lambda t)$. Dies ist der erste Teil von $(ii)$ und für den zweiten Teil betrachten wir die gemeinsame Dichte $f_{S_1,...,S_{n+1}}(t_1,...,t_{n+1})$ von $S_1,...,S_{n+1}$. Diese ist für beliebige $t_0=0 \leq t_1 \leq ... \leq t_n \leq t_{n+1}$ gegeben durch
+Dies gilt für jedes $n\geq 1$, und damit folgt, dass $N_t \sim Poi(\lambda t)$. Dies ist der erste Teil von $(ii)$ und für den zweiten Teil betrachten wir die gemeinsame Dichte $f_{S_1,...,S_{n+1}}(t_1,...,t_{n+1})$ von $S_1,...,S_{n+1}$. Für beliebige $t_0=0 \leq t_1 \leq ... \leq t_n \leq t_{n+1}$ gilt aufgrund des Transformationssatzen (vgl. \ref{sa:trafo})
 
 \begin{eqnarray*}	 
-	f_{S_1,...,S_{n+1}}(t_1,...,t_{n+1}) = \prod_{k=1}^{n+1} \lambda e^{-\lambda(t_k-t_{k-1})} = \lambda^{n+1}e^{-\lambda t_{n+1}}
+	f_{S_1,...,S_{n+1}}(t_1,...,t_{n+1}) &=& f_{T_1,T_2,...,T_{n+1}}(t_1,t_2-t_1,...,t_{n+1}-t_n) * |det(DA)| \\
+						&=& \prod_{k=1}^{n+1} \lambda e^{-\lambda(t_k-t_{k-1})} = \lambda^{n+1}e^{-\lambda t_{n+1}}
 \end{eqnarray*}
 
-und 0 sonst. Somit gilt unter der Bedingung $N_t=n$ und $0 \leq t_1 \leq ... \leq t_n \leq t$ für die gemeinsame bedingte Dichte
+und 0 sonst. Dabei ist A die Transformation $t_i \mapsto t_i - t_{i-1}$ und damit gilt $|det(DA)| = 1$. Somit gilt unter der Bedingung $N_t=n$ und $0 \leq t_1 \leq ... \leq t_n \leq t$ für die gemeinsame bedingte Dichte
 
 \begin{eqnarray*}	 
-	f_{S_1,...,S_n}(t_1,...,t_n\: | \:N_t=n) &=& f_{S_1,...,S_n}(t_1,...,t_n\: | \:S_1 \leq t_1,...,S_n\leq t, S_{n+1} > t) \\
+	f_{S_1,...,S_n}(t_1,...,t_n\: | \:N_t=n) &=& f_{S_1,...,S_n}(t_1,...,t_n\: | \:S_1 \leq t,...,S_n\leq t, S_{n+1} > t) \\
 																						&=& \frac{\int_t^{\infty} \lambda^{n+1} e^{-\lambda x_{n+1}} dx_{n+1}}
 																						{\int_0^t \int_{x_1}^t .. .\int_{x_{n-1}}^t \int_t^{\infty} \lambda^{n+1} e^{-\lambda x_{n+1}} dx_{n+1}...dx_1} \\
 																						&=& \frac{n!}{t^n}
 \end{eqnarray*}
 
-und $f_{S_1,...,S_n}(t_1,...,t_n\: | \:N_t=n) = 0$ sonst. Dies ist die Dichte der Ordnungsstatistik von n unabhängigen in[0,t] gleichverteilten Zufallsvariablen und damit der zweite Teil dieses Beweisschritts. 
+und $f_{S_1,...,S_n}(t_1,...,t_n\: | \:N_t=n) = 0$ sonst. Nach \ref{eq:ordnungsstatistik} ist dies die Dichte der Ordnungsstatistik von n unabhängigen in[0,t] gleichverteilten Zufallsvariablen und damit der zweite Teil dieses Beweisschritts. 
 
 \item $(ii) \Rightarrow (iii)$: 
 
@@ -106,7 +126,7 @@ und damit hat der Zählprozess ${N_t}$ unabhängige Zuwächse.
 
 \item $(iii) \Rightarrow (iv)$: 
 
-Aus $(iii)$ folgt, dass der Zufallsvektor $(S_1,...,S_m)$, unter der Bedingung $N(t_n + h) = m$, die gleiche Verteilung hat, wie die Ordnungstatistik vom m unabhängigen in $[0, t_n + h]$ gleichverteilten Zufallsvariablen hat. Deshalb gilt für beliebige $x_1,...,x_n \in \mathbb{N}$, $t_0=0 \leq t_1 \leq ... \leq t_n$ und$h>0$ 
+Aus $(iii)$ folgt, dass der Zufallsvektor $(S_1,...,S_m)$, unter der Bedingung $N(t_n + h) = m$, die gleiche Verteilung hat, wie die Ordnungstatistik vom m unabhängigen in $[0, t_n + h]$ gleichverteilten Zufallsvariablen hat. Deshalb gilt für beliebige $x_1,...,x_n \in \mathbb{N}$, $t_0=0 \leq t_1 \leq ... \leq t_n$ und $h>0$ 
 
 \begin{eqnarray*}	 
 	\mathbb{P}(\bigcap_{k=1}^n\{N_{t_k+h}-N_{t_{k-1}+h}=x_k\}\: | \:N_{t_n}+h=m)
@@ -154,7 +174,10 @@ was äquivalent zur zweiten Bedingung in $(iv)$ ist.
 Sei $\mathbb{P}(N_t=n) := p_n(t)$ mit $n\in \mathbb{N}$ und $t\geq0$, dann gilt für $h>0$
 
 \begin{eqnarray} \label{eq:th1a}
-	p_0(t+h)=\mathbb{P}(N_t=0,N_{t+h}-N_t=0)=p_0(t)(1-\lambda h + o(h))
+	p_0(t+h)&=& \mathbb{P}(N_t=0,N_{t+h}-N_t=0) \\
+					&=& \mathbb{P}(N_t=0) \mathbb{P}(N_{t+h}-N_t=0) \\
+					&=& \mathbb{P}(N_t=0) \mathbb{P}(N_h=0) \\
+					&=& p_0(t)(1-\lambda h + o(h))
 \end{eqnarray}
 
 und für $t\geq h>0$
@@ -191,27 +214,38 @@ Dies lässt sich analog zum vorherigen Fall zeigen und durch vollständige Indukti
 
 \item $(v) \Rightarrow (i)$:
  
-Sei $ b_0 = 0 \le a_1 < b_1 \leq ...\leq a_n < b_n$, dann gilt 
+Sei $ b_0 = 0 \le a_1 < b_1 \leq ...\leq a_n < b_n$, dann gilt
 
 \begin{eqnarray*}	 
-	&& \mathbb{P}(\cap_{k=1}^n\{ a_k < S_k \leq b_k\})	= \\[6pt]
-	&& \mathbb{P}(\cap_{k=1}^{n-1}\{N_{a_k} -N_{b_{k-1}} = 0, N_{b_k} - N_{a_k} = 1\} \cap \{N_{a_n} - N_{b_{n-1}} = 0, N_{b_n} - N_{a_n} \geq 1\})
+	&& \mathbb{P}\left(\bigcap_{k=1}^n\{ a_k < S_k \leq b_k\}\right)	= \\
+	&& \mathbb{P}\left(\bigcap_{k=1}^{n-1}\{N_{a_k} -N_{b_{k-1}} = 0, N_{b_k} - N_{a_k} = 1\} \cap \{N_{a_n} - N_{b_{n-1}} = 0, N_{b_n} - N_{a_n} \geq 1\}\right).
 \end{eqnarray*} 
 
-und zusammen mit $(v)$ 
+Nach $(v)$ ist der stochastische Prozess stationär und die $N_t \sim Poi(\lambda t=)$ deshalb gilt
+\begin{eqnarray*}	 
+	\mathbb{P}(N_{a_k} -N_{b_{k-1}} = 0) = \mathbb{P}(N_{a_k-b_{k-1}} = 0) = e^{-\lambda (a_k-b_{k-1})}
+\end{eqnarray*} 
+
+und
+
+\begin{eqnarray*}	 
+	\mathbb{P}(N_{b_k} -N_{a_k} = 1) = \mathbb{P}(N_{b_k-a_k} = 1) = \lambda (b_k-a_k)e^{-\lambda (b_k-a_k)}.
+\end{eqnarray*} 
+
+Da die Intervalle $\{(b_{k-1},a_k)\}_{1\leq k \leq n}$ und $\{(a_k, b_k)\}_{1\leq k \leq n}$ disjunkt sind und der Prozess unabhängige Zuwächse hat, gilt
 
 \begin{eqnarray*}
-	&& \mathbb{P}(\cap_{k=1}^n\{ a_k < S_k \leq b_k\}) \\
+	&& \mathbb{P}\left(\bigcap_{k=1}^n\{ a_k < S_k \leq b_k\}\right) \\
 	&=& e^{-\lambda(a_n - b_{n-1})} (1 - e^{-\lambda(b_n - a_n)}) \prod_{k=1}^{n-1} e^{-\lambda(a_k - b_{k-1})} \lambda (b_k -a_k) e^{-\lambda(b_k - a_k)} \\
 	&=& (e^{-\lambda a_n} - e^{-\lambda b_n})\lambda^{n-1} \prod_{k=1}^{n-1} (b_k - a_k) \\
 	&=& \int_{a_1}^{b_1}...\int_{a_n}^{b_n} \lambda^n e^{-\lambda y_n} dy_n...dy_1 \\
-	&=& \int_{a_1}^{b_1}\int_{a_2 - x_1}^{b_2 - x_1}...\int_{a_n-x_1-...-x_{n-1}}^{b_n-x_1-...-x_{n-1}} \lambda^n e^{-\lambda(x_1 +...+x_n)} dx_n...dx_1
+	&=& \int_{a_1}^{b_1}\int_{a_2 - x_1}^{b_2 - x_1}...\int_{a_n-x_1-...-x_{n-1}}^{b_n-x_1-...-x_{n-1}} \lambda^n e^{-\lambda(x_1 +...+x_n)} dx_n...dx_1.
 \end{eqnarray*}
 
-Die gemeinsame Dichte von  $ S_1, S_2 - S_1, ...,S_n - S_{n-1}$ ist somit gegeben durch
+Dabei wurde im letzten Schritt wieder der Transformationssatz angewendet. Die gemeinsame Dichte von  $ S_1, S_2 - S_1, ...,S_n - S_{n-1}$ ist somit gegeben durch
 
 \begin{eqnarray*}
-	\mathbb{P}(\cap_{k=1}^n \{S_k-S_{k-1}\in dx_k\})=\lambda^n e^{-\lambda(x_1 + ... +x_n)}dx_1...dx_n.
+	f_{S_1,S_2-S_1,...,S_n-S_{n-1}}(x_1,...,x_n) = \lambda^n e^{-\lambda(x_1 + ... +x_n)}.
 \end{eqnarray*}
 
 Dies bedeutet, dass die Zufallsvariablen  $ S_1, S_2 - S_1, ...,S_n - S_{n-1}$ unabhängig und exponentialverteilt zum Parameter $\lambda$ sind, d.h., $ \{N_t\}$ ist ein Poisson-Prozess mit der Intensität $ \lambda$. 
@@ -221,7 +255,7 @@ Dies bedeutet, dass die Zufallsvariablen  $ S_1, S_2 - S_1, ...,S_n - S_{n-1}$ u
 
 Die folgende sehr nützliche Eigenschaft ist bereits von der Poisson-Verteilung bekannt:
 
-\begin{lemmas} \label{lem:zusammengesetzterPP}
+\begin{lemmas} \label{lem:aufteilungPP}
 Die Überlagerung von zwei unabhängigen Poisson-Prozessen $\{N_t^1, t\geq 0\}$ und $\{N_t^1, t\geq 0\}$  mit der Intensität $\lambda _1$ bzw. $\lambda _2$ ist wieder ein Poisson-Prozess mit Intensität $\lambda = \lambda _1+\lambda _2$.
 \end{lemmas}
 \textbf{Beweis:} 
@@ -250,4 +284,33 @@ Da die Zwischenankunftszeiten eines Poisson-Prozesses exponentialverteilt sind, 
 	&=& \mathbb{P}(T_{N_{t+1}} \leq s) =1-e^{-\lambda s}
 \end{eqnarray*}
 D.h. die Wartezeit zum Zeitpunkt t ist genauso verteilt wie die Zwischenankunftszeiten und damit unabhängig davon, wie viel Zeit bereits seit dem letzten Ereignis vergangen ist.
+\qed \\
+
+Nachdem wir nun ausführlich den einfachen Poisson-Prozess betrachtet haben, wollen wir nun einen stochastischen Prozess einführen, der häufig in der Risikotheorie für die Modellierung von Schadenshöhen verwendet wird.
+
+\begin{defini}
+Sei $\{N_t, t\geq 0\}$ ein homogener Poisson-Prozess mit Intensität $\lambda$ und seien $X_1, X_2, ...$ unabhängige, nichtnegative und identisch verteilte Zufallsvariablen. Dann heißt der Prozess
+\begin{eqnarray*}
+	Y_t = \sum_{i=1}^{N_t} X_i
+\end{eqnarray*}
+\textbf{zusammengesetzter Poisson-Prozess}.
+\end{defini}
+
+Der Erwartungswert eines zusammengesetzten Poisson-Prozesses lässt sich einfach bestimmen:
+\begin{lemmas}
+Sei $Y_t = \sum_{i=1}^{N_t} X_i$ ein zusammengesetzter Poisson-Prozess und $\mathbb{E}(X_i) = \mu$ dann gilt für alle $t\geq 0$
+\begin{eqnarray*}
+	\mathbb{E}(Y_t) = \mu \lambda t
+\end{eqnarray*}
+\end{lemmas}
+
+\textbf{Beweis:} 
+Da die $X_i$ unabhängig sind, gilt nach der Satz der totalen Erwartung
+\begin{eqnarray*}
+	\mathbb{E}(Y_t) &=& \mathbb{E}\left(\sum_{i=1}^{N_t} X_i\right) \\
+	&=& \sum_{n=1}^{\infty} \mathbb{E}\left(\sum_{i=1}^{N_t} X_i \:|\: N_t=n\right)\mathbb{P}(N_t = n) \\
+	&=& \sum_{n=1}^{\infty} \mathbb{E}\left(\sum_{i=1}^{n} X_i\right)\mathbb{P}(N_t = n) \\
+	&=& \sum_{n=1}^{\infty} \mu n *\mathbb{P}(N_t = n) \\
+	&=& \mu \mathbb{E}(N_t) = \mu \lambda t
+\end{eqnarray*}
 \qed \\
