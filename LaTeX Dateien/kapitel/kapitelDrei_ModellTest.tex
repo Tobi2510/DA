@@ -1,0 +1,221 @@
+\section{Anwendung und Test des Modells}
+
+Im folgenden Abschnitt wird zunächst die Datengrundlage vorgestellt, auf der das Modell später getestet werden soll. Anschließend wird die Vorgehensweise zur Identifizierung der Unfälle beschrieben. Aus diesen werden dann im letzten Teil die Parameter des Modells geschätzt und die Modellgüte bewertet. Unfälle können entweder im ambulanten Bereich abgerechnet werden, oder im Stationären. In beiden Fällen ist es notwendig, das zugrunde liegende Abrechnungssystem nachzuvollziehen und dann alle relevanten Daten zu einem Fall zusammenzufassen. Für diese Auswertung betrachten wir ausschließlich die stationären Fälle, also solche die zu einer Aufnahme im Krankenhaus geführt haben. 
+
+\subsection{Erläuterung der Datengrundlage}
+
+Die Datengrundlage für die Anwendung des Modells besteht aus Versicherten- und Krankenhausabrechnungsdaten, die über einen Zeitraum von drei Jahren erfasst wurden. Für die Aufbereitung der Daten wurden Duplikate entfernt, die Datenformate vereinheitlicht und fehlerhafte bzw. unvollständige Datensätze herausgefiltert. Die wichtigsten Informationen in den Krankenhausdaten sind die abgerechnete Krankenhausbehandlungen und die gestellten Diagnosen. Deshalb werden wir, bevor wir die Datengrundlage näher betrachten, im Folgenden einen kurzer Einblick in das deutsche Abrechnungssystem im Krankenhaus geben.\\
+
+Seit 2003 wird in Deutschland die Vergütung im Kranhausbereich über ein Fallpauschalensystem realisiert. Dieses basiert auf den sogenannten Diagnosis Related Groups (kurz: DRG)\footnote{auf Deutsch: diagnosebezogene Fallgruppen}. Behandlungsfälle, die medizinisch und hinsichtlich des Ressourcenverbrauchs ähnlich sind, sind dort zu Fallgruppen zusammengefasst. Die Zuordnung erfolgt auf Basis der Patienten- und Falldaten die während eines Krankenhausaufenthaltes gesammelt werden. Dazu gehören neben dem Alter und Geschlecht des Patienten auch die gestellten Diagnosen und die vorgenommen Prozeduren. Komplikationen oder erschwerende Begleiterkrankungen (Komorbiditäten) werden über verschiedene Schweregrade berücksichtigt.\\
+
+\begin{figure}[htb]                     
+\centering 
+\includegraphics[width=0.8\textwidth]{./bilder/drg}
+\caption{DRG-Fallkostenentwicklung (eigene Darstellung)} 
+\label{fig:DRG} 
+\end{figure}
+
+Für jede DRG gibt es eine Fallpauschale. Abhängig von der mittleren Verweildauer, wird eine untere und eine obere Grenzverweildauer bestimmt. Liegt die tatsächliche Verweildauer eines Falles außerhalb dieses Bereichs, gibt es Zu- bzw. Abschläge auf die Fallpauschale. Der endgültige Betrag ergibt dann die Kosten für einen Behandlungsfall. Das System wird vom "`Institut für das Entgeltsystem im Krankenhaus"'\footnote{\url{www.g-drg.de}} (kurz InEK) gepflegt und weiterentwickelt. \\
+
+Die während eines Krankenhausaufenthalts gestellten Diagnosen und die durchgeführten Prozeduren werden nach den medizinischen Klassifikationen ICD-10-GM und OPS kodiert. Das ICD-10-GM ist eine für Deutschland angepasste Version der "`internationalen statistischen Klassifikation der Krankheiten und verwandter Gesundheitsprobleme"'(kurz: ICD\footnote{Aufgrund des englischen Namens: "`International Statistical Classification of Diseases and Related Health Problems"'}). Der zugehörige Katalog wird vom "`deutschen Institut für Medizinische Dokumentation und Information"'\footnote{\url{www.dimdi.de}},kurz DIMDI, jährlich aktualisiert und angepasst. Er ist hierarchisch strukturiert und enthält 22 Krankheitskapitel, die sich in Gruppen, Kategorien und Subkategorien aufsplitten. Das DIMDI schätzt die Anzahl der Schlüsselnummern auf ca. 13.400.  Die jährlichen Anpassungen stellen auch eine besondere Herausforderung bei der Arbeit mit ICD-Schlüsseln dar. Es kann vorkommen, dass in zwei unterschiedlichen Jahren einem ICD-Schlüssel unterschiedliche Diagnosen zugeordnet werden. Der Operationen- und Prozedurenschlüssel (kurz: OPS) wird ebenfalls vom DIMDI gepflegt und ist die amtliche Klassifikation zum Verschlüsseln von Operationen, Prozeduren und allgemein medizinischen Maßnahmen im stationären Bereich und beim ambulanten Operieren. \\
+
+Sowohl die DRG- als auch ICD-Informationen sind, in den Grunddaten, für jeden einzelnen Krankenhausfall aufgeschlüsselt. Es ist zu beachten, dass alle während eines Kranhausfalles gestellten Diagnosen erfasst werden. Das heißt es können auch Diagnosen vorkommen, die mit der DRG nicht in Zusammenhang stehen\footnote{z.B. ein Herzinfarkt während einer Operation}. Die Datenstruktur der aufbereiteten Daten wird in folgendem Diagramm veranschaulicht:
+
+\begin{figure}[htb]                     
+\centering 
+\includegraphics[width=0.8\textwidth]{./bilder/ER-Diagramm}
+\caption{ER-Diagramm Datengrundlage} 
+\label{fig:Datengrundlage} 
+\end{figure}
+
+\begin{enumerate}[label=(\roman{*})]
+	\item \textbf{Versicherter:} In der ersten Tabelle sind Information zu den Versicherten hinterlegt. Neben Geschlecht und Geburtsdatum, gibt es auch Information über den Wohnort(Postleitzahl) und den Zeitraum in dem er versichert war. Letzteres ist wichtig, da nur während dieses Zeitraums Leistungsdaten über den entsprechenden Versicherten vorliegen. Als Primärschlüssel wird in dieser Tabelle die Personen\_ID verwendet, wodurch dann auch eine Zuordnung zu den Krankenhaus Falldaten möglich ist.\\
+
+	\item \textbf{Krankenhaus\_Fall:} Ein Krankenhausfall umfasst alle Maßnahmen, die von der Einweisung bis zu Entlassung eines Versicherten fällig werden. In dieser Tabelle kommt ein zusammengesetzter Primärschlüssel aus Fall\_ID und Institutionskennzeichen des Krankenhauses (IK) zum Einsatz \footnote{Das ist notwendig da jedes Krankenhaus die Fall\_ID selbst vergibt und es so vorkommt das zwei Krankenhäuser dieselbe ID vergeben.}. Für jeden Behandlungsfall gibt es Daten zum Zeitpunkt und Grund der Aufnahme und Analog für die Entlassung. Außerdem wird die abgerechnete DRG und die damit verbundenen Kosten angegeben. 
+
+	\item \textbf{Fall\_Diagnose:} Zu jedem Fall sind außerdem die dazugehörigen Diagnosen hinterlegt. Diese können wieder über die Kombination aus Institutionskennzeichen und Fall\_ID zugeordnet werden. Die Diagnosen werden nach dem oben beschrieben ICD-Katalog codiert und in Haupt- und Nebendiagnosen unterteilt, durch das Feld Diagnoseart. Jeder Datensatz enthält eine Primäre ICD zu der falls notwendig auch die Lokalisation angegeben wird. Das ist z.B. notwendig um zu spezifizieren, ob der linke oder der rechte Arm gebrochen ist. In einigen wenigen Fällen gibt es auch noch eine Sekundäre ICD.
+
+\end{enumerate}
+
+\subsection{Identifizierung von Unfällen}
+
+Eine Herausforderung dieser Arbeit war es, aus den sehr umfangreichen Abrechnungsdaten, die Fälle zu identifizieren, die als Unfälle im Sinne des Kohorten-Modells interpretiert werden können. In diesem Zusammenhang sollte nochmal erwähnt werden, dass alle Fälle die nicht über die in diesem Abschnitt beschrieben Methodik erfasst werden können, trotzdem bilanziell im Kohorten Modell erfasst sind. Diese werden dann der Phase regen Lebens zugeordnet und somit gehen keine Kosten verloren. \\
+
+Das wichtigste Erkennungsmerkmal der Unfälle ist, dass sie sich nicht ankündigen. Deshalb ist der Aufnahmegrund im Krankenhaus ein guter Indikator dafür, ob der Patient mit Überweisung oder Termin aufgenommen wurde oder nicht. In den Daten ist der Aufnahmegrund entsprechend den gesetzlichen Vorgaben codiert\footnote{siehe Anhang \ref{sec:301}}. Die für uns relevanten Informationen sind in der 3. und 4. Stelle codiert. Die folgenden Tabelle liefert eine Übersicht der möglichen Ausprägungen und der relativen Häufigkeiten in den Daten: \\
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|l|r|}
+		\hline
+		Code & Aufnahmegrund &	Anteil \\
+		\hline
+		01 & Normalfall & 56,704\% \\
+		\hline
+		07 & Notfall & 38,566\% \\
+		\hline
+		03 & Verkehrsunfall / Sportunfall / Sonstiger Unfall	& 0,105\% \\
+		\hline
+		02 & Arbeitsunfall / Wegeunfall / Berufskrankheit & 0,021\% \\
+		\hline
+		06 & Kriegsbeschädigten-Leiden / BVG-Leiden & 0,003\% \\
+		\hline
+		04 & Hinweis auf Einwirkung von äußerer Gewalt	& 0,002\% \\
+		\hline
+		05 & frei (früher Hinweis auf Selbstmord / Selbstbeschädigung\footnote{Wird wegen Datenschutz nicht mehr codiert und ist für uns nicht relevant.})	& 0,001\% \\
+		\hline
+		\hline
+			 &\textit{Keine Angabe (Feld nicht gefüllt)}	& 4,598\% \\
+		\hline
+	\end{tabular}
+	\caption{Aufnahmegrund und relative Häufigkeiten}
+	\label{tbl:Aufnahme}
+\end{table}
+
+Mehr als die Hälfte der Krankenhausfälle werden als Normalfall klassifiziert und kommen somit über eine Überweisung oder mit Termin ins Krankenhaus. Ein sehr kleiner Teil wird aufgrund einer Kriegsbeschädigung(06) behandelt oder aufgrund eines Gewaltverbrechens(04).  Für uns interessant sind also die Notfälle und die Fälle die tatsächlich als Unfall aufgenommen werden (02 und 03). Letztere machen leider nur einen sehr kleinen Teil aus, was auf die Natur der Daten zurückzuführen ist. Diese Schlüssel werden nur vergeben, wenn es versicherungsrelevant ist. Damit konnten wir den Anteil der möglich Unfälle bereits auf ca. 40\% der Krankenhausfälle einschränken. \\
+
+Den nächsten Anhaltspunkt liefert der Entlassungs- bzw. Verlegungsgrund. Allerdings gibt es 25 verschiedene Ausprägungen und zusätzlich die Information, ob der Versicherte arbeitsfähig entlassen wurde\footnote{siehe Anhang \ref{sec:301}}. Deshalb erläutern wir lediglich die interessanten Fälle, welche in der nachfolgenden Tabelle zusammengefasst sind. Die Anteile beziehen sich dabei bereits nur auf Notfälle und Unfälle:  \\
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{|l|r|}
+		\hline
+		Entlassungsgrund &	Anteil \\
+		\hline
+		Behandlung beendet & 83,210\% \\
+		\hline
+		Tod oder Entlassung in ein Hospiz & 5,796\% \\
+		\hline
+		Entlassung in eine Pflegeeinrichtung	& 3,199\% \\
+		\hline
+		Entlassung in eine REHA-Einrichtung & 2,219\% \\
+		\hline
+		Sonstige & 5,575\% \\
+		\hline
+	\end{tabular}
+	\caption{Entlassungsgrund und relative Häufigkeiten für Not- und Unfälle}
+	\label{tbl:Entlassung}
+\end{table} 
+
+Für den Großteil der Not- und Unfälle, endet mit dem Krankenhausaufenthalt auch die Behandlung. Ein Teil der Patienten stirbt oder muss in ein Hospiz verlegt werden. Diese Fälle werden in der Prämortalitätsphase des Kohorten-Modells erfasst und sind somit für die Singulären Ereignisse, nicht relevant. Fälle mit anschließender Pflege sind für die Singulären Ereignisketten von Relevanz. Diese werden im nächsten Kapitel behandelt. Unter Sonstige sind insbesondere die nicht trivialen Fälle zusammengefasst. Das bedeutet in erster Linie eine Verlegung oder eine Entlassungen aus abrechnungstechnischen Gründen. In diesen Fällen muss der weitere Verlauf aufwändig rekonstruiert werden, was nicht immer gelingt. Insbesondere bei einen Kassenwechsel des Patienten stehen die Information i.d.R. nicht zur Verfügung. Hier muss dann abhängig vom jeweiligen Unfalltyp entschieden werden, ob sich der Aufwand lohnt. Gelingt die Rekonstruktion der Behandlungspfade, müssten die Kosten aller relevanten Anschlussbehandlung zu den Unfallkosten hinzugezählt werden. Gelingt dies nicht, dürfen die Fälle trotzdem nicht vernachlässigt werden. Da allerdings keine Aussage über die Kosten getroffen werden kann, findet der Fall nur bei der Modellierung der Unfallwahrscheinlichkeit Beachtung, nicht aber bei der Modellierung der Kostenverteilung.\\
+
+Nachdem die möglichen Unfälle aufgrund des Aufnahme und Entlassungsgrundes eingegrenzt wurden, sind in den Daten nur noch die DRG und ICD Informationen vorhanden. Zu jedem Fall gibt es eine DRG und mehrere Diagnosen, wobei eine davon als Hauptdiagnose ausgezeichnet wird. Das INeK definiert die Hauptdiagnose als "`Die Diagnose, die nach Analyse als diejenige festgestellt wurde, die hauptsächlich für die Veranlassung des stationären Krankenhausaufenthaltes des Patienten verantwortlich ist."'\footnote{vgl. Kodierrichtlinien Seite 4 \url{http://www.g-drg.de/cms/content/view/full/5064}}. Deshalb kann die Hauptdiagnose verwendet werden, um verschiedene Unfälle voneinander abzugrenzen. Es kommt aber vor, dass während der Behandlung andere Erkrankung entdeckt werden und dadurch die Hauptdiagnose am Ende für die DRG und damit für die Kosten, kaum eine Rolle spielt. An dieser Stelle sollte erwähnt werden, dass ein Krankenhaus ein Unternehmen ist, welches darauf ausgerichtet ist Gewinn zu erwirtschaften. Deshalb besteht die Gefahr, dass Information verändert werden um höhere Fallpauschalen zu kassieren oder um Patienten aufnehmen zu können, die eigentlich an andere Einrichtungen verwiesen werden müssten.\\
+
+Aufgrund der Komplexität der möglichen Krankenhausfälle ist es schwierig eine allgemeine Vorgehensweise zu beschreiben, um die Unfälle exakt abzugrenzen. Die vergeben Diagnosen liefern einen guten Anhaltspunkt dafür, was mit dem Patienten passiert und warum er im Krankenhaus ist. Insbesondere ist dabei die Kategorie S00-T98:	"`Verletzungen, Vergiftungen und bestimmte andere Folgen äußerer Ursachen"' hervorzuheben, da diese Diagnosen gut zu unserer Definition von Unfällen passen. Eine Abgrenzung nur auf Basis der Diagnosen ist allerdings schwierig, da viele Fälle mehrere Diagnosen und  haben und wir sicherstellen müssen, dass es bei der Definition der Unfalltypen nicht zu Überschneidungen kommt. Außerdem hängen die gestellten Diagnosen nicht immer mit der gewählten Behandlung zusammen und somit sind auch keine Rückschlüsse auf die Kosten möglich. Die DRG drückt hingegen nur aus, welche Behandlung vom Krankenhaus abgerechnet wurde. Ein DRG deckt allerdings einen großen Bereich an Fällen ab und dabei auch Fälle, die wir nicht als Unfälle definieren würden.\\
+
+Zur weiteren Abgrenzung von Unfällen ist also eine Kombination aus DRG und Diagnose nötig. Diese lassen sich teilweise nur mit medizinischen Hintergrundwissen identifizieren. Der Vorteil des Kohorten-Modells ist es, dass unabhängig davon wie vollständig man die Unfälle abgrenzt keine Kosten verloren gehen. Die restlichen Kosten werden alle in der Phase regen Lebens erfasst. \\
+
+Für die Auswahl des Testfalls im nächsten Abschnitt wurden die häufigsten Hauptdiagnosen betrachtet. Das sind Hypertonie, Herzinsuffizienz, Ohnmacht oder eine Gehirnerschütterung. Hypertonie oder eine Herzinsuffizienz sind in unserem Sinne keine Unfälle, da es häufig bereits im Vorfeld Anzeichen für eine solche Erkrankung gibt. Eine Ohnmacht kann dagegen sehr vielfältige Ursachen haben, wovon einige mit unserer Unfalldefinition konform sind und andere nicht. Die Gehirnerschütterung ist dahingegen eine nachvollziehbare Unfalldiagnose und wurde deshalb für unser Anwendungsbeispiel ausgewählt. 
+
+\subsection{Anwendung und Test des Poisson-Modells}
+
+In diesem Abschnitt werden wir, am Beispiel vom Unfall Gehirnerschütterung, den vorgestellten Poisson-Ansatz implementieren und bewerten. Dazu ist es notwendig eine saubere Datenbasis auszuwählen, auf der die notwendigen Parameter geschätzt werden können. Außerdem werden wir eine Testmenge definieren, die später zur Bewertung des fertigen Modells verwendet wird. Es existieren Daten von drei Jahren (2009,2010 und 2011). Deshalb werden wir das erste Jahr (2009) für die Schätzung der Modellparameter verwenden und die anderen Beiden für den Test. Jedem Jahr ordnen wir alle Unfälle zu, die in dem jeweiligen Jahr begonnen haben. Alle Kosten eine Falles, werden auf den Tag der Krankenhauseinweisung konzentriert, auch wenn sie in nachfolgende Jahre fallen. \\
+
+Im vorangegangenen Abschnitt haben wir bereits erläutert, wie die Abrechnungsdaten nach Aufnahme und Entlassungsgrund gefiltert werden können, um die relevanten Fälle zu identifizieren. Dieselben Filter wurden auch verwendet, um die Grundtabelle mit allen potentiellen Unfällen zu erstellen\footnote{siehe Anhang \ref{sec:scripts}}. Dazu wurde der MS SQL Server als Datenbank verwendet und die benötigten Abfragen per SQL formuliert. Anschließend wurden alle Fälle betrachtet, die als Hauptdiagnose die S06.0 "'Gehirnerschütterung"' hatten, um zu untersuchen welche DRGs in diesen Fällen abgerechnet wurden. Die häufigste DRG (Anteil $97,5\%$) ist die B80Z: "`Andere Kopfverletzung"', also die Behandlung wegen einer Kopfverletzung. Es gab auch Fälle die mit der Diagnose Gehirnerschütterung eingeliefert wurden und bei denen dann ein Herzschrittmacher eingesetzt wurde, was zu einer ganz anderen DRG geführt hat. Daran zeigt sich weshalb die Kombination aus Diagnose und DRG wichtig für die Abgrenzung ist. Für unseren Test beschränken wir uns deshalb auf alle Fälle die wegen einer Gehirnerschütterung aufgenommen wurden und auch wegen einer Kopfverletzung behandelt wurden. \\
+
+Neben den Fallinformationen benötigen wir außerdem die Personeninformationen. In der entsprechenden Grundtabelle sind für jeden Versicherten mehrere Einträge vorhanden. Jeder dieser Einträge hat dabei dieselben Grundinformationen, wie Alter und Geschlecht, aber unterschiedliche Angaben zu dem Versicherungszeitraum. Um herauszufinden, ob ein Versicherter in einem bestimmten Zeitraum versichert war, müssen die einzelnen Zeiträume zusammengeführt werden. Da dies mit SQL sehr aufwendig ist, wurde ein JAVA Programm geschrieben, das diese Aufgabe erfüllt. Als Eingabe dienen die Personeninformationen und das Jahr, welches ausgewertet werden soll. Anschließend prüft das Programm für jeden Versicherten, welche Zeitintervalle in das beobachtete Jahr fallen und gibt die Anzahl der Tage aus, die der Versicherte in diesem Jahr bei der Kasse war. Zusätzlich wird noch das Alter\footnote{Differenz aus betrachtetem Jahr und Geburtsjahr} des Versicherten im jeweiligen Jahr bestimmt. Diese Informationen werden dann im einem letzten Schritt an die Unfalldaten angespielt und ausgegeben. Die so erzeugte Grundtabelle bietet die Basis für das weitere Vorgehen.\\
+
+Im ersten Schritt betrachten wir die Unfallwahrscheinlichkeit $\lambda$. Diese können wir auf Basis der relativen Häufigkeit schätzen. 
+\begin{eqnarray*}
+	\bar{\lambda} = \frac{\#\text{Unfall}}{\#\text{Versicherte}}.
+\end{eqnarray*}
+Dabei ist $\#\text{Unfall}$ in unserem Beispiel, die Anzahl alle Krankenhausfälle, die in dem betrachteten Jahr(2009) begonnen haben. Dieser Wert wird durch die Anzahl aller Personen geteilt, die im betrachteten Zeitraum versichert waren. Das führt zu der Frage wie Versicherte behandelt werden, die nicht über den gesamten betrachteten Zeitraum Versicherter waren. Diese dürfen nicht ignoriert werden, da sonst evtl. relevante Informationen verloren gehen und das Modell verzerrt wird. Deshalb werden wir eine Gewichtung auf Basis der versicherten Tage vornehmen. Dementsprechend wird jemand, der nur 6 Monate versichert war, nur mit Wert $\frac{1}{2}$ in der Zählung berücksichtigt. Die Anzahl der Unfälle bleibt davon allerdings unberührt. Für unsere Testdaten ergibt sich damit in 2009 eine geschätzte Unfallwahrscheinlichkeit von $\bar{\lambda} = 0,189\%$ für das seltene Ereignis "`Gehirnerschütterung"'. \\
+
+Als nächstes untersuchen wir, ob dieser Unfalltyp vom Alter und Geschlecht der Versicherten abhängt. Dazu unterteilen wir den Versichertenbestand in verschiedene Altersgruppen, die jeweils 5 Jahre umfassen. Die einzigen Ausnahmen sind die Neugeboren die in einer extra Gruppe zusammengefasst sind und Versicherte die älter sind als 90. Anschließend werden diese Gruppe noch Geschlecht getrennt. Wir bezeichnen diese Gruppen im Weiteren kurz als AGG. Die folgende Grafik zeigt die Aufteilung der Grundgesamtheit in diese Gruppen.\\
+
+\begin{figure}[htb]                     
+\centering 
+\includegraphics[width=0.8\textwidth]{./bilder/Diagramm_AnteileAGG}
+\caption{Anteile in den Alters- und Geschlechtsgruppen} 
+\label{fig:AnteileAGG} 
+\end{figure}
+
+Nun können wir für jede AGG die jeweiligen $\bar{\lambda}_{AGG}$ schätzen. Die folgende Grafik zeigt die relativen Häufigkeiten für eine Gehirnerschütterung in 2009, auf Basis der vorliegenden Daten. \\
+
+\begin{figure}[htb]                     
+\centering 
+\includegraphics[width=0.8\textwidth]{./bilder/Diagramm_UnfallWs}
+\caption{Geschätzte Unfallwahrscheinlichkeiten} 
+\label{fig:UnfallWs} 
+\end{figure}
+Diese typische Badewannenkurve sieht man häufig im Zusammenhang mit Leistungen im Gesundheitswesen. Es ist klar zu sehen, dass im Bezug zu $\bar{\lambda}$, junge und alte Menschen zwei bis viermal so häufig wegen einer Gehirnerschütterung behandelt wurden. Dahingegen ist die Häufigkeit im Altersbereich $30-65$, zum Teil auf weniger als die Hälfte reduziert. Natürlich erhöht Sport die Gefahr einer Gehirnerschütterung. Damit lässt sich die erhöhte Rate bei Jugendlichen gut erklären. Außerdem können die Unterschiede in der Unfallrate bei Frauen und Männern zwischen 5 und 30 auf die erhöhte Risikobereitschaft von Männer in diesem Altersbereich zurückgeführt werden.
+Bei älteren Menschen sind dahingegen häufig Stürze die Ursache der Gehirnerschütterung.\\
+
+Ein anderer Punkt der in diesem Zusammenhang berücksichtigt werden muss, ist dass da wir uns nur auf stationäre Daten beschränkt haben, nur Einträge existieren, wenn der Patient im Krankenhaus aufgenommen wurde. Gerade Jugendliche werden bei Stößen auf den Kopf häufig einen Tag zur Beobachtung aufgenommen. Das zeigt sich insbesondere bei Neugeborenen, da diese ihre Beschwerden nicht mitteilen können. Dahingegen besteht bei älteren Menschen die Gefahr, dass die Gehirnerschütterung nur eine Folge von sekundäre Erkrankungen ist. Bei Verdacht werden deshalb diese Patienten, dann auch zur Beobachtung aufgenommen.\\
+
+Durch die sehr geringe Fallzahl bei Unfällen, entsteht beim schätzen der Unfallwahrscheinlichkeiten ein hoher Standardfehler. Je kleiner die Altersgruppen werden, umso größer wird dieser. Da wir annehmen, dass die Anzahl der Unfälle für einen Versicherten Poisson-Verteilt ist, ergibt sich der Standardfehler für eine AGG durch 
+\begin{eqnarray*}
+	\sigma_{\bar{\lambda}_{AGG}} = \sqrt{\frac{\bar{\lambda}_{AGG}}{\#\text{Versicherte}_{AGG}}}.
+\end{eqnarray*}
+Insbesondere in den schwach besetzten Gruppen ist deshalb die Genauigkeit der Schätzfunktion limitiert. Aus diesem Grund werden wir im Weiteren nur noch 3 Altersgruppen betrachten. Entsprechend den vorangegangen Beobachtungen unterteilen wir die Versicherten in Junge Leute, Erwachsene und Rentner. Diese Gruppen bilden dann auch die Grundlage für die Bewertung. Damit ergeben sich folgende Werte für die geschätzten Unfallwahrscheinlichkeiten und die entsprechenden Standardfehler.
+\begin{table}[H]
+	\centering
+	\begin{tabular}{l|r|r|r|r}
+		Gruppe & $\bar{\lambda}$ Männer & $\bar{\lambda}$ Frauen & $\sigma$ Männer & $\sigma$ Frauen\\
+		\hline
+		Junge Menschen(1-25 Jahre) & 0,3829\% & 0,2720\% & 0,0180\% & 0,0156\% \\
+		\hline
+		Erwachsene(26-65 Jahre) & 0,0973\% & 0,0585\% & 0,0051\% & 0,0043\%\\
+		\hline
+		Rentner(>65 Jahre) & 0,1867\% & 0,2820\% & 0,0074\% & 0,0080\%\\
+	\end{tabular}
+	\caption{Übersicht Unfallwahrscheinlichkeiten Gehirnerschütterung}
+	\label{tbl:overviewUnfallws}2
+\end{table}
+
+Als nächstes wollen wir die Kosten in den historischen Daten untersuchen, um für das Modell eine passende Kostenverteilung zu ermitteln. Zur Auswertung wurde in diesem Fall R\footnote{\URL{http://www.r-project.org/}} gewählt. Das Programm ist in der Lage auch größere Datenmengen schnell und zuverlässig zu untersuchen. Durch die Installation zusätzlicher Bibliotheken, ist es außerdem möglich statistische Auswertungen und Test durchzuführen. Die folgende Grafiken zeigen zum Einen die Verteilung der Gesamtkosten und zum Anderen die Kosten pro Tag in 2009.
+
+\begin{figure}[htb]
+   \centering
+      \subfloat[Gesamtkosten]{\includegraphics[width=0.39\textwidth]{./bilder/Kostenverteilung}}\qquad
+      \subfloat[Kosten pro Tag]{\includegraphics[width=0.39\textwidth]{./bilder/KostenProTag}}
+   \caption{Übersicht Leistungskosten Gehirnerschütterung}
+	 \label{fig:overviewCost}
+\end{figure}
+
+In beiden Grafik ist deutlich zu erkennen, dass die Kostenverteilung zwei Häufungspunkte besitzt. Das deutet auf eine Überlagerung von mindestens zwei Verteilungen hin.
+Da Kosten im Krankenhaus über Fallpauschalen abgerechnet werden, hängen die endgültigen Kosten von der Verweildauer des Patienten im Krankenhaus. Der Zusammenhang zwischen Kostengewicht und Verweildauer für die DRG B80Z lässt sich wie folgt darstellen.
+\begin{figure}[htb]                     
+\centering 
+\includegraphics[width=0.8\textwidth]{./bilder/Kostengewicht_B80Z}
+\caption{DRG B80Z Kostengewicht\footnote{Quelle: \url{http://www.medcode.ch/de/de/drgs/G-DRG-2012/B80Z} (Stand: 5.2.2015)}} 
+\label{fig:B80Z} 
+\end{figure}
+
+Das heißt die untere Grenzverweildauer beträgt zwei Tage und die obere Grenzverweildauer vier Tage. In diesem Zeitraum ist das Kostengewicht konstant und außerhalb davon gibt es Zu- und Abschläge. Betrachtet wir die Verweildauer für unsere Fälle, dann wird deutlich das die Mehrheit nur 1-3 Tage im Krankenhaus aufgenommen wurden. Die mittlere Verweildauer beträgt dabei 1,8 Tage.
+
+\begin{figure}[htb]                     
+\centering 
+\includegraphics[width=0.8\textwidth]{./bilder/Verweildauer}
+\caption{Übersicht Verweildauer Gehirnerschütterung} 
+\label{fig:verweildauer} 
+\end{figure}
+
+Mit diesen Informationen haben wir verschiedene Möglichkeiten die Kostenverteilung für unser Modell abzuleiten. Ein Ansatz ist es die Verteilung in drei Teile zu zerlegen. Jeweils eine Funktion für Zeit mit Abschlägen auf das Kostengewicht (Verweildauer ein Tag), für die Phase mit konstantem Kostengewicht (Verweildauer zwei bis vier Tage) und für die Zuschlags für jede 
+
+ Dieser Zusammenhang wird deutlich, wenn man das Kostengewicht der DRG B80Z betrachtet.  
+
+
+ 
+Kostenverteilung => Grafik mit 2 peaks / paralell Kosten pro Tag (rechter peak sind 1tages lieger)=> erklärung über Verweildauer bezug zu den basisfallwerten hohes Maximum abgeschnitten (6 fälle die darüer liegen mit 15k als max=
+
+Untersuchung verweildauer => kein wesentlicher ZUsammenhang mit Alter erkennbar (ältere menschen tendendieren eher zu langen Verweilzeiten mi 1,8 vs 3,3 tage) => Histogramm verweildauer 
+Aber stets  55\%-65\% bei 1-2 Tagen aus diesem Grund 3 Modellieren wir Verteilungen? 1 Tag 2 Tage und rest 
+Sind nicht nv verteilt und nich gamma verteilt => besser empirische Verteilung nutzen
+
+Bild B80Z Quelle http://www.medcode.ch/de/de/drgs/G-DRG-2012/B80Z 
+
+Kurz erläutern erwartete kosten für 35 jährigen 
+
+Modelltest - aufgrund der Begrenzten Datenlage keine möglichkeit einen langzeit test durchzuführen
+Deshalb werden wir einen Simuulationsansatz verwednde. Dazu wird wiederhohlt eine Stichprobe aus den Daten des Jahres gezogen, dass wir bewerten wollen.
+Für jeden Versicherten in dieser Stichprobe werden daraufhin die erwartet Kosten für eine Gehirnerschütterung bestimmt. Nach dem selben Schema wie oben. Die geschätzten und realen Kosten werden für alle Versicherten in der Stichprobe aufsummiert und verglichen. Dieser Vorgang wird 10000 mal wiederhohlt um ein maß für die Vorhersagegenauigkeit zu erhalten. Dieses Vorgehen wird als Monte-Carlo-Simulation bezeichnet. 
+
+Zur durchführung der Stichprobenziehung und auswertung wurde wieder ein Java Programm geschrieben. Dort werden in jedem Durchlaug Stichproben mit einen Umfang von 100000 Versicherten gezogen. Die Kosten jedes Versicherten werden nach der Formel () bestimmt. Da unser Modell die Kosten für das gesamte Jahr prognostiziert, werden die geschätzten Kosten entsprechend der versicherten Zeit gewichtet. Das ist nötig um die spätere Vergleichbarkeit mit den realen Kosten zu ermöglichen. Anschließend werden die realen und die geschätzten Kosten aufsummiert und in eine seperate Datei herausgeschrieben. Zur Auswertung der Ergebnisse kam wieder R zum einsatz.
+
+Die folgende Grafik zeigt die einzelnen Verteilungen im Vergleich ausßerdem ist noch die Verteilung der Differenzkosten abgebildet. Die Erwartungswerte der beiden Verteilungen weichen nur minimal voneinander ab. Daraus lässt sich schließen, dass sich die Erwarteten Kosten gut Vorhersagen lassen und dass das Modell zumindest für das erste Folgejahr stabil ist. 
+
+Untersuchen  wir weiterhin das zweite Folgejahr auf die Gleiche weise, dann erhalten
+
+
+
+

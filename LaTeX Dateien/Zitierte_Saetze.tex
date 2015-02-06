@@ -1,4 +1,4 @@
-\section{Zitierte Erkenntnisse} \label{sec:zitate}
+\section{Zitierte Erkenntnisse und Nebenrechnungen} \label{sec:zitate}
 
 \begin{satz}\label{sa:trafo} (Transformationssatz)\\
 Seien U und V offene Teilmengen des $\mathbb{R}^n$ und sei weiterhin $T:U\rightarrow V$ ein Diffeomorphismus. Das ist die Funktion $f$ auf $V$ genau dann über V integrierbar, wenn die Funktion $(f\circ T)|det DT|$ über U integrierbar ist. Es gilt dann:
@@ -6,7 +6,7 @@ Seien U und V offene Teilmengen des $\mathbb{R}^n$ und sei weiterhin $T:U\righta
 	\int_U f(T(x))|det(D*T(x))|dx = \int_V f(y) dy.
 \end{eqnarray*}
 Dabei ist $D$ die Jacobi-Matrix und $det DT(x)$ die Funktionaldeterminante von T. \\
-Vergleiche \cite[Kapitel 9 - Abschnitt 1]{koenig04}.
+Vergleiche \cite[Kapitel 9 - Abschnitt 1]{koenig04}.\\
 \end{satz}
 
 \begin{satz}\label{sa:monotoneKonv} (Satz von der monotonen Konvergenz)\\
@@ -15,5 +15,26 @@ Seien $(\Omega,\mathfrak{A},\mathbb{P})$ ein Wahrscheinlichkeitsraum und $\{X_n\
 	\lim_{n\rightarrow \infty}\mathbb{E}(X_n) = \mathbb{E}(\lim_{n\rightarrow \infty} X_n).
 \end{eqnarray*}
 Das heißt Integration und Grenzwertbildung können vertauscht werden.\\
-Vergleiche TODO:.
+Vergleiche TODO:.\\
 \end{satz}
+
+\begin{nr} \label{nr:integral1} Wir zeigen mit Hilfe von vollständiger Induktion, dass für alle $y_1...y_n \in \mathbb{R}$ und $t_0,t_1 \in \mathbb{R}$ gilt
+\begin{eqnarray*}
+	\int_{t_0}^{t_1}\int_{y_1}^{t_1}...\int_{y_{n-1}}^{t_1} dy_n...dy_1 = \frac{(t_1-t_0)^n}{n!}.
+\end{eqnarray*}
+Induktionsanfang:
+\begin{eqnarray*}	 
+	\int_{y_{n-1}}^{t_1} dy_n = (t_1-y_{n-1})
+\end{eqnarray*}
+Induktionsschritt: Sei
+\begin{eqnarray*}	
+	\int_{y_1}^{t_1}...\int_{y_{n-1}}^{t_1} dy_n...dy_2 = \frac{(t_1-y_1)^{n-1}}{(n-1)!}
+\end{eqnarray*}
+Dann ist
+\begin{eqnarray*}	
+	\int_{y_1}^{t_1}...\int_{y_n}^{t_1} dy_{n+1}...dy_2 &=& \int_{y_1}^{t_1} \frac{(t_1-y_2)^{n-1}}{(n-1)!} dy_2\\
+																												&=& \big[ -\frac{1}{n!}(t-y_2)^n\big]_{y_1}^t \\
+																												&=& \frac{1}{n!}(t-y_1)^n
+\end{eqnarray*}
+\qed
+\end{nr}

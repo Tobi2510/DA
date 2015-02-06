@@ -1,0 +1,62 @@
+\section{Alternativer Modellansatz - Markov-Kette}
+
+Ein alternativer Modellansatz für die isolierten Ereignisse, kann mit Hilfe von Markov-Ketten konstruiert werden. Im Gegensatz zum Poisson-Ansatz können wir mit einer Markov-Kette die Genesungszeiten abbilden. Dadurch kann ausgeschlossen werden, dass ein Patient der im Krankenhaus behandelt wird in dieser Zeit einen weiteren Unfall erleidet. Ansonsten gelten weiterhin die unter \ref{sec:grundBet} beschriebenen Grundannahmen.  Wie bereits in Abschnitt \ref{sec:markov} gezeigt wurde, ist eine Markov-Kette durch ihre Übergangsmatrix eindeutig definiert. Deshalb werden wir beschreiben wie die Zustände und Übergangswahrscheinlichkeiten modelliert werden können. \\
+
+Der Zustandsraum besteht im einfachsten Fall aus zwei Zuständen: $i_0 :=$ Patient ist gesund und $i_1 :=$ Patient erholt sich von einem Unfall. Als Zeitraum für einen Prozessschritt bietet sich dabei ein Tag an, da Informationen zum Unfallzeitpunkt und zur Genesungsdauer in der Regel nur auf den Tag genau vorliegen. Die folgende Grafik veranschaulicht die möglichen Übergänge.\\
+
+\begin{figure}[htb]
+\centering
+	\begin{tikzpicture}[->, >=stealth', auto, semithick, node distance=3cm]
+	\tikzstyle{every state}=[fill=white,draw=black,thick,text=black,scale=1]
+	\node[state]    (A)                     {$i_0$};
+	\node[state]    (B)[right of=A]   {$i_1$};
+	\path
+	(A) edge[loop left]     node{$p_{0,0}$}         (A)
+			edge[bend left,above]      node{$p_{0,1}$}      (B)
+	(B) edge[loop right]    node{$p_{1,1}$}     (B)
+			edge[bend left,below]    node{$p_{1,0}$}      (A);
+	\end{tikzpicture}
+\caption{Einfaches Markov-Modell} 
+\label{fig:simpleMarkov} 
+\end{figure}
+
+Die Übergangswahrscheinlichkeiten sind dabei wie folgt definiert. Die Eintrittswahrscheinlichkeit für einen Unfall $p_{0,1}$ ist die auf den Tag heruntergerechnete relative Unfallhäufigkeit, die auf Basis der empirischen Daten ermittelt werden kann. Damit gilt für die Wahrscheinlichkeit gesund zu bleiben $p_{0,0} = 1-p_{0,1}$. Die Genesungswahrscheinlichkeit hängt von der Verweildauer, also der Genesungszeit, ab. Intuitiv könnte man wieder die mittlere Genesungsdauer $t_{Genesung}$ als Grundlage nehmen und damit definieren, dass und $p_{1,1}:= 1$/$t_{Genesung}$ und $p_{1,0} = 1- p_{1,1}$. In diesem Fall ist die Verweildauer im Zustand $i_1$ im stetigen Fall geometrisch verteilt und exponentialverteilt im kontinuierlichen Fall.\\
+
+An dieser Stelle wird die Schwäche dieses einfachen Ansatzes deutlich. In einer Markov-Kette sind die Verweilzeit immer geometrisch- bzw. exponentialverteilt. Aber gerade nach einem schweren Unfall, kann es passieren, dass der Patient eine gewisse Zeit im Krankenhaus bleiben muss, bevor die Möglichkeit einer Entlassung besteht. Um auch diese Fälle sauber abbilden zu können, ist es notwendig neue Zustände einzuführen. Deshalb wird für jeden Genesungstag ein eigener Zustand angelegt, der modellieren, ob die Behandlung abgeschlossen ist oder einen weiteren Tag dauert. Die daraus resultierenden Übergänge werden in der folgenden Grafik veranschaulicht.\\
+
+\begin{figure}[htb]
+\centering
+	\begin{tikzpicture}[->, >=stealth', auto, semithick, node distance=2.5cm]
+	\tikzstyle{every state}=[fill=white,draw=black,thick,text=black,scale=1]
+	\node[state]    (A)                     {$i_0$};
+	\node[state]    (B)[right of=A]   {$i_1$};
+	\node[state]    (C)[below right=0.7cm and 1.5cm of B]   {$i_2$};
+	\node[state]    (D)[below right=0.7cm and 1.5cm of C]   {$i_3$};
+	\node[state]    (E)[below right=0.7cm and 1.5cm of D]   {$...$};
+	\path
+	(A) edge[loop left]     		 node{$p_{0,0}$}      (A)
+			edge[bend left,above]    node{$p_{0,1}$}      (B)
+	(B) edge[bend left,below]    node{$p_{1,0}$}      (A)
+			edge[bend left,above]    node{$p_{1,2}$}      (C)
+	(C) edge[bend left,below]    node{$p_{2,0}$}      (A)
+			edge[bend left,above]    node{$p_{2,3}$}      (D)
+	(D) edge[bend left,below]    node{$p_{3,0}$}      (A)
+			edge[bend left,above]    node{$p_{3,...}$}      (E);
+	\end{tikzpicture}
+\caption{Erweitertes Markov-Modell} 
+\label{fig:komplexMarkov} 
+\end{figure}
+
+Dieses Konzept ließe sich sogar noch erweitern, um verschiedene Genesungspfade zu modellieren. Zum Beispiel eine notwendige Reha des Patienten oder eine ambulante Betreuung. Allerdings eignet sich dieses Vorgehen besser dafür einzelne Krankheiten oder Unfalltypen gezielt zu untersuchen, als für eine gesamt Betrachtung der Unfallkosten.\\  
+
+Bisher haben wir nur einen Unfalltyp betrachtet. Weitere Unfalltypen können als neue Zustände, $i_{U_n}$ für $n\in \mathbb{N}$, in das bestehendes Modell integriert werden. Dabei ist wieder zu beachten, dass die Unfälle so abgegrenzt sind, dass es zu keinen Überschneidungen kommt, da sonst die Übergangsmatrix keine stochastische Matrix mehr ist. Für jeden neu hinzugefügten Unfalltyp verringert sich die Wahrscheinlichkeit gesund zu bleiben $p_{0,0}$ genau um die jeweilige Eintrittswahrscheinlichkeit $p_{0,U_n}$. Die restlichen Übergangswahrscheinlichkeiten bleiben unverändert. Bei der Menge an möglichen Unfällen und unter Berücksichtigung der benötigten Zustände um die Genesungszeiten zu modellieren, führt dies zu einem sehr großen Zustandsraum. In der Übergangsmatrix sind allerdings die meisten Einträge $0$ und müssen somit nicht betrachtet werden.\\
+
+Der Vorteil dieser Vorgehensweise ist, dass nachvollziehbar dargestellt wird, was bei einem Unfall passiert. Jedes Mal wenn die Markov-Kette den Zustand $i_0$ verlässt ist ein Unfall passiert und es wird ein kleiner Teilprozess gestartet der die Genesung simuliert. Dieser Teilprozess ist abgeschlossen wenn die Markov-Kette wieder in den Zustand $i_0$ zurückkehrt. Der Nachteil jedoch ist, dass bevor ein neuer Unfall eintreten kann, die Markov-Kette in den Zustand $i_0$ zurückkehren muss. Dies führt dazu, dass nach jedem Unfall ein gesunder Tag eintreten muss, bevor ein neuer Unfall passieren kann. Um dies zu vermeiden, müssten für jeden Tag der Genesung Übergangswahrscheinlichkeiten zu den verschiedenen Unfalltypen modelliert werden. Allerdings sind Unfälle, wie Eingangs beschrieben, seltene Ereignisse und damit ist der resultierende Fehler, ohne Anpassung, relativ gering.  \\
+
+Die nächste notwendige Erweiterung dieses Modellansatzes ist der Wechsel von konstanten Übergangswahrscheinlichkeiten zu Alters- und Geschlechtsabhängigen. Wie bereits beim Poisson-Modell können die Wahrscheinlichkeiten als Treppenfunktion auf Basis der relativen Häufigkeit modelliert werden. Dabei ist es ausreichend nur die Unfallwahrscheinlichkeiten $\{p_{0,U_n}\}_{n \in \mathbb{N}}$ als Funktion von Alter und Geschlecht darzustellen und die Genesungszeiten konstant zu lassen.\\
+
+Die Kosten die für die Behandlung eines Unfalls entstehen, treten in diesem Modellansatz immer dann auf, wenn die Behandlung eines Patienten abgeschlossen ist. Für die Modellierung der Kostenfunktion gelten dieselben Überlegungen wie im Poisson-Modell. Allerdings ermöglicht es der Markov-Ansatz, unterschiedliche Kostenverteilungen für einen Unfalltyp zu verwenden und zwar abhängig davon, wie lange die Genesung benötigt hat. Dadurch lässt sich die Streuung der einzelnen Kostenverteilungen reduzieren.\\
+
+Dieser Modellansatz erzeugt sehr komplexe Modelle, insbesondere durch die alters- und geschlechtsabhängigen Unfallwahrscheinlichkeiten. Es gibt immer mindestens einen positiv rekurrent Zustand. Dies ist $i_0$ und die erwartete Rückkehrzeit entspricht der mittleren Genesungszeit aller möglichen Unfälle und damit endlich ist. Es gibt keine absorbierenden Zustände, da Tod und Pflegefälle ausgeschlossen wurden. Trotzdem ist nicht sichergestellt, dass die Markov-Kette immer irreduzibel ist. Da es möglich ist, dass bestimmte Unfälle nur Frauen bzw. Männer betreffen oder in bestimmten Altersbereichen nicht eintreten können. Ein möglicher Ansatz zur Auswertung ist eine Monte-Carlo Simulation. Dies ist ein Verfahren, dass durch die wiederholte Durchführung eines Zufallsexperiments Aussagen über das Verhalten des Systems ableitet. Dieses Vorgehen basiert auf dem Gesetz der großen Zahlen. Das heißt die relativen Häufigkeiten nähern sich im Grenzwert den Wahrscheinlichkeiten der zugrunde liegenden Verteilung an. Alternativ könnten auch hinreichend kleine Zeitintervalle betrachtet werden, in denen die Übergangswahrscheinlichkeit konstant ist. Die erreichbaren Zustände und die entsprechenden Übergangswahrscheinlichkeiten bilden dann eine irreduzible Markov-Kette, für die nach Satz \ref{sa:gleichgewicht} eine Gleichgewichtsverteilung existiert, die ausgewertet werden kann.\\
+
+Zusammenfassend lässt sich sagen, dass auch mit Hilfe von Markov-Ketten das Phänomen der isolierten Ereignisse beschrieben werden kann. Diese Herangehensweise erlaubt dabei eine detaillierte Modellierung des Genesungsprozesses und sie ist dabei hinsichtlich der modellierten Unfalltypen ähnlich leicht skalierbar wie der Poisson-Ansatz. Der Nachteil ist die Komplexität der Modelle und die große Anzahl an Variablen die geschätzt werden müssen. Dadurch ist eine effiziente Auswertung in der Regel nur mit Hilfe eines Simulationsansatzes möglich. Außerdem kann es je nach Datengrundlage schwierig werden, alle benötigten Werte sauber zu schätzen. Der wichtigste Kritikpunkt ist aber, dass durch die Genesungszeiten dieser Ansatz nur schwer mit der Phase regen Lebens kombiniert werden kann, die im Kohorten-Modell von den Unfällen überlagert werden soll. Im weiteren Verlauf dieses Kapitels werden wir uns deshalb auf den Poisson-Ansatz konzentrieren. \\ 

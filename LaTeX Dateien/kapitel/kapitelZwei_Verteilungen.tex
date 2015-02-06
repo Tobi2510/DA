@@ -44,11 +44,11 @@ Sei $X \sim exp(\lambda)$ dann gilt:
 					 &=& \int_{0}^{\infty} \left(x^2 -2x\frac{1}{\lambda} +  \frac{1}{\lambda ^2}\right) \lambda e^{-\lambda x} dx \\
 					 &=& \lambda \int_{0}^{\infty} x^2e^{-\lambda x} dx- 2\int_{0}^{\infty}xe^{-\lambda x}dx +  \frac{1}{\lambda} \int_{0}^{\infty}e^{-\lambda x} dx \\
 					 &=& \lambda \int_{0}^{\infty} x^2e^{-\lambda x} dx-\frac{2}{\lambda ^2} + \frac{1}{\lambda ^2} \\
-					 &=& \lambda \big(\underbrace{\left[-\frac{1}{\lambda} x^2 e^{-\lambda x}\right]_0^{\infty}}_{\substack{0}} + \frac{2}{\lambda}\int_{0}^{\infty}xe^{-\lambda x}dx\big) - \frac{2}{\lambda ^2} \\
+					 &=& \lambda \big(\underbrace{\left[-\frac{1}{\lambda} x^2 e^{-\lambda x}\right]_0^{\infty}}_{\substack{0}} + \frac{2}{\lambda}\int_{0}^{\infty}xe^{-\lambda x}dx\big) - \frac{1}{\lambda ^2} \\
 					 &=& \frac{2}{\lambda^2} - \frac{1}{\lambda^2} \\
 					 &=& \frac{1}{\lambda^2}
 	\end{eqnarray*}
-	\item Die Exponentialverteilung ist gedächtnislos (auch Nichtalterungseigenschaft genannt), d.h. für $X$ gilt:
+	\item Die Exponentialverteilung ist gedächtnislos (auch Nichtalterungseigenschaft genannt), d.h. es gilt für alle $x,t >0$:
 	\begin{eqnarray*}
 		\mathbb{P}(X> x+t\: | \: X > t) &=& \frac{\mathbb{P}(X> x+t, X > t)}{\mathbb{P}(X> t)} \\
 					 &=& \frac{\mathbb{P}(X> x+t)}{\mathbb{P}(X> t)} \\
@@ -58,27 +58,21 @@ Sei $X \sim exp(\lambda)$ dann gilt:
 \end{enumerate}
 \end{folg}
 
-Die Exponentialverteilung hat die besondere Eigenschaft der Gedächtnislosigkeit und es lässt sich sogar zeigen, dass sie die einzige absolut stetige Verteilung\footnote{Im diskreten Fall ist dies die geometrische Verteilung.} mit dieser Eigenschaft ist:
+Die Exponentialverteilung hat die besondere Eigenschaft der Gedächtnislosigkeit und es lässt sich sogar zeigen, dass sie die einzige absolut stetige Verteilung\footnote{Im diskreten Fall ist dies die geometrische Verteilung.} mit dieser Eigenschaft ist.
 
-\begin{lemmas} \label{lem:expLemma} Sei X eine absolut stetige postive Zufallsvariable, dann gilt  $X \sim exp(\lambda)$ genau dann wenn für alle $x, t > 0$ gilt, dass
+\begin{lemmas} \label{lem:expLemma} Sei X eine positive Zufallsvariable mit absolut stetiger Verteilungsfunktion, dann gilt  $X \sim exp(\lambda)$ genau dann wenn für alle $x, t > 0$ gilt, dass
 	\begin{eqnarray} \label{eq:ged}
 		\mathbb{P}(X> x+t\: | \: X > t) = \mathbb{P}(X > x)
 	\end{eqnarray}
 \end{lemmas}
 
 \textbf{Beweis:}
-$\Rightarrow$ Sei $X \sim exp(\lambda)$ dann gilt:
-	\begin{eqnarray*}
-		\mathbb{P}(X> x+t\: | \: X > t) &=& \frac{\mathbb{P}(X> x+t, X > t)}{\mathbb{P}(X> t)} \\
-					 &=& \frac{\mathbb{P}(X> x+t)}{\mathbb{P}(X> t)} \\
-					 &=& \frac{e^{-\lambda (x+t)}}{e^{-\lambda t}} \\
-					 &=& e^{-\lambda x} = \mathbb{P}(X> x)
-	\end{eqnarray*}
+$\Rightarrow$ Wir haben bereit gezeigt, dass wenn $X \sim exp(\lambda)$, dann gilt \ref{eq:ged}.
 
-$\Leftarrow$ Sei umgekehrt X eine absolut stetige Zufallsvariable, die die Gleichung \ref{eq:ged} erfüllt. Wir definieren $g(x) := \mathbb{P}(X > x)$. Für $x, y > 0$ gilt:
+$\Leftarrow$ Sei umgekehrt X eine positive Zufallsvariable mit absolut stetiger Verteilungsfunktion, die die Gleichung \ref{eq:ged} erfüllt. Wir definieren $g(x) := \overline{F}_X(x) = \mathbb{P}(X > x)$. Da $g$ stetig ist, gilt für $x, y > 0$ gilt:
 
 \begin{eqnarray*}
-	g(x + t) &=& \mathbb{P}(X > x + y) \\
+	g(x + y) &=& \mathbb{P}(X > x + y) \\
 					 &=& \mathbb{P}(X > x + y \: | \: X > y) \mathbb{P}(X > y) \\
 					 &=& \mathbb{P}(X > x) \mathbb{P}(X > y) = g(x)g(y)
 \end{eqnarray*}
@@ -87,21 +81,23 @@ Durch n-fache Anwendung folgt für alle $n \in \mathbb{N}$:
 \begin{eqnarray*}
 g(1) = g\big( \underbrace{\frac{1}{n} + ... + \frac{1}{n}}_{\substack{n-mal}} \big) = \left(g\big(\frac{1}{n}\big)\right)^n
 \end{eqnarray*}
-und somit insbesondere auch $g(\frac{1}{n}) = (g(1))^\frac{1}{n}$. Da X nur positive Werte annimmt, existiert ein $n \in \mathbb{N}$ mit $g(1/n) > 0$. Außerdem existiert wegen $0 < g(1) \leq 1$, ein $\lambda \geq 0$ mit $g(1) = e^{-\lambda}$. Für beliebige $p, q \in \mathbb{N}$ gilt 
+und somit insbesondere auch $g(\frac{1}{n}) = (g(1))^\frac{1}{n}$. Da $X>0$ fast sicher, existiert ein $n \in \mathbb{N}$ mit $g(1/n) > 0$. Außerdem existiert wegen $0 < g(1) \leq 1$, ein $\lambda \geq 0$ mit $g(1) = e^{-\lambda}$. Für beliebige $p, q \in \mathbb{N}$ gilt 
 \begin{eqnarray*}
-	g(\frac{p}{q}) = g(\frac{1}{q})^p = g(1)^{\frac{p}{q}}
+	g(\frac{p}{q}) = g\big(\frac{1}{q}\big)^p = g(1)^{\frac{p}{q}} = e^{-\lambda * \frac{p}{q}}
 \end{eqnarray*}
-und somit $g(r) = e^{-\lambda r}$ für alle $r \in \mathbb{Q}^+$. Aufgrund der Stetigkeit folgt daraus
+und somit $g(r) = e^{-\lambda r}$ für alle $r \in \mathbb{Q}^+$. Aufgrund der Stetigkeit folgt daraus für alle $x\in \mathbb{R}^+$
 \begin{eqnarray*}
-	g(x) = e^{-\lambda x}
+	g(x) = e^{-\lambda x}.
 \end{eqnarray*}
 \qed
+
+Als nächstes wollen wir eine Wahrscheinlichkeitsverteilung vorstellen, die für unabhängige, zufällige Ereignisse mit konstanter Eintrittrate modelliert, wie viel davon in ein festes Zeitintervall fallen. Ein Beispiel dafür wäre die Anzahl der Busse die innerhalb einer Stunde an einer Haltestelle halten, wenn die Abfahrtszeiten zufällig und unabhängig voneinander und die Busse mit einer konstanten Rate die Haltestelle anfahren.
 
 \begin{defini}
 Eine diskrete Zufallsvariable $X:\Omega\to \mathbb{N}$ heißt \textbf{poissonverteilt zum Parameter $\lambda \in \mathbb{R}_{>0}$} (kurz $X\sim Poi(\lambda)$), wenn gilt:
 
 \begin{eqnarray*}
-	P_{\lambda}(k) := \mathbb{P}(X=k) = \frac{\lambda^k}{k!}e^{-\lambda}, k=0,1,2,...
+	Poi_{\lambda}(k) := \mathbb{P}(X=k) = \frac{\lambda^k}{k!}e^{-\lambda}, k=0,1,2,...
 \end{eqnarray*}
 \end{defini}
 
@@ -111,7 +107,7 @@ Sei $X\sim Poi(\lambda)$ dann gilt:
 \begin{enumerate}[label=(\roman{*})]
 	\item Die Verteilungsfunktion der Poisson-Verteilung ist: 
 	\begin{eqnarray*}
-		F_{\lambda}(n) = \sum_{k=0}^{n} P_{\lambda}(k) = e^{-\lambda} \sum_{k=0}^{n} \frac{\lambda^k}{k!}
+		F_{\lambda}(n) = \sum_{k=0}^{n} Poi_{\lambda}(k) = e^{-\lambda} \sum_{k=0}^{n} \frac{\lambda^k}{k!}
 	\end{eqnarray*}
 	\item Der Erwartungswert ist:
 	\begin{eqnarray*}
@@ -147,18 +143,23 @@ Sei $X\sim Poi(\lambda)$ dann gilt:
 	\end{enumerate}
 \end{folg}
 
-Die Poisson-Verteilung hat außerdem eine besondere Bedeutung, da sie unter den richtigen Voraussetzungen die Grenzverteilung der Binomialverteilung ist. Dieser Zusammenhang wird in folgendem Lemma verdeutlicht: \\
+Wir wollen uns an dieser Stelle kurz überlegen, weshalb gerade die Poisson-Verteilung für unsere Beispiel mit Bussen angewendet werden kann. Dazu unterteilen wir den betrachteten Zeitraum $t$ in $n$ gleiche Teilstücke der Länge $\frac{t}{n}$. Dabei ist n so klein gewählt, dass in jedem dieser Teilintervalle maximal ein Bus fährt.
+Die Wahrscheinlichkeit, dass in einem dieser Intervalle ein Bus fährt bezeichnen wir mit $p_n$. Wie bereits beschrieben nehmen wir an, dass die Abfahrtszeiten unabhängig voneinander sind. Das heißt wir haben ein Bernoulli-Experiment der Länge $n$ mit Erfolgswahrscheinlichkeit $p_n$. Wählen wir nun $p_n$ so, dass für große n, die erwartete Anzahl von Abfahrten konstant ist, dann ist die Anzahl der zufälligen Abfahrtszeitpunkte genau Poisson-Verteilt. Das folgende Lemma fasst diese Überlegung zusammen. \\
 
-\begin{lemmas} Sei $X \sim B_{n,p}(k)$ eine binomialverteilte Zufallsgröße. Wenn für $n \rightarrow \infty$ und $p \rightarrow 0$ gilt, dass der Erwartungswert $np$ gegen eine von $n$ unabhängige Konstante $\lambda$ konvergiert, dann konvergiert die Verteilungsfunktion von X gegen die Verteilungsfunktion einer, zum Parameter $\lambda$, poissonverteilten Zufallsgröße.
+\begin{lemmas} Sei $\{ p_n\} _{n \in \mathbb{N}} \in (0,1)$ eine Folge mit der Eigenschaft $\lim_{n \rightarrow \infty} np_n = \lambda$ für eine beliebige Konstante $\lambda \in (0, \infty)$, dann gilt für alle $k\in \mathbb{N}_0$
+	\begin{eqnarray*}
+		\lim_{n\rightarrow \infty} Bi_{n,p_n}(k) = Poi_{\lambda}(k).
+	\end{eqnarray*}
+Dabei bezeichnet $Bi_{n,p_n}$ die Verteilungsfunktion der Binomialverteilung mit Parametern $n$ und $p_n$.
 \end{lemmas}
 
 \textbf{Beweis:}
-Wir zeigen, dass der Grenzwert $n\rightarrow \infty$ der Verteilungsfunktion einer binomialverteilten Zufallsvariable an der Stelle k, gegen den Wert einer poissonverteilten Zufallsvariablen an der Stelle k geht.
+Wir zeigen, dass der Grenzwert $n\rightarrow \infty$ der Verteilungsfunktion einer binomialverteilten Zufallsvariable $X$ an der Stelle k, gegen den Wert einer poissonverteilten Zufallsvariablen an der Stelle k geht.
 
 	\begin{eqnarray*}
-		\lim_{\substack{n\rightarrow \infty\\p\rightarrow 0}} \mathbb{P}(X=k) &=& \lim_{\substack{n\rightarrow \infty\\p\rightarrow 0}}\binom{n}{k} p^k(1-p)^{n-k}\\
-		&=& \lim_{\substack{n\rightarrow \infty\\p\rightarrow 0}} \frac{n!}{k!(n-k)!} \left(\frac{\lambda}{n}\right)^k \left(1-\frac{\lambda}{n}\right)^{n-k} \\
-		&=& \frac{\lambda ^k}{k!} \lim_{\substack{n\rightarrow \infty\\p\rightarrow 0}} \underbrace{\left(\frac{n(n-1)(n-2)...(n-k+1)}{n^k}\right)}_{\rightarrow 1} \underbrace{\left( 1-\frac{\lambda}{n}\right)^{n}}_{\rightarrow e^{-\lambda}} \underbrace{\left(1-\frac{\lambda}{n}\right)^{-k}}_{\rightarrow 1} \\
+		\lim_{n\rightarrow} \mathbb{P}(X=k) &=& \lim_{n\rightarrow \infty}\binom{n}{k} p^k(1-p)^{n-k}\\
+		&=& \lim_{n\rightarrow \infty} \frac{n!}{k!(n-k)!} \left(\frac{\lambda}{n}\right)^k \left(1-\frac{\lambda}{n}\right)^{n-k} \\
+		&=& \frac{\lambda ^k}{k!} \lim_{n\rightarrow \infty} \underbrace{\left(\frac{n(n-1)(n-2)...(n-k+1)}{n^k}\right)}_{\rightarrow 1} \underbrace{\left( 1-\frac{\lambda}{n}\right)^{n}}_{\rightarrow e^{-\lambda}} \underbrace{\left(1-\frac{\lambda}{n}\right)^{-k}}_{\rightarrow 1} \\
 		&=& \frac{\lambda ^k e^{-\lambda}}{k!}		
 	\end{eqnarray*}
 \qed
@@ -181,26 +182,27 @@ Wobei $\Gamma: (0,\infty) \rightarrow (0,\infty)$ die Gamma-Funktion ist:
 mit $r>0$.
 \end{defini}
 
-\begin{folg}
-Die Exponentialverteilung ist ein Spezialfall der Gamma-Verteilung: Sei $X \sim \gamma(\alpha, r)$ dann gilt für $r =1$ gilt $X \sim exp(\alpha)$. Da für x>0 gilt:
+Es lässt sich leicht zeigen, dass die Exponentialverteilung ist ein Spezialfall der Gamma-Verteilung.
+
+\begin{folg} Im Fall $r=1$, gilt für alle $x>0$
 	\begin{eqnarray*}
-		\gamma_{\alpha, 1}(x) = \frac{\alpha ^1}{\Gamma(1)}x^{0} e^{-\alpha x} = \frac{\alpha}{\int_0^{\infty} e^{-y} dy } e^{-\alpha x} = \alpha e^{-\alpha x}
+		\gamma_{\alpha, 1}(x) = \frac{\alpha ^1}{\Gamma(1)}x^{0} e^{-\alpha x} = \frac{\alpha}{\int_0^{\infty} e^{-y} dy } e^{-\alpha x} = \alpha e^{-\alpha x}.
 	\end{eqnarray*}
-und das ist die Dichte einer zum Parameter $\alpha$ exponentialverteilten Zufallsgröße.
+Das ist die Dichte Exponentialverteilung.
 \end{folg}
 
 \begin{lemmas}\label{lem:gamma} Die Summe zweier unabhängiger gammaverteilter Zufallsgrößen $X_1, X_2$ mit Parametern $\alpha$ und $r_1$ bzw. $\alpha$ und $r_2$ ist gammaverteilt mit Parametern $\alpha$ und $r_1 + r_2$. Insbesondere ist für $k\in \mathbb{N}$ die Gamma-Verteilung mit Parametern $\alpha$ und $k$ identisch zur Verteilung der Summe von k unabhängigen, zum Parameter $\alpha$ exponentialverteilten Zufallsgrößen. 
 \end{lemmas}
 
 \textbf{Beweis:}
-Es gilt:  
+Es gilt 
 	\begin{eqnarray*}
 		\mathbb{P}(X_1+X_2 \leq x) &=& \int_0^x \gamma_{\alpha, r_1}(t)\gamma_{\alpha, r_2}(x-t)dt \\
 															 &=& \frac{\alpha ^{r_1}}{\Gamma(r_1)} \frac{\alpha ^{r_2}}{\Gamma(r_2)} e^{-\alpha x} \int_0^x t^{r_1-1}(s-t)^{r_2-1}dt \\
-															 &=& \gamma_{\alpha, r_1 +r2}(t) \frac{\Gamma(r_1+r_2)}{\Gamma(r_1)\Gamma(r_2)} \underbrace{\int_0^x t^{r_1-1}(s-t)^{r_2-1}dt}_{u=\frac{s}{t}} \\
- &=& \gamma_{\alpha, r_1 +r2}(t) \frac{\Gamma(r_1+r_2)}{\Gamma(r_1)\Gamma(r_2)} \underbrace{\int_0^1 u^{r_1-1}(1-u)^{r_2-1}du}_{Eulersche Beta-Integral} \\
+															 &=& \gamma_{\alpha, r_1 +r2}(t) \frac{\Gamma(r_1+r_2)}{\Gamma(r_1)\Gamma(r_2)} \int_0^x t^{r_1-1}(s-t)^{r_2-1}dt \\
+															 &=& \gamma_{\alpha, r_1 +r2}(t) \frac{\Gamma(r_1+r_2)}{\Gamma(r_1)\Gamma(r_2)} \underbrace{\int_0^1 u^{r_1-1}(1-u)^{r_2-1}du}_{Eulersche Beta-Integral} \\
 															 &=& \gamma_{\alpha, r_1 +r2}(t)  \frac{\Gamma(r_1+r_2)}{\Gamma(r_1)\Gamma(r_2)}  \frac{\Gamma(r_1)\Gamma(r_2)}{\Gamma(r_1+r_2)} \\
 														   &=& \gamma_{\alpha, r_1 +r2}(t)
 	\end{eqnarray*}
-Der zweite Teil der Aussage folgt direkt aus dieser Beziehung.
+mit $u=\frac{s}{t}$. Der zweite Teil der Aussage folgt direkt aus dieser Beziehung.
 \qed

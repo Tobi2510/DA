@@ -9,18 +9,18 @@
 \contentsline {chapter}{\numberline {2}Theoretische Grundlagen f\"ur die Modellierung}{11}{chapter.2}
 \contentsline {section}{\numberline {2.1}Verwendete Verteilungen}{11}{section.2.1}
 \contentsline {section}{\numberline {2.2}Poisson Prozess}{17}{section.2.2}
-\contentsline {section}{\numberline {2.3}Markov-Kette}{26}{section.2.3}
-\contentsline {chapter}{\numberline {3}Modellierung Isolierte Ereignisse}{33}{chapter.3}
-\contentsline {section}{\numberline {3.1}Grundlegende Betrachtungen}{33}{section.3.1}
-\contentsline {section}{\numberline {3.2}Modell - Poisson-Prozess}{34}{section.3.2}
-\contentsline {section}{\numberline {3.3}Alternativer Modellansatz - Markov-Kette}{37}{section.3.3}
-\contentsline {section}{\numberline {3.4}Anwendung und Test des Modells}{40}{section.3.4}
-\contentsline {subsection}{\numberline {3.4.1}Datengrundlage und Aufbereitung}{40}{subsection.3.4.1}
-\contentsline {subsection}{\numberline {3.4.2}Identifizierung von Unf\"allen}{42}{subsection.3.4.2}
-\contentsline {subsection}{\numberline {3.4.3}Anwendung und Test der Modelle}{44}{subsection.3.4.3}
-\contentsline {chapter}{\numberline {A}Anhang}{46}{appendix.A}
-\contentsline {section}{\numberline {A.1}Zitierte Erkenntnisse}{47}{section.A.1}
-\contentsline {section}{\numberline {A.2}Abk\"urzungsverzeichnis und Zeichenerkl\"arungen}{48}{section.A.2}
-\contentsline {section}{\numberline {A.3}Codierung nach \IeC {\S } 301 Abs. 3 SGB V}{49}{section.A.3}
-\contentsline {section}{\numberline {A.4}Verwendete Abfragen}{51}{section.A.4}
-\contentsline {subsection}{\numberline {A.4.1}SQL-Scripte}{51}{subsection.A.4.1}
+\contentsline {section}{\numberline {2.3}Markov-Kette}{28}{section.2.3}
+\contentsline {chapter}{\numberline {3}Modellierung Isolierte Ereignisse}{36}{chapter.3}
+\contentsline {section}{\numberline {3.1}Grundlegende Betrachtungen}{36}{section.3.1}
+\contentsline {section}{\numberline {3.2}Modell - Poisson-Prozess}{37}{section.3.2}
+\contentsline {section}{\numberline {3.3}Alternativer Modellansatz - Markov-Kette}{40}{section.3.3}
+\contentsline {section}{\numberline {3.4}Anwendung und Test des Modells}{43}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Erl\"auterung der Datengrundlage}{43}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}Identifizierung von Unf\"allen}{46}{subsection.3.4.2}
+\contentsline {subsection}{\numberline {3.4.3}Anwendung und Test des Poisson-Modells}{48}{subsection.3.4.3}
+\contentsline {chapter}{\numberline {A}Anhang}{54}{appendix.A}
+\contentsline {section}{\numberline {A.1}Zitierte Erkenntnisse und Nebenrechnungen}{54}{section.A.1}
+\contentsline {section}{\numberline {A.2}Abk\"urzungsverzeichnis und Zeichenerkl\"arungen}{56}{section.A.2}
+\contentsline {section}{\numberline {A.3}Codierung nach \IeC {\S } 301 Abs. 3 SGB V}{57}{section.A.3}
+\contentsline {section}{\numberline {A.4}Verwendete Abfragen}{59}{section.A.4}
+\contentsline {subsection}{\numberline {A.4.1}SQL-Scripte}{59}{subsection.A.4.1}

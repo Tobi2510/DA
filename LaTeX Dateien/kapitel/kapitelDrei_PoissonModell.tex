@@ -1,0 +1,48 @@
+\section{Modell - Poisson-Prozess}
+Die erwartenden Kosten für Unfälle in der Phase regen Lebens, setzen sich aus zwei Teilen zusammen. Zum Einen müssen die Kosten für einen Unfall modelliert werden und zum Anderen benötigen wir einen Stochastischen Prozess, der die Häufigkeit für einen Unfall, in dem beobachteten Zeitraum, zählt. Wir werden zuerst den Stochastischen Prozess betrachten. Eine Modellannahme ist, dass die Wahrscheinlichkeit für einen Unfall unabhängig davon ist, wann der vorherige Unfall eingetreten ist. Das heißt der Stochastische Prozess hat unabhängige Zuwächse. Außerdem nehmen wir an, dass aufgrund des Charakters der Unfälle als seltene Ereignisse, die Genesungsdauer vernachlässigt werden kann. Das heißt die begrenzte Leistungsfolge, die bei jeden Unfall ausgelöst wird, wird auf den Zeitpunkt des Unfalls konzentriert und die Zeit zwischen zwei Unfällen, hängt nur von der Unfallwahrscheinlichkeit ab. Bevor wir den Prozess näher beschreiben führen wir folgende Bezeichnungen ein:
+
+\begin{enumerate}[label=(\roman{*})]
+	\item Die Unfallwahrscheinlichkeit wird mit $\lambda$ bezeichnet.
+	\item Die Unfallzeitpunkte seien gegeben durch $t_1, t_2, t_3,...$ und weiterhin sei $t_0 = 0$ den Beginn der Beobachtung kennzeichnet.
+	\item Die Zeit zwischen den einzelnen Unfällen sei definiert als $\{T_k\}_{k \geq 1}$ mit $T_k := t_k-t_{k-1}$.
+	\item Die kumulierten Zwischenankunftszeiten werden mit $S_n = \sum_{k=1}^n T_k$ bezeichnet.
+	\item Die Anzahl der Unfälle wird bezeichnet durch 
+	\begin{eqnarray*}
+		N_t := max\{k : t_k \leq t\} = \sum_{k=1}^{\infty} \mathds{1}(S_k\leq t).
+	\end{eqnarray*}
+\end{enumerate}
+
+Man sieht leicht, dass $\{N_t, t\geq 0\}$ der gesuchte stochastische Prozess ist und gemäß Definition \ref{def:zaehlPro} ein Zählprozess ist. Laut Voraussetzung hängt die Unfallwahrscheinlichkeit nur vom Alter und Geschlecht der Versicherten ab. Ohne Einschränkung der Allgemeinheit können wir das Alter eines Versicherten, als die Differenz aus dem aktuelles Jahr und seinem Geburtsjahr definieren. Das heißt alle Versicherten werden immer zum 1.1. ein Jahr älter. Da aufgrund der Modellannahmen keine weiteren Einflussfaktoren berücksichtigt werden müssen, ist somit die Unfallwahrscheinlichkeit eines Versicherten innerhalb eines Kalenderjahres konstant und die Unfallzeitpunkte sind gleichmäßig verteilt. Dann gilt für die Zwischenankunftszeiten $\{T_k\}_{k \geq 1}$, dass die Zeit bis zum nächsten Unfall unabhängig davon ist, wie viel Zeit $s\geq 0$ bereits ohne Unfall verstrichen ist
+
+\begin{eqnarray*}
+	\mathbb(T_k>x+s | T_k>s) = \mathbb(T_k>x).
+\end{eqnarray*}
+
+Das heißt die Verteilung der Zwischenankunftszeiten sind gedächtnislos und somit gilt, gemäß Lemma \ref{lem:expLemma}, $T_k \sim exp(\lambda)$ für alle $k \geq 1$. Damit ist, innerhalb eines Kalenderjahres, $\{N_t, t\geq 0\}$, laut Definition \ref{def:poiPro}, ein homogener Poisson-Prozess und $N_t \sim Poi(\lambda)$. Da ein Poisson-Prozess, gemäß Theorem \ref{th:poiPro} unabhängige und stationäre Zuwächse besitzt, passt dieser auch zu den Eingangs aufgestellten Modellannahmen. An dieser Stelle sollte auch erwähnt werden, dass aufgrund von Lemma \ref{lem:wartezeit} der Zeitpunkt, zu dem die Beobachtung beginnt, keinen Einfluss auf den Zeitpunkt des nächsten beobachteten Unfalls hat. Deshalb ist auch die Zerlegung des Beobachtungszeitraumes in Jahresscheiben gerechtfertigt und die Summe der Unfälle in den einzelnen Jahresscheiben ergibt, dann die Anzahl an Unfälle im Beobachtungszeitraum.\\
+
+Als nächstes müssen wir uns überlegen, wie wir die Wahrscheinlichkeit für einen Unfall schätzen können. Da der Poisson-Prozess stationäre Zuwächse hat, können wir die Parameter auf Basis von historischen Informationen schätzen. Aufgrund der erwarteten Abhängigkeit von Alter und Geschlecht, muss für jede Kombination aus Altersgruppe und Geschlecht ein separates $\lambda_{Altersgruppe, Geschlecht}$ geschätzt werden. Dazu betrachten wir die relative Häufigkeit eines Unfalls für die jeweilige Kombination aus Alter und Geschlecht und setzen
+\begin{eqnarray} \label{eq:unfallWs}
+	\bar{\lambda_{Altersgruppe, Geschlecht}} := \frac{\#\text{Unfall}_{Altersgruppe, Geschlecht}}{\#\text{Versicherte}_{Altersgruppe, Geschlecht}}.
+\end{eqnarray}
+
+Dabei ist $\#\text{Versicherte}_{Altersgruppe, Geschlecht}$ die Anzahl aller Versicherten, die in die jeweilige Alters- und Geschlechtsgruppe fallen und in dem betrachteten Zeitraum bei der Kasse versichert waren. Des Weiteren ist $\#\text{Unfall}_{Altersgruppe, Geschlecht}$ die Anzahl der Unfälle aller Personen, die in die jeweilige Alters- und Geschlechtsgruppe fallen. Es werden dabei alle Fälle betrachtet, die in dem jeweiligen Kalenderjahr begonnen haben, da wir Unfälle auf den Eintrittszeitpunkt konzentrieren. Die Einteilung der Altersgruppen ist dabei flexibel. \\
+
+Bisher haben wir nur die allgemeine Wahrscheinlichkeit für einen Unfall untersucht. Wie bereits am Anfang erwähnt, ist es sinnvoll verschiedene Unfalltypen zu betrachten, da diese sich hinsichtlich ihrer Kosten sehr stark unterscheiden können. Das Lemma \ref{lem:aufteilungPP} erlaubt es uns, den allgemeinen Unfall Prozess als eine Überlagerung von Teilprozessen darzustellen. Seien $U_1, U_2,...,U_n$ mit $n\in \mathbb{N}$ die verschiedenen relevanten Unfalltypen und $\lambda _{U_1},\lambda _{U_2},...,\lambda _{U_n}$ die zugehörigen Unfallwahrscheinlichkeiten. Dann gilt für die daraus resultierenden Prozesse 
+\begin{eqnarray*} 
+	N_t^{\lambda _{U_i}} &\sim& poi(\lambda _{U_i}) \\
+	N_t^{\lambda} &:=& \sum^n_{i=1} N_t^{\lambda _{U_i}} \\
+	N_t^{\lambda} &\sim& poi(\sum_{i=0}^n\lambda _{U_i})
+\end{eqnarray*}
+Das heißt der Prozess lässt sich bei Bedarf beliebig in Unterprozesse zerlegen, die jeweils eine Teilmenge der Unfälle beschreiben. Die Voraussetzung dafür ist, dass die $N_{\lambda _{U_i}}$ unabhängig voneinander sind. Deshalb müssen die einzelnen Unfalltypen so abgrenzt werden, dass es nicht zu Überschneidungen kommt.\\
+
+Damit ist der erste Teil der Modellierung abgeschlossen und wir können nun die Kosten betrachten. Für jeden Unfalltyp sind diese aufgrund der Modellannahmen unabhängige und gleich verteilte Zufallsgrößen $X_1,X_2,...$, wobei $X_i$ die Kosten für den $i$-ten Unfall angibt. Bei Leistungskosten in der Krankenversicherung ist zu beobachten, dass es viele Fälle mit niedrigen Kosten und einige mit sehr hohen Kosten (Hochkostenfällen), aber nur einen sehr geringen Teil mit durchschnittlichen Kosten. Aus diesem Grund ist es wichtig eine Verteilungsfunktion für die $\{X_i\}_{i>0}$ zu wählen, die zum Einen die Standardfälle abdeckt und zum Anderen noch genug Masse in den hohen Kostenbereichen hat, um die Hochkostenfälle nicht zu vernachlässigen. Verteilungsfunktionen mit dieser Eigenschaft werden auch als Heavy-Tail-Verteilung\footnote{z.B. Weibull-Verteilung mit Formparameter<1 oder Log-Normalverteilung} bezeichnet. Alternativ könnte als Näherung für die Kostenverteilung auch die empirische Verteilung auf Basis der historischen Informationen verwendet werden. Dabei werden die Kosten für alle Leistungen, die aus dem Unfall resultieren, zusammenaddiert, auch wenn die Leistungszeitpunkte weit auseinander liegen oder sogar in verschiedene Jahre fallen.\\
+
+Bei der Modellierung der Leistungskosten ist außerdem zu beachten, dass diese einer kontinuierlichen Veränderungen, durch Preisveränderungen oder die Einführung alternativer Behandlungsmethoden, unterliegen. Es ist kann versucht werden, dies durch jährliche Änderungsraten auszugleichen, trotzdem hat man in der Regel nicht genug Information alle Einflüsse auf die Kostenentwicklung zu berücksichtigen. Das optimale Vorgehen bei der Modellierung der Kostenverteilung hängt letztendlich vom Unfalltyp ab.\\ 
+
+Kombinieren wir jetzt diese beiden Modellbestandteile, dann erhalten wir einen zusammengesetzten Poisson-Prozess, der die zukünftigen Kosten aufgrund von Unfällen beschreibt. Dieser ist für jeden Unfalltyp $U$ definiert durch
+\begin{eqnarray*} 
+	Y_t^U = \sum_{i=1}^{N_t^U} X_i^U. 
+\end{eqnarray*}
+Das Risikoäquivalent für die singulären Ereignisse eines Versicherten zum Zeitpunkt der Berechnung, entspricht somit der Summe der Barwerte\footnote{Der Barwert ist der Wert, den eine zukünftige Zahlung in der Gegenwart besitzt.}, der für die Phase regen Lebens vorhergesagten Unfallkosten.\\
+
+Im weiteren Verlauf dieses Kapitels werden wir diesen Modellansatz beispielhaft für einen Unfalltyp implementieren und auswerten. Allerdings wird vorher noch ein alternativer Modellansatz vorgestellt mit dem Unfälle beschrieben werden können. 
