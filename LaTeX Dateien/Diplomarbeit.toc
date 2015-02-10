@@ -18,9 +18,13 @@
 \contentsline {subsection}{\numberline {3.4.1}Erl\"auterung der Datengrundlage}{43}{subsection.3.4.1}
 \contentsline {subsection}{\numberline {3.4.2}Identifizierung von Unf\"allen}{46}{subsection.3.4.2}
 \contentsline {subsection}{\numberline {3.4.3}Anwendung und Test des Poisson-Modells}{48}{subsection.3.4.3}
-\contentsline {chapter}{\numberline {A}Anhang}{54}{appendix.A}
-\contentsline {section}{\numberline {A.1}Zitierte Erkenntnisse und Nebenrechnungen}{54}{section.A.1}
-\contentsline {section}{\numberline {A.2}Abk\"urzungsverzeichnis und Zeichenerkl\"arungen}{56}{section.A.2}
-\contentsline {section}{\numberline {A.3}Codierung nach \IeC {\S } 301 Abs. 3 SGB V}{57}{section.A.3}
-\contentsline {section}{\numberline {A.4}Verwendete Abfragen}{59}{section.A.4}
-\contentsline {subsection}{\numberline {A.4.1}SQL-Scripte}{59}{subsection.A.4.1}
+\contentsline {chapter}{\numberline {4}Modellierung Singul\"are Ereignisketten}{59}{chapter.4}
+\contentsline {section}{\numberline {4.1}Grundlegende Betrachtungen}{59}{section.4.1}
+\contentsline {section}{\numberline {4.2}Modell - Markov-Prozess}{60}{section.4.2}
+\contentsline {chapter}{\numberline {A}Anhang}{61}{appendix.A}
+\contentsline {section}{\numberline {A.1}Zitierte Erkenntnisse und Nebenrechnungen}{61}{section.A.1}
+\contentsline {section}{\numberline {A.2}Abk\"urzungsverzeichnis und Zeichenerkl\"arungen}{63}{section.A.2}
+\contentsline {section}{\numberline {A.3}Codierung nach \IeC {\S } 301 Abs. 3 SGB V}{64}{section.A.3}
+\contentsline {section}{\numberline {A.4}Verwendete Abfragen}{66}{section.A.4}
+\contentsline {subsection}{\numberline {A.4.1}SQL-Scripte}{66}{subsection.A.4.1}
+\contentsline {subsection}{\numberline {A.4.2}R-Scripte}{67}{subsection.A.4.2}

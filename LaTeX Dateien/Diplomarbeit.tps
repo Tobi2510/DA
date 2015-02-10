@@ -17,8 +17,8 @@ Class=LaTeXView
 Document=kapitel\kapitelDrei_ModellTest.tex
 
 [Frame0_View0,0]
-TopLine=314
-Cursor=25643
+TopLine=292
+Cursor=26067
 
 [Frame1]
 Flags=0
@@ -35,7 +35,7 @@ Class=LaTeXView
 Document=kapitel\kapitelDrei_PoissonModell.tex
 
 [Frame1_View0,0]
-TopLine=50
+TopLine=27
 Cursor=8663
 
 [Frame2]
@@ -128,8 +128,26 @@ Document=Diplomarbeit.tex
 TopLine=0
 Cursor=0
 
+[Frame7]
+Flags=0
+ShowCmd=1
+MinPos.x=-1
+MinPos.y=-1
+MaxPos.x=-1
+MaxPos.y=-1
+NormalPos.left=4
+NormalPos.top=26
+NormalPos.right=1588
+NormalPos.bottom=565
+Class=LaTeXView
+Document=kapitel\kapitelZwei_Markov.tex
+
+[Frame7_View0,0]
+TopLine=38
+Cursor=0
+
 [SessionInfo]
-FrameCount=7
+FrameCount=8
 ActiveFrame=0
 
 [Bookmarks]

@@ -1,0 +1,35 @@
+\chapter{Modellierung Singuläre Ereignisketten}
+
+Nachdem wir ausführlich die Isolierten Ereignisse untersucht haben, werden wir in diesem Kapitel ein Risikomodell für die singulären Ereignisketten (im Folgenden alternativ auch als Chronische Erkrankungen bezeichnet) vorstellen. Das Grundlegende Vorgehen ist dabei analog zu dem im vorangegangen Kapitel. Wir werden zuerst die allgemeinen Eigenschaft der chronischen Erkrankungen vorstellen und anschließend ein Modell vorstellen, dass diese abbildet.\\
+
+\section{Grundlegende Betrachtungen}
+
+Als singuläre Ereigniskette, wird im Kohorten-Modell, eine \textbf{beträchtliche Verschlechterung der Gesundheit} bezeichnet, \textbf{die bis zum Tod des Versicherten andauert}. Das heißt im Gegensatz zu den isolierten Ereignissen, können nach dem Eintreten immer wieder neue Kosten anfallen. Da die Chronische Erkrankung bis zum Tod andauert, ist eine Genesung ausgeschlossen. Typische Beispiele sind z.B. Diabetes oder verschiedene Formen von Krebs, aber auch Psychische Erkrankungen sind in den meisten Fällen nicht heilbar und treten bis zum Tod immer wieder in Schüben auf. \\
+
+Für die Modellierung sind dementsprechend zwei Prozesse zu betrachtet. Zum Einen der Eintritt in die Singuläre Ereigniskette und zum Anderen das regelmäßige Auftreten von Kosten. Ersteres kann in vielen Punkten ähnlich betrachtet werden, wie die Unfälle vorangegangen Kapitel. Das heißt der Eintritt ist ein seltenes Ereignis, dass sich nicht ankündigt und unabhängig davon ist, ob bereits eine andere Chronische Erkrankung vorliegt. Die Eintrittswahrscheinlichkeit hängt dabei wieder in erster Linie wieder vom Typ der Erkrankung ab und je nachdem vom Alter und Geschlecht des Versicherten. Eine Abhängigkeit von der Saison, ist dagegen für die meisten Erkrankungen, die in diesem Kapitel relevant sind, unwahrscheinlich.\\
+
+Inwiefern und in welcher Form nach dem Eintreten in die singuläre Ereigniskette Kosten auftreten, kann sehr unterschiedlich sein. Der einfachste denkbare Fall, ist die regelmäßige Verordnung von Arzneimittel und routinemäßige Untersuchungen. Eine andere Möglichkeit sind regelmäßige Eskalationen, in Form von längeren Krankenhausaufenthalten und anschließenden REHA-Behandlungen. Zusätzlich kann sich der Zustand des Versicherten im Verlauf der Chronischen Erkrankung verschlechtern, was zu häufigeren Behandlungen und damit höheren Kosten führt. In der Praxis werden häufig Überlagerungen dieser Effekte zu beobachten sein.\\
+
+Da auch die singuläre Ereignisketten auf die "`Phase regen Lebens"' beschränkt sind, werden die Kosten die während der letzten 5 Jahre vor dem Tod entstehen, der letzten Phase im Kohorten-Modell zugeordnet. Dabei ist zu beobachten das Chroniker in der Regel bis zum Tod, lediglich weiterhin die Kosten ihrer Chronischen Erkrankung verursachen. Deshalb ist der Übergang im Modell an dieser Stelle fließend.\\
+
+\section{Modell - Markov-Prozess}
+Die erwarteten Kosten für singuläre Ereignisse setzen sich aus, wie beschrieben aus zwei Prozessen zusammen. Wir werden zuerst den Eintritt in den Zustand der chronischen Erkrankung untersuchen und anschließend überlegen, wie sich die Kosten, die in der Zeit als Chroniker einstehen, abbilden lassen. Die Grundlegende Modellannahme ist wieder, dass sich das Ereignis des Eintritts nicht ankündigt und unabhängig von eventuellen Vorerkrankungen ist. Trotz der Ähnlichkeiten zu den Charakteristiken eines Unfalls, können wir die Erkenntnisse aus dem vorangegangen Kapitel nicht anwenden, da jeder Versicherte jede chronische Erkrankung nur einmal erhalten kann. \\
+
+Zur Modellierung werden wir deshalb einen abgewandelten Markov-Ansatz verfolgen. Dass heißt wir konstruieren eine Markov-Kette die den Übergang von Zustand $i_0 :=$"`gesund"' in den Zustand $i_1 :=$"`Chroniker"' abbildet. Wir erhalten damit im einfachsten Fall folgende Markov-Kette.
+
+\begin{figure}[htb]
+\centering
+	\begin{tikzpicture}[->, >=stealth', auto, semithick, node distance=3cm]
+	\tikzstyle{every state}=[fill=white,draw=black,thick,text=black,scale=1]
+	\node[state]    (A)                     {$i_0$};
+	\node[state]    (B)[right of=A]   {$i_1$};
+	\path
+	(A) edge[loop left]     node{$p_{0,0}$}         (A)
+			edge[bend left,above]      node{$p_{0,1}$}      (B)
+	(B) edge[loop right]    node{$p_{1,1}$}     (B);
+	\end{tikzpicture}
+\caption{Markov-Modell für isolierte Ereignisse} 
+\label{fig:chronMarkov} 
+\end{figure}
+
+Da es es laut Definition keine Genesungschance gibt, existiert kein Pfad von $i_1$ nach $i_0$. Das heißt $i_1$ ist ein absorbierender Zustand und die Markov-Kette ist nicht irreduzibel. Die Zeit bis zum Eintritt in den Chroniker-Zustand einspricht damit der Verweilzeit im Zustand gesund. Diese ist bei einer Markov-Kette immer geometrisch verteilt mit Parameter $p=1-p_{0,0}$.  	

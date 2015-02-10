@@ -22,7 +22,7 @@ Das heißt die Verteilung der Zwischenankunftszeiten sind gedächtnislos und somit
 
 Als nächstes müssen wir uns überlegen, wie wir die Wahrscheinlichkeit für einen Unfall schätzen können. Da der Poisson-Prozess stationäre Zuwächse hat, können wir die Parameter auf Basis von historischen Informationen schätzen. Aufgrund der erwarteten Abhängigkeit von Alter und Geschlecht, muss für jede Kombination aus Altersgruppe und Geschlecht ein separates $\lambda_{Altersgruppe, Geschlecht}$ geschätzt werden. Dazu betrachten wir die relative Häufigkeit eines Unfalls für die jeweilige Kombination aus Alter und Geschlecht und setzen
 \begin{eqnarray} \label{eq:unfallWs}
-	\bar{\lambda_{Altersgruppe, Geschlecht}} := \frac{\#\text{Unfall}_{Altersgruppe, Geschlecht}}{\#\text{Versicherte}_{Altersgruppe, Geschlecht}}.
+	\bar{\lambda}_{Altersgruppe, Geschlecht} := \frac{\#\text{Unfall}_{Altersgruppe, Geschlecht}}{\#\text{Versicherte}_{Altersgruppe, Geschlecht}}.
 \end{eqnarray}
 
 Dabei ist $\#\text{Versicherte}_{Altersgruppe, Geschlecht}$ die Anzahl aller Versicherten, die in die jeweilige Alters- und Geschlechtsgruppe fallen und in dem betrachteten Zeitraum bei der Kasse versichert waren. Des Weiteren ist $\#\text{Unfall}_{Altersgruppe, Geschlecht}$ die Anzahl der Unfälle aller Personen, die in die jeweilige Alters- und Geschlechtsgruppe fallen. Es werden dabei alle Fälle betrachtet, die in dem jeweiligen Kalenderjahr begonnen haben, da wir Unfälle auf den Eintrittszeitpunkt konzentrieren. Die Einteilung der Altersgruppen ist dabei flexibel. \\

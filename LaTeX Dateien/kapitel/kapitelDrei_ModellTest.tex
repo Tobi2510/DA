@@ -6,7 +6,7 @@ Im folgenden Abschnitt wird zunächst die Datengrundlage vorgestellt, auf der das
 
 Die Datengrundlage für die Anwendung des Modells besteht aus Versicherten- und Krankenhausabrechnungsdaten, die über einen Zeitraum von drei Jahren erfasst wurden. Für die Aufbereitung der Daten wurden Duplikate entfernt, die Datenformate vereinheitlicht und fehlerhafte bzw. unvollständige Datensätze herausgefiltert. Die wichtigsten Informationen in den Krankenhausdaten sind die abgerechnete Krankenhausbehandlungen und die gestellten Diagnosen. Deshalb werden wir, bevor wir die Datengrundlage näher betrachten, im Folgenden einen kurzer Einblick in das deutsche Abrechnungssystem im Krankenhaus geben.\\
 
-Seit 2003 wird in Deutschland die Vergütung im Kranhausbereich über ein Fallpauschalensystem realisiert. Dieses basiert auf den sogenannten Diagnosis Related Groups (kurz: DRG)\footnote{auf Deutsch: diagnosebezogene Fallgruppen}. Behandlungsfälle, die medizinisch und hinsichtlich des Ressourcenverbrauchs ähnlich sind, sind dort zu Fallgruppen zusammengefasst. Die Zuordnung erfolgt auf Basis der Patienten- und Falldaten die während eines Krankenhausaufenthaltes gesammelt werden. Dazu gehören neben dem Alter und Geschlecht des Patienten auch die gestellten Diagnosen und die vorgenommen Prozeduren. Komplikationen oder erschwerende Begleiterkrankungen (Komorbiditäten) werden über verschiedene Schweregrade berücksichtigt.\\
+Seit 2003 wird in Deutschland die Vergütung im Kranhausbereich über ein Fallpauschalensystem realisiert. Dieses basiert auf den sogenannten Diagnosis Related Groups (kurz: DRG)\footnote{auf Deutsch: diagnosebezogene Fallgruppen}. Behandlungsfälle, die medizinisch und hinsichtlich des Ressourcenverbrauchs ähnlich sind, sind dort zu Fallgruppen zusammengefasst. Die Zuordnung erfolgt auf Basis der Patienten- und Falldaten die während eines Krankenhausaufenthaltes gesammelt werden. Dazu gehören neben dem Alter und Geschlecht des Patienten auch die gestellten Diagnosen und die vorgenommen Prozeduren. Komplikationen oder erschwerende Begleiterkrankungen (Komorbiditäten) werden über verschiedene Schweregrade berücksichtigt. Auf diese Weise wird jeder DRG ein relatives Kostengewicht zugeordnet. Außerdem gibt es, für jede DRG, abhängig von der mittleren Verweildauer, eine untere und eine obere Grenzverweildauer. Liegt die tatsächliche Verweildauer eines Falles außerhalb dieses Bereichs, gibt es Zu- bzw. Abschläge auf das Kostengewicht.\\
 
 \begin{figure}[htb]                     
 \centering 
@@ -15,7 +15,7 @@ Seit 2003 wird in Deutschland die Vergütung im Kranhausbereich über ein Fallpaus
 \label{fig:DRG} 
 \end{figure}
 
-Für jede DRG gibt es eine Fallpauschale. Abhängig von der mittleren Verweildauer, wird eine untere und eine obere Grenzverweildauer bestimmt. Liegt die tatsächliche Verweildauer eines Falles außerhalb dieses Bereichs, gibt es Zu- bzw. Abschläge auf die Fallpauschale. Der endgültige Betrag ergibt dann die Kosten für einen Behandlungsfall. Das System wird vom "`Institut für das Entgeltsystem im Krankenhaus"'\footnote{\url{www.g-drg.de}} (kurz InEK) gepflegt und weiterentwickelt. \\
+Am Ende wird das resultierende Kostengewicht mit dem Basisfallwert multipliziert, um die Kosten des Krankenhausfalles zu bestimmen. Der Basisfallwert wird dabei jährlich für jedes Bundesland neu berechnet. Aktuell liegt dieser Wert zwischen 3.190,81 Euro und 3.311,98 Euro\footnote{Quelle: \url{http://www.gkv-spitzenverband.de/krankenversicherung/krankenhaeuser/budgetverhandlungen/bundesbasisfallwert/bundesbasisfallwert.jsp} (Stand 8.2.2015)}. Das System wird vom "`Institut für das Entgeltsystem im Krankenhaus"'\footnote{\url{www.g-drg.de} (Stand 8.2.2015)} (kurz InEK) gepflegt und weiterentwickelt. \\
 
 Die während eines Krankenhausaufenthalts gestellten Diagnosen und die durchgeführten Prozeduren werden nach den medizinischen Klassifikationen ICD-10-GM und OPS kodiert. Das ICD-10-GM ist eine für Deutschland angepasste Version der "`internationalen statistischen Klassifikation der Krankheiten und verwandter Gesundheitsprobleme"'(kurz: ICD\footnote{Aufgrund des englischen Namens: "`International Statistical Classification of Diseases and Related Health Problems"'}). Der zugehörige Katalog wird vom "`deutschen Institut für Medizinische Dokumentation und Information"'\footnote{\url{www.dimdi.de}},kurz DIMDI, jährlich aktualisiert und angepasst. Er ist hierarchisch strukturiert und enthält 22 Krankheitskapitel, die sich in Gruppen, Kategorien und Subkategorien aufsplitten. Das DIMDI schätzt die Anzahl der Schlüsselnummern auf ca. 13.400.  Die jährlichen Anpassungen stellen auch eine besondere Herausforderung bei der Arbeit mit ICD-Schlüsseln dar. Es kann vorkommen, dass in zwei unterschiedlichen Jahren einem ICD-Schlüssel unterschiedliche Diagnosen zugeordnet werden. Der Operationen- und Prozedurenschlüssel (kurz: OPS) wird ebenfalls vom DIMDI gepflegt und ist die amtliche Klassifikation zum Verschlüsseln von Operationen, Prozeduren und allgemein medizinischen Maßnahmen im stationären Bereich und beim ambulanten Operieren. \\
 
@@ -108,19 +108,19 @@ Für die Auswahl des Testfalls im nächsten Abschnitt wurden die häufigsten Hauptd
 
 \subsection{Anwendung und Test des Poisson-Modells}
 
-In diesem Abschnitt werden wir, am Beispiel vom Unfall Gehirnerschütterung, den vorgestellten Poisson-Ansatz implementieren und bewerten. Dazu ist es notwendig eine saubere Datenbasis auszuwählen, auf der die notwendigen Parameter geschätzt werden können. Außerdem werden wir eine Testmenge definieren, die später zur Bewertung des fertigen Modells verwendet wird. Es existieren Daten von drei Jahren (2009,2010 und 2011). Deshalb werden wir das erste Jahr (2009) für die Schätzung der Modellparameter verwenden und die anderen Beiden für den Test. Jedem Jahr ordnen wir alle Unfälle zu, die in dem jeweiligen Jahr begonnen haben. Alle Kosten eine Falles, werden auf den Tag der Krankenhauseinweisung konzentriert, auch wenn sie in nachfolgende Jahre fallen. \\
+In diesem Abschnitt werden wir, am Beispiel vom Unfall Gehirnerschütterung, den vorgestellten Poisson-Ansatz implementieren und bewerten. Dazu ist es notwendig eine saubere Datenbasis auszuwählen, auf der die notwendigen Parameter geschätzt werden können. Außerdem werden wir eine Testmenge definieren, die später zur Bewertung des fertigen Modells verwendet wird. Es existieren Daten von drei Jahren (2009,2010 und 2011). Deshalb werden wir das erste Jahr (2009) für die Schätzung der Modellparameter verwenden und die anderen Beiden für den Test. Jedem Jahr ordnen wir alle Unfälle zu, die in dem jeweiligen Jahr begonnen haben. Alle Kosten eine Falles, werden auf den Tag der Krankenhauseinweisung konzentriert, auch wenn sie in nachfolgende Jahre anfallen. \\
 
 Im vorangegangenen Abschnitt haben wir bereits erläutert, wie die Abrechnungsdaten nach Aufnahme und Entlassungsgrund gefiltert werden können, um die relevanten Fälle zu identifizieren. Dieselben Filter wurden auch verwendet, um die Grundtabelle mit allen potentiellen Unfällen zu erstellen\footnote{siehe Anhang \ref{sec:scripts}}. Dazu wurde der MS SQL Server als Datenbank verwendet und die benötigten Abfragen per SQL formuliert. Anschließend wurden alle Fälle betrachtet, die als Hauptdiagnose die S06.0 "'Gehirnerschütterung"' hatten, um zu untersuchen welche DRGs in diesen Fällen abgerechnet wurden. Die häufigste DRG (Anteil $97,5\%$) ist die B80Z: "`Andere Kopfverletzung"', also die Behandlung wegen einer Kopfverletzung. Es gab auch Fälle die mit der Diagnose Gehirnerschütterung eingeliefert wurden und bei denen dann ein Herzschrittmacher eingesetzt wurde, was zu einer ganz anderen DRG geführt hat. Daran zeigt sich weshalb die Kombination aus Diagnose und DRG wichtig für die Abgrenzung ist. Für unseren Test beschränken wir uns deshalb auf alle Fälle die wegen einer Gehirnerschütterung aufgenommen wurden und auch wegen einer Kopfverletzung behandelt wurden. \\
 
 Neben den Fallinformationen benötigen wir außerdem die Personeninformationen. In der entsprechenden Grundtabelle sind für jeden Versicherten mehrere Einträge vorhanden. Jeder dieser Einträge hat dabei dieselben Grundinformationen, wie Alter und Geschlecht, aber unterschiedliche Angaben zu dem Versicherungszeitraum. Um herauszufinden, ob ein Versicherter in einem bestimmten Zeitraum versichert war, müssen die einzelnen Zeiträume zusammengeführt werden. Da dies mit SQL sehr aufwendig ist, wurde ein JAVA Programm geschrieben, das diese Aufgabe erfüllt. Als Eingabe dienen die Personeninformationen und das Jahr, welches ausgewertet werden soll. Anschließend prüft das Programm für jeden Versicherten, welche Zeitintervalle in das beobachtete Jahr fallen und gibt die Anzahl der Tage aus, die der Versicherte in diesem Jahr bei der Kasse war. Zusätzlich wird noch das Alter\footnote{Differenz aus betrachtetem Jahr und Geburtsjahr} des Versicherten im jeweiligen Jahr bestimmt. Diese Informationen werden dann im einem letzten Schritt an die Unfalldaten angespielt und ausgegeben. Die so erzeugte Grundtabelle bietet die Basis für das weitere Vorgehen.\\
 
-Im ersten Schritt betrachten wir die Unfallwahrscheinlichkeit $\lambda$. Diese können wir auf Basis der relativen Häufigkeit schätzen. 
+Im ersten Schritt betrachten wir die Unfallwahrscheinlichkeit $\lambda$. Da ein Poisson-Prozess stationäre Zuwächse besitzt, können wir diese auf Basis der relativen Häufigkeit in den historischen Daten schätzen. 
 \begin{eqnarray*}
 	\bar{\lambda} = \frac{\#\text{Unfall}}{\#\text{Versicherte}}.
 \end{eqnarray*}
-Dabei ist $\#\text{Unfall}$ in unserem Beispiel, die Anzahl alle Krankenhausfälle, die in dem betrachteten Jahr(2009) begonnen haben. Dieser Wert wird durch die Anzahl aller Personen geteilt, die im betrachteten Zeitraum versichert waren. Das führt zu der Frage wie Versicherte behandelt werden, die nicht über den gesamten betrachteten Zeitraum Versicherter waren. Diese dürfen nicht ignoriert werden, da sonst evtl. relevante Informationen verloren gehen und das Modell verzerrt wird. Deshalb werden wir eine Gewichtung auf Basis der versicherten Tage vornehmen. Dementsprechend wird jemand, der nur 6 Monate versichert war, nur mit Wert $\frac{1}{2}$ in der Zählung berücksichtigt. Die Anzahl der Unfälle bleibt davon allerdings unberührt. Für unsere Testdaten ergibt sich damit in 2009 eine geschätzte Unfallwahrscheinlichkeit von $\bar{\lambda} = 0,189\%$ für das seltene Ereignis "`Gehirnerschütterung"'. \\
+Dabei ist $\#\text{Unfall}$ in unserem Beispiel, die Anzahl alle Krankenhausfälle, die in dem betrachteten Jahr(2009) begonnen haben. Dieser Wert wird durch die Anzahl aller Personen geteilt, die im betrachteten Zeitraum versichert waren. Das führt zu der Frage wie Versicherte behandelt werden, die nicht über den gesamten betrachteten Zeitraum Versicherter waren. Diese dürfen nicht ignoriert werden, da sonst evtl. relevante Informationen verloren gehen und das Modell verzerrt wird. Deshalb werden wir eine Gewichtung auf Basis der versicherten Tage vornehmen. Dementsprechend wird jemand, der nur 6 Monate versichert war, nur mit einem Gewicht von 0,5 in der Zählung berücksichtigt. Die Anzahl der Unfälle wird dabei nicht gewichtet. Dementsprechend wird unterstellt das ein Versicherter, der nur ein halbes Jahr versichert war und in diesem Zeitraum einen Unfall hatte, dass dieser in der anderen Jahreshälfte wieder einen Unfall hat. Da Unfälle als seltene Ereignisse charakterisiert sind, führt dieses Vorgehen also tendenziell zu einer Überschätzung der Unfallwahrscheinlichkeit. Für unsere Testdaten ergibt sich in 2009 eine geschätzte Unfallwahrscheinlichkeit von $\bar{\lambda} = 0,189\%$ für das seltene Ereignis "`Gehirnerschütterung"'. \\
 
-Als nächstes untersuchen wir, ob dieser Unfalltyp vom Alter und Geschlecht der Versicherten abhängt. Dazu unterteilen wir den Versichertenbestand in verschiedene Altersgruppen, die jeweils 5 Jahre umfassen. Die einzigen Ausnahmen sind die Neugeboren die in einer extra Gruppe zusammengefasst sind und Versicherte die älter sind als 90. Anschließend werden diese Gruppe noch Geschlecht getrennt. Wir bezeichnen diese Gruppen im Weiteren kurz als AGG. Die folgende Grafik zeigt die Aufteilung der Grundgesamtheit in diese Gruppen.\\
+Als nächstes untersuchen wir, ob dieser Unfalltyp vom Alter und Geschlecht der Versicherten abhängt. Dazu unterteilen wir den Versichertenbestand in verschiedene Altersgruppen, die jeweils 5 Jahre umfassen. Die Neugeborenen sind dabei in einer extra Gruppe zusammengefasst, da diese in der ersten Phase des Kohorten-Modells betrachtet werden. Außerdem bilden Versicherte die älter sind als 90 eine Gruppe, da es in den hohen Altersbereichen nicht genug Versicherte gibt um allgemeine Aussagen ableiten zu können. Anschließend werden diese Gruppe noch Geschlecht getrennt. Wir bezeichnen diese Gruppen im Weiteren kurz als AGG für Alters- und Geschlechtsgruppe. Die folgende Grafik zeigt die Aufteilung der Grundgesamtheit in diese Gruppen.\\
 
 \begin{figure}[htb]                     
 \centering 
@@ -137,12 +137,9 @@ Nun können wir für jede AGG die jeweiligen $\bar{\lambda}_{AGG}$ schätzen. Die f
 \caption{Geschätzte Unfallwahrscheinlichkeiten} 
 \label{fig:UnfallWs} 
 \end{figure}
-Diese typische Badewannenkurve sieht man häufig im Zusammenhang mit Leistungen im Gesundheitswesen. Es ist klar zu sehen, dass im Bezug zu $\bar{\lambda}$, junge und alte Menschen zwei bis viermal so häufig wegen einer Gehirnerschütterung behandelt wurden. Dahingegen ist die Häufigkeit im Altersbereich $30-65$, zum Teil auf weniger als die Hälfte reduziert. Natürlich erhöht Sport die Gefahr einer Gehirnerschütterung. Damit lässt sich die erhöhte Rate bei Jugendlichen gut erklären. Außerdem können die Unterschiede in der Unfallrate bei Frauen und Männern zwischen 5 und 30 auf die erhöhte Risikobereitschaft von Männer in diesem Altersbereich zurückgeführt werden.
-Bei älteren Menschen sind dahingegen häufig Stürze die Ursache der Gehirnerschütterung.\\
+Diese typische Badewannenkurve sieht man häufig im Zusammenhang mit Leistungen im Gesundheitswesen. Es ist klar zu sehen, dass im Vergleich zur durchschnittlichen Unfallwahrscheinlichkeit $\bar{\lambda}$, junge und alte Menschen zwei bis viermal so häufig wegen einer Gehirnerschütterung behandelt wurden. Dahingegen liegt die Häufigkeit im Altersbereich $30-65$, deutlich unter dem Durchschnitt.\\
 
-Ein anderer Punkt der in diesem Zusammenhang berücksichtigt werden muss, ist dass da wir uns nur auf stationäre Daten beschränkt haben, nur Einträge existieren, wenn der Patient im Krankenhaus aufgenommen wurde. Gerade Jugendliche werden bei Stößen auf den Kopf häufig einen Tag zur Beobachtung aufgenommen. Das zeigt sich insbesondere bei Neugeborenen, da diese ihre Beschwerden nicht mitteilen können. Dahingegen besteht bei älteren Menschen die Gefahr, dass die Gehirnerschütterung nur eine Folge von sekundäre Erkrankungen ist. Bei Verdacht werden deshalb diese Patienten, dann auch zur Beobachtung aufgenommen.\\
-
-Durch die sehr geringe Fallzahl bei Unfällen, entsteht beim schätzen der Unfallwahrscheinlichkeiten ein hoher Standardfehler. Je kleiner die Altersgruppen werden, umso größer wird dieser. Da wir annehmen, dass die Anzahl der Unfälle für einen Versicherten Poisson-Verteilt ist, ergibt sich der Standardfehler für eine AGG durch 
+Durch die sehr geringe Fallzahl bei Unfällen, entsteht beim schätzen der Unfallwahrscheinlichkeiten ein hoher Standardfehler, also eine hohe mittlere Abweichung des geschätzten Parameters vom wahren Wert. Je kleiner die Altersgruppen werden, umso größer wird dieser. Da wir annehmen, dass die Anzahl der Unfälle für einen Versicherten Poisson-Verteilt ist, ergibt sich der Standardfehler für eine AGG durch 
 \begin{eqnarray*}
 	\sigma_{\bar{\lambda}_{AGG}} = \sqrt{\frac{\bar{\lambda}_{AGG}}{\#\text{Versicherte}_{AGG}}}.
 \end{eqnarray*}
@@ -159,63 +156,144 @@ Insbesondere in den schwach besetzten Gruppen ist deshalb die Genauigkeit der Sc
 		Rentner(>65 Jahre) & 0,1867\% & 0,2820\% & 0,0074\% & 0,0080\%\\
 	\end{tabular}
 	\caption{Übersicht Unfallwahrscheinlichkeiten Gehirnerschütterung}
-	\label{tbl:overviewUnfallws}2
+	\label{tbl:overviewUnfallws}
 \end{table}
 
-Als nächstes wollen wir die Kosten in den historischen Daten untersuchen, um für das Modell eine passende Kostenverteilung zu ermitteln. Zur Auswertung wurde in diesem Fall R\footnote{\URL{http://www.r-project.org/}} gewählt. Das Programm ist in der Lage auch größere Datenmengen schnell und zuverlässig zu untersuchen. Durch die Installation zusätzlicher Bibliotheken, ist es außerdem möglich statistische Auswertungen und Test durchzuführen. Die folgende Grafiken zeigen zum Einen die Verteilung der Gesamtkosten und zum Anderen die Kosten pro Tag in 2009.
+Diese Unfallwahrscheinlichkeiten werden später dazu verwendet, die erwarteten Kosten eines Versicherten zu schätzen. Die Unterschiede zwischen den einzelnen Gruppen sind dabei deutlich zu erkennen.\\
+
+Als nächstes wollen wir die Kosten in den historischen Daten untersuchen, um für das Modell eine passende Kostenverteilung zu ermitteln. Zur Auswertung wurde in diesem Fall R\footnote{\url{http://www.r-project.org/}} gewählt. Das Programm ist in der Lage auch größere Datenmengen schnell und zuverlässig zu untersuchen. Durch die Installation zusätzlicher Bibliotheken, ist es außerdem möglich statistische Auswertungen und Test durchzuführen. Die folgende Grafiken zeigen zum Einen die Verteilung der Gesamtkosten und zum Anderen die Kosten pro Tag in 2009.
 
 \begin{figure}[htb]
    \centering
-      \subfloat[Gesamtkosten]{\includegraphics[width=0.39\textwidth]{./bilder/Kostenverteilung}}\qquad
-      \subfloat[Kosten pro Tag]{\includegraphics[width=0.39\textwidth]{./bilder/KostenProTag}}
+      \subfloat[Gesamtkosten]{\includegraphics[width=0.45\textwidth]{./bilder/Kostenverteilung}}\qquad
+      \subfloat[Kosten pro Tag]{\includegraphics[width=0.45\textwidth]{./bilder/KostenProTag}}
    \caption{Übersicht Leistungskosten Gehirnerschütterung}
 	 \label{fig:overviewCost}
 \end{figure}
 
-In beiden Grafik ist deutlich zu erkennen, dass die Kostenverteilung zwei Häufungspunkte besitzt. Das deutet auf eine Überlagerung von mindestens zwei Verteilungen hin.
-Da Kosten im Krankenhaus über Fallpauschalen abgerechnet werden, hängen die endgültigen Kosten von der Verweildauer des Patienten im Krankenhaus. Der Zusammenhang zwischen Kostengewicht und Verweildauer für die DRG B80Z lässt sich wie folgt darstellen.
-\begin{figure}[htb]                     
+In beiden Grafik ist deutlich zu erkennen, dass die Kostenverteilung zwei Häufungspunkte besitzt. Das deutet auf eine Überlagerung von mindestens zwei Verteilungen hin. Die Ursache dafür ist das Abrechnungssystem im Krankenhaus. Wie bereits beschrieben entsprechen die Kosten für einen Fall dem Produkt aus Kostengewicht und Basisfallwert. Der bundeslandspezifische Basisfallwert ist dabei innerhalb eines Jahres konstant. Das Kostengewicht hängt jedoch in erster Linie von der Verweildauer des Patienten im Krankenhaus ab. Der daraus resultierende Zusammenhang zwischen Kosten und Verweildauer lässt sich für die DRG B80Z\footnote{Quelle: \url{http://drg.uni-muenster.de/index.php?option=com_drgsystematik&view=DRGSystematik&Itemid=49&mdc=01} (Stand: 8.2.2015)} wie folgt darstellen. 
+
+\begin{figure}[H]                     
 \centering 
-\includegraphics[width=0.8\textwidth]{./bilder/Kostengewicht_B80Z}
-\caption{DRG B80Z Kostengewicht\footnote{Quelle: \url{http://www.medcode.ch/de/de/drgs/G-DRG-2012/B80Z} (Stand: 5.2.2015)}} 
+\includegraphics[width=0.8\textwidth]{./bilder/drgdiagrammB80Z}
+\caption{DRG B80Z Kostenentwicklung} 
 \label{fig:B80Z} 
 \end{figure}
 
-Das heißt die untere Grenzverweildauer beträgt zwei Tage und die obere Grenzverweildauer vier Tage. In diesem Zeitraum ist das Kostengewicht konstant und außerhalb davon gibt es Zu- und Abschläge. Betrachtet wir die Verweildauer für unsere Fälle, dann wird deutlich das die Mehrheit nur 1-3 Tage im Krankenhaus aufgenommen wurden. Die mittlere Verweildauer beträgt dabei 1,8 Tage.
+Das heißt die untere Grenzverweildauer beträgt zwei Tage und die obere Grenzverweildauer vier Tage. In diesem Zeitraum ist das Kostengewicht konstant und außerhalb davon gibt es Zu- und Abschläge. Die Verteilung der Verweildauer ist dabei immer diskret, da das Abrechnungssystem nur ganze Tage berücksichtigt. Betrachten wir die Verweildauer für unsere Fälle, dann wird deutlich, dass die Mehrheit nur ein bis drei Tage im Krankenhaus aufgenommen wurden. Die mittlere Verweildauer beträgt 1,8 Tage.
 
 \begin{figure}[htb]                     
 \centering 
-\includegraphics[width=0.8\textwidth]{./bilder/Verweildauer}
+\includegraphics[width=0.7\textwidth]{./bilder/Verweildauer}
 \caption{Übersicht Verweildauer Gehirnerschütterung} 
 \label{fig:verweildauer} 
 \end{figure}
 
-Mit diesen Informationen haben wir verschiedene Möglichkeiten die Kostenverteilung für unser Modell abzuleiten. Ein Ansatz ist es die Verteilung in drei Teile zu zerlegen. Jeweils eine Funktion für Zeit mit Abschlägen auf das Kostengewicht (Verweildauer ein Tag), für die Phase mit konstantem Kostengewicht (Verweildauer zwei bis vier Tage) und für die Zuschlags für jede 
+Durch dieses Zusammenhand zwischen der diskret verteilten Verweildauer und den Kosten für einen Fall, ist es sinnvoll die Kostenverteilung in drei Teile zu zerlegen. Jeweils eine Verteilung für die Zeit mit Abschlägen auf das Kostengewicht (Verweildauer ein Tag), mit konstantem Kostengewicht (Verweildauer zwei bis vier Tage)und mit Zuschlägen. Bezeichne $F_{A}, F_{K}$ und $F_{Z}$ jeweils die entsprechende Verteilungsfunktion und sei $V$ die Verweildauer, dann lässt die Kostenverteilung wie folgt darstellen. 
 
- Dieser Zusammenhang wird deutlich, wenn man das Kostengewicht der DRG B80Z betrachtet.  
+\begin{eqnarray} \label{eq:kostenVerteilung}
+	F_{Gesamt}(x) = \mathbb{P}(V \leq 1) F_{A}(x) + \mathbb{P}(V \leq 4 | V > 1) F_{K}(x) + \mathbb{P}(V > 4) F_{Z}(x)
+\end{eqnarray}
 
+Betrachten wir nun erneut die Verteilung der Kosten in den Daten, allerdings unterteilt nach Verweildauer, dann ergibt sich folgendes Bild. 
 
- 
-Kostenverteilung => Grafik mit 2 peaks / paralell Kosten pro Tag (rechter peak sind 1tages lieger)=> erklärung über Verweildauer bezug zu den basisfallwerten hohes Maximum abgeschnitten (6 fälle die darüer liegen mit 15k als max=
+\begin{figure}[htb]
+   \centering
+      \subfloat[Verweildauer 1 Tag]{\includegraphics[width=0.45\textwidth]{./bilder/KostenUntereVWD}}\quad
+      \subfloat[Verweildauer 2-4 Tage]{\includegraphics[width=0.45\textwidth]{./bilder/KostenMittlereVWD}}\quad
+			\subfloat[Verweildauer >4 Tage]{\includegraphics[width=0.45\textwidth]{./bilder/KostenHoheVWD}}
+   \caption{Übersicht Leistungskosten unterteilt nach Verweildauer}
+	 \label{fig:overviewCostVWE}
+\end{figure}
 
-Untersuchung verweildauer => kein wesentlicher ZUsammenhang mit Alter erkennbar (ältere menschen tendendieren eher zu langen Verweilzeiten mi 1,8 vs 3,3 tage) => Histogramm verweildauer 
-Aber stets  55\%-65\% bei 1-2 Tagen aus diesem Grund 3 Modellieren wir Verteilungen? 1 Tag 2 Tage und rest 
-Sind nicht nv verteilt und nich gamma verteilt => besser empirische Verteilung nutzen
+Eine Approximation durch stetige Verteilung ist für keine der drei Verteilungen gelungen. Zum Testen wurde der Kolmogorow-Smirnow-Test verwendet und als mögliche Verteilungen wurden Normalverteilung, Weibullverteilung, und im letzten Fall die Exponentialverteilung bzw. Gammaverteilung untersucht. In jedem Fall konnte die Nullhypothese bei einem Signifikanzniveau von 1\% verworfen werden. Aus diesem Grund verwenden wir im Weiteren die empirische Verteilung.\\
 
-Bild B80Z Quelle http://www.medcode.ch/de/de/drgs/G-DRG-2012/B80Z 
+Der Erwartungswert der empirischen Kostenkostenverteilung, lässt sich wieder mit Hilfe des Mittelwert-Schätzers bestimmen. Damit ergeben sich durchschnittliche Kosten in Höhe von 922,85 Euro. Zusammen mit den geschätzten Unfallwahrscheinlichkeiten können wir somit das Risikoäquivalent für einen Versicherten bestimmen. Dieses ergibt sich als Summe der Barwerte, der erwarteten Kosten für alle Folgejahre, bis zum Eintritt in die Prämortalitätsphase. Die erwarteten Kosten in einem Jahr entsprechen dem Erwartungswert des zusammengesetzten Poisson-Prozesses für dieses Jahr. Bezeichne $Y_t^{AGG}$ den zusammengesetzte Poisson-Prozess und $N_t^{AGG}$ den Poisson-Prozess für die Anzahl der Gehirnerschütterungen, jeweils für einen Versicherten in der entsprechenden AGG. Weiterhin seinen ${X_i}$ die Kosten der i-ten Gehirnerschütterung, dann gilt 
+\begin{eqnarray} \label{eq:erwKostenGE}
+	\mathbb{E}(Y_t^{AGG}) = \mathbb{E}(\sum_{i=1}^{N_t^{AGG}} X_i) = \lambda_{AGG}*t \mathbb{E}(X_i) = \lambda_{AGG}*t*922,85
+\end{eqnarray}
+Das heißt z.B. die erwarteten Kosten für einen 30-jährigen Versicherten für das nächste Jahr betragen rund 0,90 Euro.\\
 
-Kurz erläutern erwartete kosten für 35 jährigen 
+Für die Bewertung der Modellgüte werden wir untersuchen, wie sich die realen Kosten im Vergleich zu diesen Erwartungswerten entwickeln. Im ersten Schritt testen wir, ob sich die relevanten Modellparameter signifikant verändert haben. Dazu führen wir einen Einstichproben-t-Test für die mittleren Fallkosten und einen gewichteten Einstichproben-t-Test für die alters- und geschlechtsabhängigen Unfallwahrscheinlichkeiten durch\footnote{Die entsprechenden Abfragen für R befinden sich im Anhang \ref{sec:scripts}.}. Die Nullhypothese ist dementsprechend, dass der Mittelwert der jeweiligen Daten aus 2010 gleich dem im Vorjahr geschätzten Modellparameter ist. Als Signifikanzniveau wählen wir 5\%.  Die folgende Tabelle zeigt eine Übersicht der Entwicklung der einzelnen Parameter und das Ergebnis des Tests.
 
-Modelltest - aufgrund der Begrenzten Datenlage keine möglichkeit einen langzeit test durchzuführen
-Deshalb werden wir einen Simuulationsansatz verwednde. Dazu wird wiederhohlt eine Stichprobe aus den Daten des Jahres gezogen, dass wir bewerten wollen.
-Für jeden Versicherten in dieser Stichprobe werden daraufhin die erwartet Kosten für eine Gehirnerschütterung bestimmt. Nach dem selben Schema wie oben. Die geschätzten und realen Kosten werden für alle Versicherten in der Stichprobe aufsummiert und verglichen. Dieser Vorgang wird 10000 mal wiederhohlt um ein maß für die Vorhersagegenauigkeit zu erhalten. Dieses Vorgehen wird als Monte-Carlo-Simulation bezeichnet. 
+\begin{table}[H]
+	\centering
+	\begin{tabular}{l|r|r|r}
+		Parameter & Wert 2009 & Wert 2010 & p-Wert des t-Tests\\
+		\hline
+		Mittlere Fallkosten & 922,85 Euro & 922,07 Euro & 0,9254 \\
+		\hline
+		$\lambda$ Gesamt & 0,1890\% & 0,1891\% & 0,9838 \\
+		\hline
+		$\lambda$ Frauen 1-25 Jahre & 0,2720\% & 0,2897\% & 0,2971 \\
+		\hline
+		$\lambda$ Frauen 26-65 Jahre & 0,0585\% & 0,0631\% & 0,3356\\
+		\hline
+		$\lambda$ Frauen >65 Jahre & 0,2820\% & 0,2762\% & 0,4831\\
+		\hline
+		$\lambda$ Männer 1-25 Jahre & 0,3829\% & 0,3574\% & 0,1751 \\
+		\hline
+		$\lambda$ Männer 26-65 Jahre & 0,0973\% & 0,0930\% & 0,4090\\
+		\hline
+		$\lambda$ Männer >65 Jahre & 0,1867\% & 0,2016\% & 0,0675\\
+	\end{tabular}
+	\caption{Übersicht Testergebnisse 2010}
+	\label{tbl:overviewTestResults2010}
+\end{table}
 
-Zur durchführung der Stichprobenziehung und auswertung wurde wieder ein Java Programm geschrieben. Dort werden in jedem Durchlaug Stichproben mit einen Umfang von 100000 Versicherten gezogen. Die Kosten jedes Versicherten werden nach der Formel () bestimmt. Da unser Modell die Kosten für das gesamte Jahr prognostiziert, werden die geschätzten Kosten entsprechend der versicherten Zeit gewichtet. Das ist nötig um die spätere Vergleichbarkeit mit den realen Kosten zu ermöglichen. Anschließend werden die realen und die geschätzten Kosten aufsummiert und in eine seperate Datei herausgeschrieben. Zur Auswertung der Ergebnisse kam wieder R zum einsatz.
+Da keiner der resultierenden p-Werte < 0,05 ist, konnte die Nullhypothese für keinen der getesteten Parameter verworfen werden. Dementsprechend scheint die Schätzung der Parameter erwartungstreu zu sein.\\
 
-Die folgende Grafik zeigt die einzelnen Verteilungen im Vergleich ausßerdem ist noch die Verteilung der Differenzkosten abgebildet. Die Erwartungswerte der beiden Verteilungen weichen nur minimal voneinander ab. Daraus lässt sich schließen, dass sich die Erwarteten Kosten gut Vorhersagen lassen und dass das Modell zumindest für das erste Folgejahr stabil ist. 
+Um eine detailliertere Auswertung zu ermöglichen, werden wir zusätzlich einen Simulationsansatz verfolgen. Anstatt einmal den gesamten Bestand auszuwerten, werden zufällig gezogene Stichproben untersucht. Da eine Stichprobe allein nur eine geringe Aussagekraft hat, werden wir entsprechend eines Monte-Carlo-Ansatzes, 10000 zufällige Stichproben analysieren. Die geschätzten und realen Kosten werden dann, für alle Versicherten in der Stichprobe, aufsummiert und verglichen. So erhalten wir ein Maß für die Vorhersagegenauigkeit.\\
 
-Untersuchen  wir weiterhin das zweite Folgejahr auf die Gleiche weise, dann erhalten
+Zur Durchführung der Stichprobenziehung und zur Berechnung der individuellen, erwarteten Unfallkosten, wurde wieder ein Java Programm erstellt. Für jeden Versicherten werden dabei die erwarteten Kosten, entsprechend der Formel \ref{eq:erwKostenGE} bestimmt. Da wir $\lambda$ auf Basis der jährlichen Unfallrate geschätzt haben, entspricht der Zeitraum der Schätzung t, dem Anteil des Jahres, den der Versicherte bei der Kasse war. In jedem Durchlauf werden Stichproben mit einen Umfang von 100000 Versicherten gezogen. Anschließend werden die realen und die geschätzten Kosten aufsummiert und in eine separate Datei herausgeschrieben. Zur Auswertung der Ergebnisse kam wieder R zum Einsatz. \\
 
+\begin{figure}[H]                     
+\centering 
+\includegraphics[width=0.7\textwidth]{./bilder/SimuResultHisto}
+\caption{Ergebnis Simulation 2010} 
+\label{fig:SimuResultHisto} 
+\end{figure}
 
+Aufgrund der geringen Varianz der Erwartungswertschätzung, sind die geschätzten kosten auf ein kleines Intervall konzentriert. Trotzdem ist gut zu sehen, dass die Mittelwerte der beiden Verteilungen sehr dicht beieinander liegen. Für die realen Kosten ist dieser Wert 161695,80 Euro und für die geschätzten Kosten 160408,70 Euro. Das bestätigt die Ergebnisse des t-Test für die Modellparameter.\\
 
+Der Vorteil des Simulationsansatzes ist, dass wir die Differenz zwischen realen und geschätzten Kosten untersuchen können, um ein Gefühl für die Verteilung der Abweichung von den Erwarteten Kosten zu erhalten. Das folgende Histogramm zeigt die Verteilung der Kostendifferenzen in den 10000 Stichproben für 2010.\\
 
+\begin{figure}[H]                     
+\centering 
+\includegraphics[width=0.7\textwidth]{./bilder/DifferenzKosten2010}
+\caption{Differenzen der aufsummierten Kosten in 2010} 
+\label{fig:Diff2010} 
+\end{figure}
+
+Der Mittelwert dieser Differenzen beträgt -1287,04 Euro. Das heißt wir unterschätzen im Mittel die eintretenden Kosten für 2010 geringfügig. Zurückzuführen ist dies auf eine leicht erhöhte Unfallrate in 2010. Obwohl die Differenzen normalverteilt aussehen, ließ sich dies nicht durch einen entsprechenden Test belegen. Ein angepasster Kolomogorov-Smirnow-Test (Lilliefors-Test) liefert einen p-Wert von 0,01326. Das heißt bei einem Signifikanzniveau von 5\% muss die Nullhypothese, dass die Daten normalverteilt sind, verworfen werden. Trotzdem kann die empirische Verteilung dazu verwendet werden, Risikozuschläge zu bestimmen, damit wir die eintretenden Kosten nicht unterschätzen.\\
+
+Beispielsweise könnte der Risikozuschlag bestimmt werden, damit die Differenz aus realen Kosten und geschätzten Kosten in 95\% der Fälle positiv ist. Dazu betrachten wir im einfachsten Fall das 5\% Quantil der Verteilung in \ref{fig:Diff2010}: $Q_{0,05} = -23554,70$. Da jede Stichprobe 100000 Versicherte umfasst, würde ein einheitlicher Risikozuschlag von rund 24 Cent für jeden Versicherten ausreichen. Diese einfache Berechnung ist lediglich als Beispiel dafür gedacht, wofür die Verteilung der Abweichung verwendet werden kann. \\
+
+Zusammenfassend lässt sich sagen, dass der Poisson-Ansatz zur Modellierung der isolierten Ereignisse im Jahr 2010 stabile Ergebnisse produziert hat. \\
+
+Nun betrachten wir das Jahr 2011 und untersuchen auch wieder die geschätzten Parameter mit Hilfe eines t-Test. 
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{l|r|r|r}
+		Parameter & Wert 2009 & Wert 2011 & p-Wert des t-Tests\\
+		\hline
+		Mittlere Fallkosten & 922,85 Euro & 933,43 Euro & 0,1382 \\
+		\hline
+		$\lambda$ Gesamt & 0,1890\% & 0,2056\% & 0,00002 \\
+		\hline
+		$\lambda$ Frauen 1-25 Jahre & 0,2720\% & 0,2941\% & 0,1909 \\
+		\hline
+		$\lambda$ Frauen 26-65 Jahre & 0,0585\% & 0,0611\% & 0,7179\\
+		\hline
+		$\lambda$ Frauen >65 Jahre & 0,2820\% & 0,3227\% & 0,00001\\
+		\hline
+		$\lambda$ Männer 1-25 Jahre & 0,3829\% & 0,3882\% & 0,7801 \\
+		\hline
+		$\lambda$ Männer 26-65 Jahre & 0,0973\% & 0,0954\% & 0,7221\\
+		\hline
+		$\lambda$ Männer >65 Jahre & 0,1867\% & 0,2180\% & 0,0004\\
+	\end{tabular}
+	\caption{Übersicht Testergebnisse 2011}
+	\label{tbl:overviewTestResults2011}
+\end{table}

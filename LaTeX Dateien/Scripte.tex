@@ -30,3 +30,66 @@ INNER JOIN [Fall_Diagnose] AS KH_ICD
 ON KHD.FALL_ID =KH_ICD.FALL_ID AND KHD.IK = KH_ICD.IK;
 \end{lstlisting}
 \end{itemize}
+
+\pagebreak
+\subsection{R-Scripte}
+\begin{itemize}
+	\item Abfrage zur Eingrenzung der Unfälle nach Aufnahme- und Entlassunggrund
+\begin{lstlisting}[basicstyle = \small, language=R]
+## Test der Parameter 2010
+data <- read.csv(file="UnfallData2010_final.csv", sep=';', dec=',')
+t.test(data$ZAHLBETRAG, mu=922.851)
+
+data <- read.csv(file="vers2010Detail.csv", sep=';', dec='.')
+data <- data[data$Geschlecht == "W" & data$Alter>0 & data$Alter<26,]
+wtd.t.test(data$AnzahlUnfaelle/data$Gewicht,0.002720257,data$Gewicht)
+
+data <- read.csv(file="vers2010Detail.csv", sep=';', dec='.')
+data <- data[data$Geschlecht == "W" & data$Alter>25 & data$Alter<66,]
+wtd.t.test(data$AnzahlUnfaelle/data$Gewicht,0.000584902,data$Gewicht)
+
+data <- read.csv(file="vers2010Detail.csv", sep=';', dec='.')
+data <- data[data$Geschlecht == "W" & data$Alter>65,]
+wtd.t.test(data$AnzahlUnfaelle/data$Gewicht,0.002820436,data$Gewicht)
+
+data <- read.csv(file="vers2010Detail.csv", sep=';', dec='.')
+data <- data[data$Geschlecht == "M" & data$Alter>0 & data$Alter<26,]
+wtd.t.test(data$AnzahlUnfaelle/data$Gewicht,0.003829016,data$Gewicht)
+
+data <- read.csv(file="vers2010Detail.csv", sep=';', dec='.')
+data <- data[data$Geschlecht == "M" & data$Alter>25 & data$Alter<66,]
+wtd.t.test(data$AnzahlUnfaelle/data$Gewicht,0.000972688,data$Gewicht)
+
+data <- read.csv(file="vers2010Detail.csv", sep=';', dec='.')
+data <- data[data$Geschlecht == "M" & data$Alter>65,]
+wtd.t.test(data$AnzahlUnfaelle/data$Gewicht,0.001866967,data$Gewicht)
+
+## Test der Parameter 2011
+data <- read.csv(file="UnfallData2011_final.csv", sep=';', dec=',')
+t.test(data$ZAHLBETRAG, mu=922.851)
+
+data <- read.csv(file="vers2011Detail.csv", sep=';', dec='.')
+data <- data[data$Geschlecht == "W" & data$Alter>0 & data$Alter<26,]
+wtd.t.test(data$AnzahlUnfaelle/data$Gewicht,0.002720257,data$Gewicht)
+
+data <- read.csv(file="vers2011Detail.csv", sep=';', dec='.')
+data <- data[data$Geschlecht == "W" & data$Alter>25 & data$Alter<66,]
+wtd.t.test(data$AnzahlUnfaelle/data$Gewicht,0.000584902,data$Gewicht)
+
+data <- read.csv(file="vers2011Detail.csv", sep=';', dec='.')
+data <- data[data$Geschlecht == "W" & data$Alter>65,]
+wtd.t.test(data$AnzahlUnfaelle/data$Gewicht,0.002820436,data$Gewicht)
+
+data <- read.csv(file="vers2011Detail.csv", sep=';', dec='.')
+data <- data[data$Geschlecht == "M" & data$Alter>0 & data$Alter<26,]
+wtd.t.test(data$AnzahlUnfaelle/data$Gewicht,0.003829016,data$Gewicht)
+
+data <- read.csv(file="vers2011Detail.csv", sep=';', dec='.')
+data <- data[data$Geschlecht == "M" & data$Alter>25 & data$Alter<66,]
+wtd.t.test(data$AnzahlUnfaelle/data$Gewicht,0.000972688,data$Gewicht)
+
+data <- read.csv(file="vers2011Detail.csv", sep=';', dec='.')
+data <- data[data$Geschlecht == "M" & data$Alter>65,]
+wtd.t.test(data$AnzahlUnfaelle/data$Gewicht,0.001866967,data$Gewicht)
+\end{lstlisting}
+\end{itemize}
