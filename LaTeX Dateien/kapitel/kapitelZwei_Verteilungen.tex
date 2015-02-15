@@ -1,5 +1,5 @@
 \section{Verwendete Verteilungen}
-Zunächst werden wir die Verteilungen vorstellen, die in dieser Arbeit verwendet werden, und die wichtigsten Eigenschaften vorstellen.
+Zunächst werden wir die Verteilungen vorstellen, die in dieser Arbeit verwendet werden, und deren wichtigste Eigenschaften vorstellen.
 \\
 
 \begin{defini}
@@ -58,9 +58,9 @@ Sei $X \sim exp(\lambda)$ dann gilt:
 \end{enumerate}
 \end{folg}
 
-Die Exponentialverteilung hat die besondere Eigenschaft der Gedächtnislosigkeit und es lässt sich sogar zeigen, dass sie die einzige absolut stetige Verteilung\footnote{Im diskreten Fall ist dies die geometrische Verteilung.} mit dieser Eigenschaft ist.
+Die Exponentialverteilung hat die besondere Eigenschaft der Gedächtnislosigkeit und es lässt sich sogar zeigen, dass sie die einzige, absolut stetige Verteilung\footnote{Im diskreten Fall ist dies die geometrische Verteilung.} mit dieser Eigenschaft ist.
 
-\begin{lemmas} \label{lem:expLemma} Sei X eine positive Zufallsvariable mit absolut stetiger Verteilungsfunktion, dann gilt  $X \sim exp(\lambda)$ genau dann wenn für alle $x, t > 0$ gilt, dass
+\begin{lemmas} \label{lem:expLemma} Sei X eine positive Zufallsvariable mit absolut stetiger Verteilungsfunktion, dann gilt  $X \sim exp(\lambda)$ genau dann, wenn für alle $x, t > 0$ gilt, dass
 	\begin{eqnarray} \label{eq:ged}
 		\mathbb{P}(X> x+t\: | \: X > t) = \mathbb{P}(X > x)
 	\end{eqnarray}
@@ -91,7 +91,7 @@ und somit $g(r) = e^{-\lambda r}$ für alle $r \in \mathbb{Q}^+$. Aufgrund der St
 \end{eqnarray*}
 \qed
 
-Als nächstes wollen wir eine Wahrscheinlichkeitsverteilung vorstellen, die für unabhängige, zufällige Ereignisse mit konstanter Eintrittrate modelliert, wie viel davon in ein festes Zeitintervall fallen. Ein Beispiel dafür wäre die Anzahl der Busse die innerhalb einer Stunde an einer Haltestelle halten, wenn die Abfahrtszeiten zufällig und unabhängig voneinander und die Busse mit einer konstanten Rate die Haltestelle anfahren.
+Als nächstes wollen wir eine Wahrscheinlichkeitsverteilung vorstellen, die für unabhängige, zufällige Ereignisse mit konstanter Eintrittrate modelliert, wie viel davon in ein festes Zeitintervall fallen. Ein Beispiel dafür wäre die Anzahl der Patienten die innerhalb einer Stunde in eine Praxis kommen, wenn die Ankunftszeiten zufällig und unabhängig voneinander und die Patienten mit einer konstanten Rate die Praxis aufsuchen.
 
 \begin{defini}
 Eine diskrete Zufallsvariable $X:\Omega\to \mathbb{N}$ heißt \textbf{poissonverteilt zum Parameter $\lambda \in \mathbb{R}_{>0}$} (kurz $X\sim Poi(\lambda)$), wenn gilt:
@@ -119,7 +119,7 @@ Sei $X\sim Poi(\lambda)$ dann gilt:
 										= \lambda
 	\end{eqnarray*}
 	
-	Der Parameter $\lambda$ der Poisson-Verteilung kann also, als die erwartete Ereignishäufigkeit pro Zeiteinheit interpretiert werden.
+	Der Parameter $\lambda$ der Poisson-Verteilung kann also als die erwartete Ereignis\-häufigkeit pro Zeiteinheit interpretiert werden.
 	
 	\item Die Varianz ist: 
 	\begin{eqnarray*}
@@ -139,12 +139,11 @@ Sei $X\sim Poi(\lambda)$ dann gilt:
 											&=& e^{-(\lambda_1+\lambda_2)} \frac{(\lambda _{1} + \lambda _{2})^x}{x!} \\
 				\Rightarrow  X &\sim & Poi(\lambda _1 + \lambda _2) 
 		\end{eqnarray*}
-		Das heißt die Summe von poissonverteilten Zufallsvariablen ist wieder poissonverteilt.
+		Das heißt, die Summe von poissonverteilten Zufallsvariablen ist wieder poissonverteilt.
 	\end{enumerate}
 \end{folg}
 
-Wir wollen uns an dieser Stelle kurz überlegen, weshalb gerade die Poisson-Verteilung für unsere Beispiel mit Bussen angewendet werden kann. Dazu unterteilen wir den betrachteten Zeitraum $t$ in $n$ gleiche Teilstücke der Länge $\frac{t}{n}$. Dabei ist n so klein gewählt, dass in jedem dieser Teilintervalle maximal ein Bus fährt.
-Die Wahrscheinlichkeit, dass in einem dieser Intervalle ein Bus fährt bezeichnen wir mit $p_n$. Wie bereits beschrieben nehmen wir an, dass die Abfahrtszeiten unabhängig voneinander sind. Das heißt wir haben ein Bernoulli-Experiment der Länge $n$ mit Erfolgswahrscheinlichkeit $p_n$. Wählen wir nun $p_n$ so, dass für große n, die erwartete Anzahl von Abfahrten konstant ist, dann ist die Anzahl der zufälligen Abfahrtszeitpunkte genau Poisson-Verteilt. Das folgende Lemma fasst diese Überlegung zusammen. \\
+Wir wollen uns an dieser Stelle kurz überlegen, weshalb gerade die Poisson-Verteilung für unser Beispiel mit den Patienten in der Praxis angewendet werden kann. Dazu unterteilen wir den betrachteten Zeitraum $t$ in $n$ gleiche Teilstücke der Länge $\frac{t}{n}$. Dabei ist n so klein gewählt, dass in jedem dieser Teilintervalle maximal ein Patient in die Praxis kommt. Die Wahrscheinlichkeit, dass in einem dieser Intervalle ein Patient eintrifft, bezeichnen wir mit $p_n$. Wie bereits beschrieben nehmen wir an, dass die Ankunftszeiten unabhängig voneinander sind. Das heißt, wir haben ein Bernoulli-Experiment der Länge $n$ mit Erfolgswahrscheinlichkeit $p_n$. Wählen wir nun $p_n$ so, dass für große n die erwartete Anzahl von Patienten konstant ist, dann ist die Anzahl der zufälligen Ankunftszeitpunkte poissonverteilt. Das folgende Lemma fasst diese Überlegung zusammen. \\
 
 \begin{lemmas} Sei $\{ p_n\} _{n \in \mathbb{N}} \in (0,1)$ eine Folge mit der Eigenschaft $\lim_{n \rightarrow \infty} np_n = \lambda$ für eine beliebige Konstante $\lambda \in (0, \infty)$, dann gilt für alle $k\in \mathbb{N}_0$
 	\begin{eqnarray*}
@@ -154,17 +153,17 @@ Dabei bezeichnet $Bi_{n,p_n}$ die Verteilungsfunktion der Binomialverteilung mit
 \end{lemmas}
 
 \textbf{Beweis:}
-Wir zeigen, dass der Grenzwert $n\rightarrow \infty$ der Verteilungsfunktion einer binomialverteilten Zufallsvariable $X$ an der Stelle k, gegen den Wert einer poissonverteilten Zufallsvariablen an der Stelle k geht.
+Wir zeigen, dass der Grenzwert $n\rightarrow \infty$ der Verteilungsfunktion $Bi_{n,p_n}(k)$ an der Stelle k gleich dem Wert der Poissonverteilung an der Stelle k ist.
 
 	\begin{eqnarray*}
-		\lim_{n\rightarrow} \mathbb{P}(X=k) &=& \lim_{n\rightarrow \infty}\binom{n}{k} p^k(1-p)^{n-k}\\
+		\lim_{n\rightarrow \infty} Bi_{n,p_n}(k) &=& \lim_{n\rightarrow \infty}\binom{n}{k} p_n^k(1-p_n)^{n-k}\\
 		&=& \lim_{n\rightarrow \infty} \frac{n!}{k!(n-k)!} \left(\frac{\lambda}{n}\right)^k \left(1-\frac{\lambda}{n}\right)^{n-k} \\
 		&=& \frac{\lambda ^k}{k!} \lim_{n\rightarrow \infty} \underbrace{\left(\frac{n(n-1)(n-2)...(n-k+1)}{n^k}\right)}_{\rightarrow 1} \underbrace{\left( 1-\frac{\lambda}{n}\right)^{n}}_{\rightarrow e^{-\lambda}} \underbrace{\left(1-\frac{\lambda}{n}\right)^{-k}}_{\rightarrow 1} \\
 		&=& \frac{\lambda ^k e^{-\lambda}}{k!}		
 	\end{eqnarray*}
 \qed
 
-An dieser Stelle wollen wir noch eine weitere Verteilung einführen, die in einer interessanten Beziehung sowohl zur Exponentialverteilung als auch zur Poisson-Verteilung steht. 
+An dieser Stelle wollen wir noch eine weitere Verteilung einführen, die in einer interessanten Beziehung sowohl zur Exponentialverteilung, als auch zur Poisson-Verteilung steht. 
 
 \begin{defini}
 Eine Zufallsvariable $X:\Omega\to \mathbb{R}$ heißt \textbf{gammaverteilt zu den Parametern $\alpha$ und $r$} (kurz: $X \sim \gamma(\alpha, r)$), wenn sie die folgende Dichtefunktion besitzt:
@@ -182,7 +181,7 @@ Wobei $\Gamma: (0,\infty) \rightarrow (0,\infty)$ die Gamma-Funktion ist:
 mit $r>0$.
 \end{defini}
 
-Es lässt sich leicht zeigen, dass die Exponentialverteilung ist ein Spezialfall der Gamma-Verteilung.
+Es lässt sich leicht zeigen, dass die Exponentialverteilung ein Spezialfall der Gamma-Verteilung ist.
 
 \begin{folg} Im Fall $r=1$, gilt für alle $x>0$
 	\begin{eqnarray*}
