@@ -1,35 +1,35 @@
-\contentsline {chapter}{\numberline {1}Einleitung}{6}{chapter.1}
-\contentsline {chapter}{\numberline {2}Einf\"uhrung in das Thema}{8}{chapter.2}
-\contentsline {section}{\numberline {2.1}Mitnahme von Alterungsr\"uckstellung in der PKV - Auswirkungen auf das Versichertenkollektiv}{8}{section.2.1}
-\contentsline {section}{\numberline {2.2}Kohorten Modell}{10}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}Lebensabschnitt: \active@dq \dq@prtct {`}0-j\"ahrige\active@dq \dq@prtct {'}}{12}{subsection.2.2.1}
-\contentsline {subsection}{\numberline {2.2.2}Lebensabschnitt: \active@dq \dq@prtct {`}Pr\"amortalit\"atsphase\active@dq \dq@prtct {'}}{12}{subsection.2.2.2}
-\contentsline {subsection}{\numberline {2.2.3}Lebensabschnitt: \active@dq \dq@prtct {`}Phase regen Lebens\active@dq \dq@prtct {'}}{12}{subsection.2.2.3}
-\contentsline {subsection}{\numberline {2.2.4}Ereignis: Isolierte Ereignisse}{12}{subsection.2.2.4}
-\contentsline {subsection}{\numberline {2.2.5}Ereignis: Singul\"are Ereignisketten}{12}{subsection.2.2.5}
-\contentsline {chapter}{\numberline {3}Theoretische Grundlagen f\"ur die Modellierung}{14}{chapter.3}
-\contentsline {section}{\numberline {3.1}Verwendete Verteilungen}{14}{section.3.1}
-\contentsline {section}{\numberline {3.2}Poisson Prozess}{20}{section.3.2}
-\contentsline {section}{\numberline {3.3}Markov-Kette}{31}{section.3.3}
-\contentsline {chapter}{\numberline {4}Modellierung Isolierte Ereignisse}{39}{chapter.4}
-\contentsline {section}{\numberline {4.1}Grundlegende Betrachtungen}{39}{section.4.1}
-\contentsline {section}{\numberline {4.2}Modell - Poisson-Prozess}{40}{section.4.2}
-\contentsline {section}{\numberline {4.3}Alternativer Modellansatz - Markov-Kette}{43}{section.4.3}
-\contentsline {section}{\numberline {4.4}Anwendung und Test des Modells}{46}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Erl\"auterung der Datengrundlage}{46}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Identifizierung von Unf\"allen}{49}{subsection.4.4.2}
-\contentsline {subsection}{\numberline {4.4.3}Anwendung und Test des Poisson-Modells}{51}{subsection.4.4.3}
-\contentsline {chapter}{\numberline {5}Modellierung Singul\"are Ereignisketten}{63}{chapter.5}
-\contentsline {section}{\numberline {5.1}Grundlegende Betrachtungen}{63}{section.5.1}
-\contentsline {section}{\numberline {5.2}Modellierung}{64}{section.5.2}
-\contentsline {section}{\numberline {5.3}Erl\"auterungen zur Anwendung und Test des Modells}{67}{section.5.3}
-\contentsline {subsection}{\numberline {5.3.1}Identifikation von Chronischen Erkrankungen und Abgrenzung der Leistungen}{67}{subsection.5.3.1}
-\contentsline {subsection}{\numberline {5.3.2}Anwendung und Test des Modells}{68}{subsection.5.3.2}
-\contentsline {chapter}{\numberline {6}Zusammenfassung und Ausblick}{71}{chapter.6}
-\contentsline {chapter}{\numberline {A}Anhang}{73}{appendix.A}
-\contentsline {section}{\numberline {A.1}Zitierte Erkenntnisse und Nebenrechnungen}{73}{section.A.1}
-\contentsline {section}{\numberline {A.2}Abk\"urzungsverzeichnis und Zeichenerkl\"arungen}{75}{section.A.2}
-\contentsline {section}{\numberline {A.3}Codierung nach \IeC {\S } 301 Abs. 3 SGB V}{76}{section.A.3}
-\contentsline {section}{\numberline {A.4}Verwendete Abfragen}{78}{section.A.4}
-\contentsline {subsection}{\numberline {A.4.1}SQL-Scripte}{78}{subsection.A.4.1}
-\contentsline {subsection}{\numberline {A.4.2}R-Scripte}{79}{subsection.A.4.2}
+\contentsline {chapter}{\numberline {1}Einleitung}{5}{chapter.1}
+\contentsline {chapter}{\numberline {2}Einf\"uhrung in das Thema}{7}{chapter.2}
+\contentsline {section}{\numberline {2.1}Mitnahme von Alterungsr\"uckstellung in der PKV - Auswirkungen auf das Versichertenkollektiv}{7}{section.2.1}
+\contentsline {section}{\numberline {2.2}Kohorten Modell}{9}{section.2.2}
+\contentsline {subsection}{\numberline {2.2.1}Lebensabschnitt: \active@dq \dq@prtct {`}0-j\"ahrige\active@dq \dq@prtct {'}}{10}{subsection.2.2.1}
+\contentsline {subsection}{\numberline {2.2.2}Lebensabschnitt: \active@dq \dq@prtct {`}Pr\"amortalit\"atsphase\active@dq \dq@prtct {'}}{11}{subsection.2.2.2}
+\contentsline {subsection}{\numberline {2.2.3}Lebensabschnitt: \active@dq \dq@prtct {`}Phase regen Lebens\active@dq \dq@prtct {'}}{11}{subsection.2.2.3}
+\contentsline {subsection}{\numberline {2.2.4}Ereignis: Isolierte Ereignisse}{11}{subsection.2.2.4}
+\contentsline {subsection}{\numberline {2.2.5}Ereignis: Singul\"are Ereignisketten}{11}{subsection.2.2.5}
+\contentsline {chapter}{\numberline {3}Theoretische Grundlagen f\"ur die Modellierung}{12}{chapter.3}
+\contentsline {section}{\numberline {3.1}Verwendete Verteilungen}{12}{section.3.1}
+\contentsline {section}{\numberline {3.2}Poisson Prozess}{19}{section.3.2}
+\contentsline {section}{\numberline {3.3}Markov-Kette}{30}{section.3.3}
+\contentsline {chapter}{\numberline {4}Modellierung Isolierte Ereignisse}{38}{chapter.4}
+\contentsline {section}{\numberline {4.1}Grundlegende Betrachtungen}{38}{section.4.1}
+\contentsline {section}{\numberline {4.2}Modell - Poisson-Prozess}{39}{section.4.2}
+\contentsline {section}{\numberline {4.3}Alternativer Modellansatz - Markov-Kette}{42}{section.4.3}
+\contentsline {section}{\numberline {4.4}Anwendung und Test des Modells}{45}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Erl\"auterung der Datengrundlage}{45}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Identifizierung von Unf\"allen}{48}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}Anwendung und Test des Poisson-Modells}{50}{subsection.4.4.3}
+\contentsline {chapter}{\numberline {5}Modellierung Singul\"are Ereignisketten}{62}{chapter.5}
+\contentsline {section}{\numberline {5.1}Grundlegende Betrachtungen}{62}{section.5.1}
+\contentsline {section}{\numberline {5.2}Modellierung}{63}{section.5.2}
+\contentsline {section}{\numberline {5.3}Erl\"auterungen zur Anwendung und Test des Modells}{66}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Identifikation von Chronischen Erkrankungen und Abgrenzung der Leistungen}{66}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}Anwendung und Test des Modells}{67}{subsection.5.3.2}
+\contentsline {chapter}{\numberline {6}Zusammenfassung und Ausblick}{70}{chapter.6}
+\contentsline {chapter}{\numberline {A}Anhang}{72}{appendix.A}
+\contentsline {section}{\numberline {A.1}Zitierte Erkenntnisse und Nebenrechnungen}{72}{section.A.1}
+\contentsline {section}{\numberline {A.2}Abk\"urzungsverzeichnis und Zeichenerkl\"arungen}{74}{section.A.2}
+\contentsline {section}{\numberline {A.3}Codierung nach \IeC {\S } 301 Abs. 3 SGB V}{75}{section.A.3}
+\contentsline {section}{\numberline {A.4}Verwendete Abfragen}{77}{section.A.4}
+\contentsline {subsection}{\numberline {A.4.1}SQL-Scripte}{77}{subsection.A.4.1}
+\contentsline {subsection}{\numberline {A.4.2}R-Scripte}{78}{subsection.A.4.2}

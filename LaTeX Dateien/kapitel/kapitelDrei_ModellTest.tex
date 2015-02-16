@@ -33,6 +33,8 @@ Sowohl die DRG- als auch ICD-Informationen sind, in den Grunddaten, für jeden ei
 
 	\item \textbf{Krankenhaus\_Fall:} Ein Krankenhausfall umfasst alle Maßnahmen, die von der Einweisung bis zu Entlassung eines Versicherten fällig werden. In dieser Tabelle kommt ein zusammengesetzter Primärschlüssel aus Fall\_ID und Institutionskennzeichen des Krankenhauses (IK) zum Einsatz \footnote{Das ist notwendig da jedes Krankenhaus die Fall\_ID selbst vergibt und es so vorkommt das zwei Krankenhäuser dieselbe ID vergeben.}. Für jeden Behandlungsfall gibt es Daten zum Zeitpunkt und zum Grund der Aufnahme beziehungsweise für die Entlassung. Außerdem werden die abgerechnete DRG und die damit verbundenen Kosten angegeben. 
 
+\pagebreak
+
 	\item \textbf{Fall\_Diagnose:} Zu jedem Fall sind außerdem die dazugehörigen Diagnosen hinterlegt. Diese können wieder über die Kombination aus Institutionskennzeichen und Fall\_ID zugeordnet werden. Die Diagnosen werden nach dem oben beschrieben ICD-Katalog codiert und in Haupt- und Nebendiagnosen unterteilt, durch das Feld Diagnoseart. Jeder Datensatz enthält eine primäre ICD zu der, falls notwendig, auch die Lokalisation angegeben wird. Dies dient der Spezifizierung, zum Beispiel, ob der linke oder der rechte Arm gebrochen ist. In einigen wenigen Fällen gibt es auch noch eine sekundäre ICD.
 
 \end{enumerate}

@@ -1,32 +1,29 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {2.1}{\ignorespaces Grafik Alterungsr\"uckstellung}}{9}{figure.caption.3}
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Leistungsverlauf}}}{9}{subfigure.1.1}
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {R\"ucklagen}}}{9}{subfigure.1.2}
-\contentsline {figure}{\numberline {2.2}{\ignorespaces Schema des Kostenverlaufs im Kohorten-Modell\relax }}{11}{figure.caption.4}
+\contentsline {figure}{\numberline {2.1}{\ignorespaces Schema des Kostenverlaufs im Kohorten-Modell\relax }}{10}{figure.caption.3}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {3.1}{\ignorespaces Dichte- und Verteilungsfunktion der Exponentialverteilung}}{15}{figure.caption.5}
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Dichtefunktion}}}{15}{subfigure.1.1}
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Verteilungsfunktion}}}{15}{subfigure.1.2}
+\contentsline {figure}{\numberline {3.1}{\ignorespaces Dichte- und Verteilungsfunktion der Exponentialverteilung}}{13}{figure.caption.4}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Dichtefunktion}}}{13}{subfigure.1.1}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Verteilungsfunktion}}}{13}{subfigure.1.2}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {4.1}{\ignorespaces Einfaches Markov-Modell\relax }}{43}{figure.caption.6}
-\contentsline {figure}{\numberline {4.2}{\ignorespaces Erweitertes Markov-Modell\relax }}{44}{figure.caption.7}
-\contentsline {figure}{\numberline {4.3}{\ignorespaces DRG-Fallkostenentwicklung (eigene Darstellung)\relax }}{47}{figure.caption.8}
-\contentsline {figure}{\numberline {4.4}{\ignorespaces ER-Diagramm Datengrundlage\relax }}{48}{figure.caption.9}
-\contentsline {figure}{\numberline {4.5}{\ignorespaces Anteile in den Alters- und Geschlechtsgruppen\relax }}{53}{figure.caption.12}
-\contentsline {figure}{\numberline {4.6}{\ignorespaces Gesch\"atzte Unfallwahrscheinlichkeiten\relax }}{54}{figure.caption.13}
-\contentsline {figure}{\numberline {4.7}{\ignorespaces \"Ubersicht Leistungskosten Gehirnersch\"utterung\relax }}{55}{figure.caption.15}
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Gesamtkosten}}}{55}{subfigure.7.1}
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Kosten pro Tag}}}{55}{subfigure.7.2}
-\contentsline {figure}{\numberline {4.8}{\ignorespaces DRG B80Z Kostenentwicklung\relax }}{56}{figure.caption.16}
-\contentsline {figure}{\numberline {4.9}{\ignorespaces \"Ubersicht Verweildauer Gehirnersch\"utterung\relax }}{56}{figure.caption.17}
-\contentsline {figure}{\numberline {4.10}{\ignorespaces \"Ubersicht Leistungskosten unterteilt nach Verweildauer\relax }}{57}{figure.caption.18}
-\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Verweildauer 1 Tag}}}{57}{subfigure.10.1}
-\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Verweildauer 2-4 Tage}}}{57}{subfigure.10.2}
-\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Verweildauer >4 Tage}}}{57}{subfigure.10.3}
-\contentsline {figure}{\numberline {4.11}{\ignorespaces Ergebnis Simulation 2010\relax }}{59}{figure.caption.20}
-\contentsline {figure}{\numberline {4.12}{\ignorespaces Differenzen der aufsummierten Kosten in 2010\relax }}{60}{figure.caption.21}
+\contentsline {figure}{\numberline {4.1}{\ignorespaces Einfaches Markov-Modell\relax }}{42}{figure.caption.5}
+\contentsline {figure}{\numberline {4.2}{\ignorespaces Erweitertes Markov-Modell\relax }}{43}{figure.caption.6}
+\contentsline {figure}{\numberline {4.3}{\ignorespaces DRG-Fallkostenentwicklung (eigene Darstellung)\relax }}{46}{figure.caption.7}
+\contentsline {figure}{\numberline {4.4}{\ignorespaces ER-Diagramm Datengrundlage\relax }}{47}{figure.caption.8}
+\contentsline {figure}{\numberline {4.5}{\ignorespaces Anteile in den Alters- und Geschlechtsgruppen\relax }}{52}{figure.caption.11}
+\contentsline {figure}{\numberline {4.6}{\ignorespaces Gesch\"atzte Unfallwahrscheinlichkeiten\relax }}{53}{figure.caption.12}
+\contentsline {figure}{\numberline {4.7}{\ignorespaces \"Ubersicht Leistungskosten Gehirnersch\"utterung\relax }}{54}{figure.caption.14}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Gesamtkosten}}}{54}{subfigure.7.1}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Kosten pro Tag}}}{54}{subfigure.7.2}
+\contentsline {figure}{\numberline {4.8}{\ignorespaces DRG B80Z Kostenentwicklung\relax }}{55}{figure.caption.15}
+\contentsline {figure}{\numberline {4.9}{\ignorespaces \"Ubersicht Verweildauer Gehirnersch\"utterung\relax }}{55}{figure.caption.16}
+\contentsline {figure}{\numberline {4.10}{\ignorespaces \"Ubersicht Leistungskosten unterteilt nach Verweildauer\relax }}{56}{figure.caption.17}
+\contentsline {subfigure}{\numberline {(a)}{\ignorespaces {Verweildauer 1 Tag}}}{56}{subfigure.10.1}
+\contentsline {subfigure}{\numberline {(b)}{\ignorespaces {Verweildauer 2-4 Tage}}}{56}{subfigure.10.2}
+\contentsline {subfigure}{\numberline {(c)}{\ignorespaces {Verweildauer >4 Tage}}}{56}{subfigure.10.3}
+\contentsline {figure}{\numberline {4.11}{\ignorespaces Ergebnis Simulation 2010\relax }}{58}{figure.caption.19}
+\contentsline {figure}{\numberline {4.12}{\ignorespaces Differenzen der aufsummierten Kosten in 2010\relax }}{59}{figure.caption.20}
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {5.1}{\ignorespaces Markov-Modell f\"ur isolierte Ereignisse\relax }}{65}{figure.caption.23}
+\contentsline {figure}{\numberline {5.1}{\ignorespaces Markov-Modell f\"ur isolierte Ereignisse\relax }}{64}{figure.caption.22}
 \addvspace {10\p@ }
 \addvspace {10\p@ }
